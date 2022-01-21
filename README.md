@@ -20,6 +20,7 @@ Actually same thing happened to me fiddling with STM hardware.
 ## noticed
 
 geeking out on tech stuff is OK, but why not make a buck in the process?
+ - [html](https://najnesnaj.github.io/pinetime-zephyr/html)
 
 ## investing
 
