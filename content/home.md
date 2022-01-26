@@ -1,12 +1,12 @@
 ---
-title: About najnesnaj 
-author: najnesnaj 
+title: The Informed Investor 
+author: the humble mr J 
 ---
 
 The informed investor is just a pretext to boost my skillset.
 I have been impressed with the functionality of pandas, python ...
 
-I have attended a free course on EDX, but noting beats practice.
+I have attended a free course on EDX, but nothing beats practice.
 
 Investing is a very human topic:
 
@@ -23,21 +23,19 @@ These days it will be a challenge to stay ahead of inflation ...
 
 
 
-I cannot time the market, but I can try to get an idea about risk :
+I cannot time the market, but I can try to get an idea about risk (by being informed):
 - is the EM country more than 60% in debt
-- what about exchange rate
 - what about Foreign Direct Investment
-- is there an imminent conflict
 - is stock exchange on par with GDP
 - how long is the upward trend in effect
-
+- ....
 
 
 **Investing in stocks is risky, you can end up losing 50 percent or more**
 
 
 *Everybody has a plan until they're hit*
-*Mike Tyson*
+(*Mike Tyson*)
 
 
 
