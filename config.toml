@@ -4,14 +4,21 @@ title = "The informed Investor"
 theme = "xmin"
 [menu]
 [[menu.main]]
-  identifier = 'about'
-  name = 'about The informed Investor'
+  identifier = 'Home'
+  name = 'The informed Investor'
   pre = "<i class='fa fa-heart'></i>"
-  url = '/about/'
+  url = '/home/'
   weight = -110
 [[menu.main]]
-  name = 'getting started'
+  name = 'About'
   post = "<span class='alert'>New!</span>"
   pre = "<i class='fa fa-road'></i>"
-  url = '/getting-started/'
+  url = '/about/'
   weight = -100
+[[menu.main]]
+  name = 'Investing Overview'
+  post = "<span class='alert'>New!</span>"
+  pre = "<i class='fa fa-road'></i>"
+  url = '/investing/'
+  weight = -100
+
