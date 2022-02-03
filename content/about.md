@@ -1,6 +1,6 @@
 ---
-title: About najnesnaj 
-author: najnesnaj 
+title: About  
+author: najnesnaj is my name in reverse, this way I stay clear of big brother
 ---
 
 
