@@ -1,19 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on The tireless documentarian</title>
-    <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on The tireless documentarian</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 25 Jan 2022 17:55:12 +0100</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>My First Post</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
-      <pubDate>Tue, 25 Jan 2022 17:55:12 +0100</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h1 id=&#34;test&#34;&gt;test&lt;/h1&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;test&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;test1&lt;/li&gt;&#xA;&lt;li&gt;test2&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on The tireless documentarian</title><link>https://najnesnaj.github.io/posts/</link><description>Recent content in Posts on The tireless documentarian</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 25 Jan 2022 17:55:12 +0100</lastBuildDate><atom:link href="https://najnesnaj.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>My First Post</title><link>https://najnesnaj.github.io/posts/my-first-post/</link><pubDate>Tue, 25 Jan 2022 17:55:12 +0100</pubDate><guid>https://najnesnaj.github.io/posts/my-first-post/</guid><description>&lt;h1 id="test"&gt;test&lt;/h1&gt;
+&lt;hr&gt;
+&lt;p&gt;test&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;test1&lt;/li&gt;
+&lt;li&gt;test2&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
