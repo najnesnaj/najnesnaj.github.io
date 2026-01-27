@@ -1,2 +1,14 @@
-cd najnesnaj.github.io
-hugo --minify   # builds to public/ folder
+# Documenting projects
+ 
+
+sphinx: make html
+
+copy build/html/* under /static/docs/projectname
+
+
+update config.toml
+[[menu.main]]
+  name = 'RAGflow Docs'
+  url = '/docs/projectname/'
+  weight = 5
+

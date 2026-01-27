@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on The tireless documentarian</title><link>https://najnesnaj.github.io/categories/</link><description>Recent content in Categories on The tireless documentarian</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 28 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://najnesnaj.github.io/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>Example</title><link>https://najnesnaj.github.io/categories/example/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://najnesnaj.github.io/categories/example/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Categories on The tireless documentarian</title>
+    <link>http://localhost:1313/categories/</link>
+    <description>Recent content in Categories on The tireless documentarian</description>
+    <generator>Hugo -- 0.147.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example</title>
+      <link>http://localhost:1313/categories/example/</link>
+      <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/example/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
