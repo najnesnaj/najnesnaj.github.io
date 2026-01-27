@@ -1,24 +1,72 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>About | The tireless documentarian</title>
-<link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css></head><body><nav><ul class=menu><li><a href=/home/>The informed Investor</a></li><li><a href=/about/>About</a></li><li><a href=/investing/>Investing Overview</a></li><li><a href=/ragflow/>RAGflow Docs</a></li></ul><hr></nav><div class=article-meta><h1><span class=title>About</span></h1><h2 class=author>Mr J</h2></div><main><h1 id=configyaml>config.yaml</h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>permalinks</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>note</span>: <span style=color:#e6db74>&#34;/note/:year/:month/:day/:slug/&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>post</span>: <span style=color:#e6db74>&#34;/post/:year/:month/:day/:slug/&#34;</span>
-</span></span></code></pre></div><p>You can define the menu through <code>menu.main</code>, e.g.,</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>menu</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>main</span>:
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Home</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>weight</span>: <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>About</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;about/&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>weight</span>: <span style=color:#ae81ff>2</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Categories</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;categories/&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>weight</span>: <span style=color:#ae81ff>3</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Tags</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;tags/&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>weight</span>: <span style=color:#ae81ff>4</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Subscribe</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;index.xml&#34;</span>
-</span></span></code></pre></div><p>Alternatively, you can add <code>menu: main</code> to the YAML metadata of any of your pages, so that these pages will appear in the menu.</p><p>The page footer can be defined in <code>.Params.footer</code>, and the text is treated as Markdown, e.g.,</p><pre tabindex=0><code>params:
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About | The tireless documentarian</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/home/">The informed Investor</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/investing/">Investing Overview</a></li>
+      
+      <li><a href="/ragflow/">RAGflow Docs</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">About</span></h1>
+<h2 class="author">Mr J</h2>
+
+</div>
+
+<main>
+<h1 id="configyaml">config.yaml</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">permalinks</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">note</span>: <span style="color:#e6db74">&#34;/note/:year/:month/:day/:slug/&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">post</span>: <span style="color:#e6db74">&#34;/post/:year/:month/:day/:slug/&#34;</span>
+</span></span></code></pre></div><p>You can define the menu through <code>menu.main</code>, e.g.,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">menu</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">main</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Home</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">weight</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">About</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;about/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">weight</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Categories</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;categories/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">weight</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Tags</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;tags/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">weight</span>: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Subscribe</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;index.xml&#34;</span>
+</span></span></code></pre></div><p>Alternatively, you can add <code>menu: main</code> to the YAML metadata of any of your pages, so that these pages will appear in the menu.</p>
+<p>The page footer can be defined in <code>.Params.footer</code>, and the text is treated as Markdown, e.g.,</p>
+<pre tabindex="0"><code>params:
   footer: &#34;&amp;copy; [najnesnaj](https://najnesnaj.github.io) 2017 -- 2022&#34;
-</code></pre><h1 id=licence>LICENCE</h1><p>I think the MIT licence should be OK.
-If you use documents I&rsquo;ve written in a publication, I&rsquo;d like to be noticed.</p></main><footer></footer></body></html>
+</code></pre><h1 id="licence">LICENCE</h1>
+<p>I think the MIT licence should be OK.
+If you use documents I&rsquo;ve written in a publication, I&rsquo;d like to be noticed.</p>
+
+</main>
+
+  <footer>
+  
+  
+  </footer>
+  </body>
+</html>
+
