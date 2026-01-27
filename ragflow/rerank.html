@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>example: &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Why vLLM is Used to Serve the Reranker Model" href="vllm.html" />
+    <link rel="prev" title="From RAG to Context - A 2025 Year-End Review of RAG" href="blog-dec-2025.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">example:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-infiniflow-ragflow-uses-a-reranker-an-embedding-model-and-a-chat-model">Why Infiniflow RAGFlow Uses a Reranker, an Embedding Model, and a Chat Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">example:</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rerank.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example">
+<span id="ragflow-models"></span><h1>example:<a class="headerlink" href="#example" title="Link to this heading"></a></h1>
+<dl>
+<dt>curl -X POST <a class="reference external" href="http://localhost:8000/v1/rerank">http://localhost:8000/v1/rerank</a> </dt><dd><p>-H “Content-Type: application/json” -d ‘{</p>
+<blockquote>
+<div><p>“model”: “uw-modelnaam.gguf”,
+“query”: “Wat is het weer in Lokeren?”,
+“documents”: [</p>
+<blockquote>
+<div><p>“Het is vandaag zonnig in Brussel.”,
+“Lokeren ligt in Oost-Vlaanderen.”,
+“Het KNMI voorspelt regen voor morgen.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}’</p>
+</dd>
+</dl>
+<section id="why-infiniflow-ragflow-uses-a-reranker-an-embedding-model-and-a-chat-model">
+<h2>Why Infiniflow RAGFlow Uses a Reranker, an Embedding Model, and a Chat Model<a class="headerlink" href="#why-infiniflow-ragflow-uses-a-reranker-an-embedding-model-and-a-chat-model" title="Link to this heading"></a></h2>
+<p>Infiniflow RAGFlow is a Retrieval-Augmented Generation (RAG) framework designed to build high-quality, traceable question-answering systems over complex data sources. To achieve accurate and contextually relevant responses, RAGFlow employs three distinct models that work in concert:</p>
+<ol class="arabic">
+<li><p><strong>Embedding Model</strong>
+- <strong>Purpose</strong>: Converts both the user query and the chunks of retrieved documents into dense vector representations in the same semantic space.
+- <strong>Role in Pipeline</strong>: Enables semantic similarity search during the retrieval phase. By computing cosine similarity (or other distance metrics) between the query embedding and document chunk embeddings, RAGFlow retrieves the most semantically relevant passages from a large corpus—far beyond keyword matching.</p></li>
+<li><p><strong>Reranker</strong>
+- <strong>Purpose</strong>: Refines the initial retrieval results by re-scoring the top-<em>k</em> candidate chunks using a cross-encoder architecture.
+- <strong>Role in Pipeline</strong>: While the embedding model provides efficient approximate retrieval, the reranker applies a more computationally intensive but accurate relevance scoring. This step significantly improves precision by pushing the most contextually appropriate chunks to the top, reducing noise before generation.</p>
+<figure class="align-center" id="id1">
+<img alt="RAGFlow reranking process illustration" src="_images/rerank.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 1</strong>: The reranker evaluates query-chunk pairs to produce fine-grained relevance scores.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p><strong>Chat Model (LLM)</strong>
+- <strong>Purpose</strong>: Generates the final natural language response grounded in the refined retrieved context.
+- <strong>Role in Pipeline</strong>: Takes the top reranked chunks as context and synthesizes a coherent, accurate, and fluent answer. The chat model (typically a large language model fine-tuned for instruction following) ensures the output is not only factually aligned with the source material but also conversational and user-friendly.</p></li>
+</ol>
+</section>
+</section>
+<section id="synergy-of-the-three-models">
+<h1>Synergy of the Three Models<a class="headerlink" href="#synergy-of-the-three-models" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>Embedding Model</strong> → Broad, fast, semantic retrieval</p></li>
+<li><p><strong>Reranker</strong> → Precise, fine-grained reordering</p></li>
+<li><p><strong>Chat Model</strong> → Coherent, grounded generation</p></li>
+</ul>
+<p>This modular design allows RAGFlow to balance <strong>speed</strong>, <strong>accuracy</strong>, and <strong>interpretability</strong>, making it suitable for enterprise-grade RAG applications where both performance and trustworthiness are critical.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="blog-dec-2025.html" class="btn btn-neutral float-left" title="From RAG to Context - A 2025 Year-End Review of RAG" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vllm.html" class="btn btn-neutral float-right" title="Why vLLM is Used to Serve the Reranker Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

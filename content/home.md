@@ -4,9 +4,8 @@ author: the humble mr J
 ---
 
 The informed investor is just a pretext to boost my skillset.
-I have been impressed with the functionality of pandas, python ...
+Pandas, python, AI, github, docker, sphinx, agents, robotics, open source, linux, microcontrollers ...
 
-I have attended a free course on EDX, but nothing beats practice.
 
 Investing is a very human topic:
 

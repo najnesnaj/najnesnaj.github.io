@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running Llama 3.1 with llama.cpp &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running Multiple Models on llama.cpp Using Docker" href="multiple-models-llamacpp.html" />
+    <link rel="prev" title="How the Knowledge Graph in Infiniflow/RAGFlow Works" href="graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running Llama 3.1 with llama.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#model-format-gguf">1. Model Format: GGUF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compile-llama-cpp-for-intel-i7-cpu-only">2. Compile llama.cpp for Intel i7 (CPU-only)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-model-with-web-interface">3. Run the Model with Web Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compile-llama-cpp-with-nvidia-gpu-support-cuda">4. Compile llama.cpp with NVIDIA GPU Support (CUDA)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-with-cuda">Build with CUDA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-with-gpu-offloading">Run with GPU offloading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Running Llama 3.1 with llama.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/llama-cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-llama-3-1-with-llama-cpp">
+<span id="llama-cpp-model-format-gguf"></span><h1>Running Llama 3.1 with llama.cpp<a class="headerlink" href="#running-llama-3-1-with-llama-cpp" title="Link to this heading"></a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#model-format-gguf" id="id1">1. Model Format: GGUF</a></p></li>
+<li><p><a class="reference internal" href="#compile-llama-cpp-for-intel-i7-cpu-only" id="id2">2. Compile llama.cpp for Intel i7 (CPU-only)</a></p></li>
+<li><p><a class="reference internal" href="#run-the-model-with-web-interface" id="id3">3. Run the Model with Web Interface</a></p>
+<ul>
+<li><p><a class="reference internal" href="#features" id="id4">Features</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#compile-llama-cpp-with-nvidia-gpu-support-cuda" id="id5">4. Compile llama.cpp with NVIDIA GPU Support (CUDA)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#prerequisites" id="id6">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#build-with-cuda" id="id7">Build with CUDA</a></p></li>
+<li><p><a class="reference internal" href="#run-with-gpu-offloading" id="id8">Run with GPU offloading</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#summary" id="id9">Summary</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="model-format-gguf">
+<span id="llama-cpp-compile-llama-cpp-for-intel-i7-cpu-only"></span><h2><a class="toc-backref" href="#id1" role="doc-backlink">1. Model Format: GGUF</a><a class="headerlink" href="#model-format-gguf" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">llama.cpp</span></code> uses the <strong>GGUF</strong> (GPT-Generated Unified Format) model format.</p>
+<p>You can download a pre-quantized <strong>Llama 3.1 8B</strong> model in GGUF format directly from Hugging Face:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>https://huggingface.co/QuantFactory/Meta-Llama-3-8B-GGUF
+</pre></div>
+</div>
+<p>Example file: <code class="docutils literal notranslate"><span class="pre">Meta-Llama-3-8B.Q4_K_S.gguf</span></code> (~4.7 GB, 4-bit quantization, excellent quality/size tradeoff).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Q4_K_S</span></code> variant uses ~4.7 GB RAM and runs efficiently on Intel i7 CPUs.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="compile-llama-cpp-for-intel-i7-cpu-only">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">2. Compile llama.cpp for Intel i7 (CPU-only)</a><a class="headerlink" href="#compile-llama-cpp-for-intel-i7-cpu-only" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ggerganov/llama.cpp
+<span class="nb">cd</span><span class="w"> </span>llama.cpp
+
+<span class="c1"># Step 2: Build for CPU (Intel i7, AVX2 enabled by default)</span>
+make<span class="w"> </span>clean
+make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span><span class="w"> </span><span class="nv">LLAMA_CPU</span><span class="o">=</span><span class="m">1</span>
+
+<span class="c1"># Optional: Force AVX2 (most i7 CPUs support it)</span>
+make<span class="w"> </span>clean
+make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span><span class="w"> </span><span class="nv">LLAMA_CPU</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">LLAMA_AVX2</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>The binaries will be in the root directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">./llama-cli</span></code> → interactive CLI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./server</span></code>   → web server (OpenAI-compatible API + full web UI)</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Do not use vLLM</strong> on older Xeon v2 CPUs — they <strong>lack AVX-512</strong>, which vLLM requires.
+<strong>llama.cpp is a better choice</strong> — it runs efficiently with just AVX2 or even SSE.</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="run-the-model-with-web-interface">
+<span id="llama-cpp-run-the-model-with-web-interface"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">3. Run the Model with Web Interface</a><a class="headerlink" href="#run-the-model-with-web-interface" title="Link to this heading"></a></h2>
+<p>Place the downloaded GGUF file in a <code class="docutils literal notranslate"><span class="pre">models/</span></code> folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>models
+<span class="c1"># Copy or symlink the model</span>
+ln<span class="w"> </span>-s<span class="w"> </span>/path/to/Meta-Llama-3-8B.Q4_K_S.gguf<span class="w"> </span>models/
+</pre></div>
+</div>
+<p>Start the server on port <strong>8087</strong> using <strong>12 threads</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./server<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>models/Meta-Llama-3-8B.Q4_K_S.gguf<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--port<span class="w"> </span><span class="m">8087</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--threads<span class="w"> </span><span class="m">12</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0
+</pre></div>
+</div>
+<p>In a corporate network : avoid contacting the proxy !!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8087/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--noproxy<span class="w"> </span><span class="m">127</span>.0.0.1,localhost<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;: &quot;Meta-Llama-3-8B&quot;,</span>
+<span class="s1">    &quot;messages&quot;: [</span>
+<span class="s1">      {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant.&quot;},</span>
+<span class="s1">      {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello! How are you?&quot;}</span>
+<span class="s1">    ]</span>
+<span class="s1">  }&#39;</span>
+</pre></div>
+</div>
+<section id="features">
+<span id="llama-cpp-features"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">Features</a><a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Full web UI</strong> at: <a class="reference external" href="http://localhost:8087">http://localhost:8087</a></p></li>
+<li><p><strong>OpenAI-compatible API</strong> at: <a class="reference external" href="http://localhost:8087/v1">http://localhost:8087/v1</a></p></li>
+<li><p>List models:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8087/v1/models
+</pre></div>
+</div>
+<p><strong>Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;models/Meta-Llama-3-8B.Q4_K_S.gguf&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1762783003</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;owned_by&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llamacpp&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;vocab_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;n_vocab&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128256</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;n_ctx_train&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;n_embd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;n_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8030261248</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4684832768</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="compile-llama-cpp-with-nvidia-gpu-support-cuda">
+<span id="llama-cpp-compile-llama-cpp-with-nvidia-gpu-support-cuda"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">4. Compile llama.cpp with NVIDIA GPU Support (CUDA)</a><a class="headerlink" href="#compile-llama-cpp-with-nvidia-gpu-support-cuda" title="Link to this heading"></a></h2>
+<p>If you have an <strong>NVIDIA GPU</strong> (e.g., RTX 3060, 4070, A100, etc.), enable <strong>CUDA acceleration</strong>:</p>
+<section id="prerequisites">
+<span id="llama-cpp-prerequisites"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>NVIDIA driver (\geq{} 525)</p></li>
+<li><p>CUDA Toolkit (\geq{} 11.8, preferably 12.x)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nvcc</span></code> in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p></li>
+</ul>
+</section>
+<section id="build-with-cuda">
+<span id="llama-cpp-build-with-cuda"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Build with CUDA</a><a class="headerlink" href="#build-with-cuda" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clean previous build</span>
+make<span class="w"> </span>clean
+
+<span class="c1"># Build with full CUDA support</span>
+make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">LLAMA_CUDA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">LLAMA_CUDA_DMMV</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">LLAMA_CUDA_F16</span><span class="o">=</span><span class="m">1</span>
+
+<span class="c1"># Optional: Specify compute capability (e.g., for RTX 40xx)</span>
+<span class="c1"># make LLAMA_CUDA=1 CUDA_ARCH=&quot;-gencode arch=compute_89,code=sm_89&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="run-with-gpu-offloading">
+<span id="llama-cpp-run-with-gpu-offloading"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Run with GPU offloading</a><a class="headerlink" href="#run-with-gpu-offloading" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./server<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>models/Meta-Llama-3-8B.Q4_K_S.gguf<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--port<span class="w"> </span><span class="m">8087</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--threads<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--n-gpu-layers<span class="w"> </span><span class="m">999</span><span class="w"> </span><span class="se">\ </span><span class="w">  </span><span class="c1"># offload ALL layers to GPU</span>
+<span class="w">  </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> to monitor VRAM usage.
+For 8B Q4 (~4.7 GB), even a <strong>6 GB GPU</strong> can run it fully offloaded.</p>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="summary">
+<span id="llama-cpp-summary"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Command / Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Model Format</p></td>
+<td><p><strong>GGUF</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Download</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/QuantFactory/...GGUF">https://huggingface.co/QuantFactory/…GGUF</a></p></td>
+</tr>
+<tr class="row-even"><td><p>CPU Build (i7)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">LLAMA_CPU=1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>GPU Build (CUDA)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">LLAMA_CUDA=1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Run Server</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">./server</span> <span class="pre">--model</span> <span class="pre">...</span> <span class="pre">--port</span> <span class="pre">8087</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Web UI</p></td>
+<td><p><a class="reference external" href="http://localhost:8087">http://localhost:8087</a></p></td>
+</tr>
+<tr class="row-even"><td><p>API</p></td>
+<td><p><a class="reference external" href="http://localhost:8087/v1">http://localhost:8087/v1</a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>llama.cpp = lightweight, CPU/GPU flexible, no AVX-512 needed → ideal replacement for vLLM on older hardware.</strong></p>
+<p>—</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="graph.html" class="btn btn-neutral float-left" title="How the Knowledge Graph in Infiniflow/RAGFlow Works" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multiple-models-llamacpp.html" class="btn btn-neutral float-right" title="Running Multiple Models on llama.cpp Using Docker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

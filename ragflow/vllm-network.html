@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integrating vLLM with RAGFlow via Docker Network &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Batch Processing and Metadata Management in Infiniflow RAGFlow" href="api.html" />
+    <link rel="prev" title="Serving vLLM Reranker Using Docker (CPU-Only)" href="vllm-cpu.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Integrating vLLM with RAGFlow via Docker Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-network-configuration-is-required">Why Network Configuration is Required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-by-step-configure-docker-network">Step-by-Step: Configure Docker Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architecture-diagram">Architecture Diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#benefits-of-this-setup">Benefits of This Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting-tips">Troubleshooting Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Integrating vLLM with RAGFlow via Docker Network</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vllm-network.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="integrating-vllm-with-ragflow-via-docker-network">
+<span id="ragflow-vllm-network"></span><h1>Integrating vLLM with RAGFlow via Docker Network<a class="headerlink" href="#integrating-vllm-with-ragflow-via-docker-network" title="Link to this heading"></a></h1>
+<p>To enable <strong>Infiniflow RAGFlow</strong> (running in Docker) to communicate with a <strong>vLLM reranker container</strong>, both services must be on the <strong>same Docker network</strong>. By default, containers are isolated and cannot resolve each other by service name unless explicitly networked.</p>
+<p>In this setup, we ensure seamless internal communication between:</p>
+<ul class="simple">
+<li><p><strong>RAGFlow</strong> (web + backend containers)</p></li>
+<li><p><strong>vLLM reranker</strong> (serving <cite>Qwen3-Reranker-0.6B</cite>)</p></li>
+</ul>
+<p>—</p>
+<section id="why-network-configuration-is-required">
+<h2>Why Network Configuration is Required<a class="headerlink" href="#why-network-configuration-is-required" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>RAGFlow runs inside Docker (typically via <cite>docker-compose</cite>).</p></li>
+<li><p>vLLM reranker runs in a <strong>separate container</strong> (e.g., CPU-only).</p></li>
+<li><p>RAGFlow needs to call: <cite>http://&lt;vllm-service-name&gt;:8000/v1</cite> internally.</p></li>
+<li><p>Without shared network → <cite>Connection refused</cite> or DNS lookup failure.</p></li>
+</ul>
+<p><strong>Solution</strong>: Attach both services to a <strong>custom Docker bridge network</strong> (e.g., <cite>docker-ragflow</cite>).</p>
+<p>—</p>
+</section>
+<section id="step-by-step-configure-docker-network">
+<h2>Step-by-Step: Configure Docker Network<a class="headerlink" href="#step-by-step-configure-docker-network" title="Link to this heading"></a></h2>
+<p>### 1. Create a Custom Network</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>docker-ragflow
+</pre></div>
+</div>
+<p>—</p>
+<p>### 2. Update <cite>docker-compose.yaml</cite> for vLLM Reranker</p>
+<p>Ensure the vLLM service uses the network:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">docker-compose.yaml (vLLM)</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">qwen-reranker</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm-cpu:latest</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ragflow-vllm-reranker</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;8123:8000&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/naj/qwen3-reranker-0.6b:/models/qwen3-reranker-0.6b:ro</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">VLLM_HF_OVERRIDES</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">{</span>
+<span class="w">          </span><span class="no">&quot;architectures&quot;: [&quot;Qwen3ForSequenceClassification&quot;],</span>
+<span class="w">          </span><span class="no">&quot;classifier_from_token&quot;: [&quot;no&quot;, &quot;yes&quot;],</span>
+<span class="w">          </span><span class="no">&quot;is_original_qwen3_reranker&quot;: true</span>
+<span class="w">        </span><span class="no">}</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">      </span><span class="no">/models/qwen3-reranker-0.6b</span>
+<span class="w">      </span><span class="no">--task score</span>
+<span class="w">      </span><span class="no">--dtype float32</span>
+<span class="w">      </span><span class="no">--port 8000</span>
+<span class="w">      </span><span class="no">--trust-remote-code</span>
+<span class="w">      </span><span class="no">--max-model-len 8192</span>
+<span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10&#39;</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16G</span>
+<span class="w">    </span><span class="nt">shm_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4g</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker-ragflow</span>
+
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">docker-ragflow</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">external</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</div>
+<p>—</p>
+<p>### 3. Connect RAGFlow Containers to the Same Network</p>
+<p>If RAGFlow is already running via its own <cite>docker-compose</cite>, <strong>attach</strong> it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>connect<span class="w"> </span>docker-ragflow<span class="w"> </span>ragflow-web
+docker<span class="w"> </span>network<span class="w"> </span>connect<span class="w"> </span>docker-ragflow<span class="w"> </span>ragflow-server
+</pre></div>
+</div>
+<p>&gt; Replace <cite>ragflow-web</cite>, <cite>ragflow-server</cite> with actual container names (check with <cite>docker ps</cite>).</p>
+<p>—</p>
+<p>### 4. Configure RAGFlow to Use Internal vLLM Endpoint</p>
+<p>In RAGFlow settings (UI or config file), set:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reranker</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm</span>
+<span class="w">  </span><span class="nt">api_base</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://ragflow-vllm-reranker:8000/v1</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models/qwen3-reranker-0.6b</span>
+</pre></div>
+</div>
+<p><strong>Key</strong>: Use <strong>container name</strong> (<cite>ragflow-vllm-reranker</cite>) — Docker DNS resolves it automatically within the network.</p>
+<p>—</p>
+</section>
+<section id="architecture-diagram">
+<h2>Architecture Diagram<a class="headerlink" href="#architecture-diagram" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/ragflow-vllm-def.png"><img alt="RAGFlow and vLLM containers communicating over docker-ragflow network" src="_images/ragflow-vllm-def.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><strong>Figure 1</strong>: RAGFlow containers communicate with vLLM reranker via internal Docker network <cite>docker-ragflow</cite>. External access (optional) via port <cite>8123</cite>.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>—</p>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>From RAGFlow container</strong>, test connectivity:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ragflow-server<span class="w"> </span>curl<span class="w"> </span>http://ragflow-vllm-reranker:8000/v1/models
+</pre></div>
+</div>
+</li>
+<li><p><strong>Expected output</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/models/qwen3-reranker-0.6b&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>—</p>
+</section>
+<section id="benefits-of-this-setup">
+<h2>Benefits of This Setup<a class="headerlink" href="#benefits-of-this-setup" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Zero external exposure</strong> (optional): vLLM accessible <strong>only</strong> within <cite>docker-ragflow</cite> network.</p></li>
+<li><p><strong>Secure &amp; fast</strong> internal communication.</p></li>
+<li><p><strong>Scalable</strong>: Add more rerankers, LLMs, or vector DBs on same network.</p></li>
+<li><p><strong>Portable</strong>: Works across dev, staging, production with same config.</p></li>
+</ul>
+<p>—</p>
+</section>
+<section id="troubleshooting-tips">
+<h2>Troubleshooting Tips<a class="headerlink" href="#troubleshooting-tips" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Issue | Solution |</div>
+</div>
+<p><a href="#id3"><span class="problematic" id="id4">|------|</span></a>———-|
+| <cite>Connection refused</cite> | Check network: <cite>docker network inspect docker-ragflow</cite> |
+| <cite>Unknown host</cite> | Use <strong>container name</strong>, not <cite>localhost</cite> |
+| Port conflict | Ensure no other service uses <cite>8000</cite> inside network |
+| Model not loading | Verify volume mount and <cite>trust-remote-code</cite> |</p>
+<p>—</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<p>To use <strong>vLLM inside RAGFlow Docker environment</strong>:</p>
+<ol class="arabic simple">
+<li><p>Create network: <cite>docker network create docker-ragflow</cite></p></li>
+<li><p>Connect both RAGFlow and vLLM containers</p></li>
+<li><p>Use <strong>container name</strong> in <cite>api_base</cite></p></li>
+<li><p>Enjoy <strong>fast, secure, internal reranking</strong></p></li>
+</ol>
+<p>&gt; <strong>No need for public IPs, reverse proxies, or complex routing</strong> — Docker handles it all.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vllm-cpu.html" class="btn btn-neutral float-left" title="Serving vLLM Reranker Using Docker (CPU-Only)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="Batch Processing and Metadata Management in Infiniflow RAGFlow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
