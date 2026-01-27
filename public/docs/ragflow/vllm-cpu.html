@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serving vLLM Reranker Using Docker (CPU-Only) &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Integrating vLLM with RAGFlow via Docker Network" href="vllm-network.html" />
+    <link rel="prev" title="Why vLLM is Used to Serve the Reranker Model" href="vllm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Serving vLLM Reranker Using Docker (CPU-Only)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-compose-configuration-cpu-mode">Docker Compose Configuration (CPU Mode)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-components-explained">Key Components Explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-the-model-must-be-pre-downloaded-locally">Why the Model Must Be Pre-Downloaded Locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-cpu-only-no-gpu">Why CPU-Only (No GPU)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#start-the-service">Start the Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify-availability">Verify Availability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-with-ragflow">Integration with RAGFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#benefits-of-this-cpu-docker-setup">Benefits of This CPU + Docker Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Serving vLLM Reranker Using Docker (CPU-Only)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vllm-cpu.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="serving-vllm-reranker-using-docker-cpu-only">
+<span id="vllm-docker"></span><h1>Serving vLLM Reranker Using Docker (CPU-Only)<a class="headerlink" href="#serving-vllm-reranker-using-docker-cpu-only" title="Link to this heading"></a></h1>
+<p>To ensure <strong>reproducibility</strong>, <strong>portability</strong>, and <strong>isolation</strong>, <strong>vLLM</strong> can be deployed using <strong>Docker</strong>. This is especially useful in environments with restricted internet access (e.g., corporate networks behind proxies or firewalls), where <strong>Hugging Face Hub</strong> may be blocked or rate-limited.</p>
+<p>In this setup, <strong>vLLM runs on CPU only</strong> because:</p>
+<ul class="simple">
+<li><p><strong>Laptop has no GPU</strong></p></li>
+<li><p><strong>Home server has an old NVIDIA GPU</strong> (not supported by vLLM’s CUDA requirements)</p></li>
+</ul>
+<p>Thus, we use the <strong>official CPU-optimized vLLM image</strong> built from:
+<a class="reference external" href="https://github.com/vllm-project/vllm/blob/main/docker/Dockerfile.cpu">https://github.com/vllm-project/vllm/blob/main/docker/Dockerfile.cpu</a></p>
+<p>—</p>
+<section id="docker-compose-configuration-cpu-mode">
+<h2>Docker Compose Configuration (CPU Mode)<a class="headerlink" href="#docker-compose-configuration-cpu-mode" title="Link to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">qwen-reranker</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm-cpu:latest</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;8123:8000&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/naj/qwen3-reranker-0.6b:/models/qwen3-reranker-0.6b:ro</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">VLLM_HF_OVERRIDES</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">{</span>
+<span class="w">          </span><span class="no">&quot;architectures&quot;: [&quot;Qwen3ForSequenceClassification&quot;],</span>
+<span class="w">          </span><span class="no">&quot;classifier_from_token&quot;: [&quot;no&quot;, &quot;yes&quot;],</span>
+<span class="w">          </span><span class="no">&quot;is_original_qwen3_reranker&quot;: true</span>
+<span class="w">        </span><span class="no">}</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">      </span><span class="no">/models/qwen3-reranker-0.6b</span>
+<span class="w">      </span><span class="no">--task score</span>
+<span class="w">      </span><span class="no">--dtype float32</span>
+<span class="w">      </span><span class="no">--port 8000</span>
+<span class="w">      </span><span class="no">--trust-remote-code</span>
+<span class="w">      </span><span class="no">--max-model-len 8192</span>
+<span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10&#39;</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16G</span>
+<span class="w">    </span><span class="nt">shm_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4g</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+</pre></div>
+</div>
+<p>—</p>
+</section>
+<section id="key-components-explained">
+<h2>Key Components Explained<a class="headerlink" href="#key-components-explained" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>``image: vllm-cpu:latest``</strong>
+- Official vLLM CPU image (no CUDA dependencies).
+- Built from: <a class="reference external" href="https://github.com/vllm-project/vllm/blob/main/docker/Dockerfile.cpu">vllm-project/vllm/docker/Dockerfile.cpu</a>
+- Uses PyTorch CPU backend with optimized inference kernels.</p></li>
+<li><p><strong>``ports: [“8123:8000”]``</strong>
+- Host port <strong>8123</strong> → container port <strong>8000</strong> (vLLM default).</p></li>
+<li><p><strong>``volumes``</strong>
+- Mounts <strong>locally pre-downloaded model</strong> in <strong>read-only</strong> mode.</p></li>
+<li><p><strong>``VLLM_HF_OVERRIDES``</strong>
+- Required for <strong>Qwen3-Reranker</strong> due to custom classification head and token handling.</p></li>
+<li><p><strong>``command``</strong>
+- <code class="docutils literal notranslate"><span class="pre">--task</span> <span class="pre">score</span></code>: Enables reranker scoring (outputs relevance logits).
+- <code class="docutils literal notranslate"><span class="pre">--dtype</span> <span class="pre">float32</span></code>: Mandatory on CPU (no half-precision support).
+- <code class="docutils literal notranslate"><span class="pre">--max-model-len</span> <span class="pre">8192</span></code>: Supports long query+passage pairs.</p></li>
+<li><p><strong>Resource Limits</strong>
+- <code class="docutils literal notranslate"><span class="pre">cpus:</span> <span class="pre">'10'</span></code> and <code class="docutils literal notranslate"><span class="pre">memory:</span> <span class="pre">16G</span></code> prevent system overload.
+- <code class="docutils literal notranslate"><span class="pre">shm_size:</span> <span class="pre">4g</span></code> ensures sufficient shared memory for batched inference.</p></li>
+</ul>
+<p>—</p>
+</section>
+<section id="why-the-model-must-be-pre-downloaded-locally">
+<h2>Why the Model Must Be Pre-Downloaded Locally<a class="headerlink" href="#why-the-model-must-be-pre-downloaded-locally" title="Link to this heading"></a></h2>
+<p>The container <strong>cannot download the model at runtime</strong> due to:</p>
+<ol class="arabic simple">
+<li><p><strong>Corporate Proxy / Firewall</strong>
+- Outbound traffic to <code class="docutils literal notranslate"><span class="pre">huggingface.co</span></code> is blocked or requires authentication.</p></li>
+<li><p><strong>Hugging Face Hub Blocked</strong>
+- Git LFS and model downloads fail in restricted networks.</p></li>
+<li><p><strong>vLLM Auto-Download Fails Offline</strong>
+- vLLM uses <code class="docutils literal notranslate"><span class="pre">transformers.AutoModel</span></code> → attempts online download if model not found.</p></li>
+</ol>
+<p><strong>Solution: Download via mirror</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">HF_ENDPOINT</span><span class="o">=</span>https://hf-mirror.com<span class="w"> </span>huggingface-cli<span class="w"> </span>download<span class="w"> </span>Qwen/Qwen3-Reranker-0.6B<span class="w"> </span>--local-dir<span class="w"> </span>./qwen3-reranker-0.6b
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Remark : for some models you need a token HF_TOKEN=xxxxxxxx (you have to specify the model in the token definition!)</p></li>
+<li><p>Remark2 : use “sudo” if non-root!!!</p></li>
+<li><p>Uses <strong>accessible mirror</strong> (<code class="docutils literal notranslate"><span class="pre">hf-mirror.com</span></code>).</p></li>
+<li><p>Saves model locally for volume mounting.</p></li>
+</ul>
+<p>—</p>
+</section>
+<section id="why-cpu-only-no-gpu">
+<h2>Why CPU-Only (No GPU)?<a class="headerlink" href="#why-cpu-only-no-gpu" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Laptop</strong>: Integrated graphics only (no discrete GPU).</p></li>
+<li><p><strong>Home Server</strong>: NVIDIA GPU too old (e.g., pre-Ampere) → <strong>not supported</strong> by vLLM’s CUDA 11.8+ / FlashAttention requirements.</p></li>
+<li><p><strong>vLLM CPU image</strong> enables full functionality without GPU.</p></li>
+</ul>
+<p>&gt; <strong>Performance Note</strong>: CPU inference is slower (~1–3 sec per batch), but sufficient for <strong>development</strong>, <strong>prototyping</strong>, or <strong>low-throughput</strong> use cases.</p>
+<p>—</p>
+</section>
+<section id="start-the-service">
+<h2>Start the Service<a class="headerlink" href="#start-the-service" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+</section>
+<section id="verify-availability">
+<h2>Verify Availability<a class="headerlink" href="#verify-availability" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8123/v1/models
+</pre></div>
+</div>
+<p>Expected output confirms the model is loaded and ready.</p>
+<p>—</p>
+</section>
+<section id="integration-with-ragflow">
+<h2>Integration with RAGFlow<a class="headerlink" href="#integration-with-ragflow" title="Link to this heading"></a></h2>
+<p>Update RAGFlow config:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reranker</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm</span>
+<span class="w">  </span><span class="nt">api_base</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8123/v1</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models/qwen3-reranker-0.6b</span>
+</pre></div>
+</div>
+<p>—</p>
+</section>
+<section id="benefits-of-this-cpu-docker-setup">
+<h2>Benefits of This CPU + Docker Setup<a class="headerlink" href="#benefits-of-this-cpu-docker-setup" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Works on any machine</strong> (laptop, old server, air-gapped systems)</p></li>
+<li><p><strong>No GPU required</strong></p></li>
+<li><p><strong>Offline-first</strong> with pre-downloaded model</p></li>
+<li><p><strong>Consistent environment</strong> via Docker</p></li>
+<li><p><strong>Secure</strong>: read-only model, isolated container</p></li>
+<li><p><strong>Scalable later</strong>: switch to GPU image when hardware upgrades</p></li>
+</ul>
+<p><strong>Ideal for local RAGFlow development and constrained production environments.</strong></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vllm.html" class="btn btn-neutral float-left" title="Why vLLM is Used to Serve the Reranker Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vllm-network.html" class="btn btn-neutral float-right" title="Integrating vLLM with RAGFlow via Docker Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

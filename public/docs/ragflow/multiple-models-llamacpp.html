@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running Multiple Models on llama.cpp Using Docker &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us" href="hybrid.html" />
+    <link rel="prev" title="Running Llama 3.1 with llama.cpp" href="llama-cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running Multiple Models on llama.cpp Using Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-docker-compose-yml">Example <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-configuration-notes">Key Configuration Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Running Multiple Models on llama.cpp Using Docker</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/multiple-models-llamacpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-multiple-models-on-llama-cpp-using-docker">
+<span id="running-multiple-models-llama-cpp-docker"></span><h1>Running Multiple Models on llama.cpp Using Docker<a class="headerlink" href="#running-multiple-models-on-llama-cpp-using-docker" title="Link to this heading"></a></h1>
+<p>This guide demonstrates how to run multiple language models simultaneously using <code class="docutils literal notranslate"><span class="pre">llama.cpp</span></code> in Docker via <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code>. The example below defines two services: a lightweight reranker model (Qwen3 0.6B) and a general-purpose chat model (Llama 3.1).</p>
+<section id="example-docker-compose-yml">
+<h2>Example <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code><a class="headerlink" href="#example-docker-compose-yml" title="Link to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">services</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nt">qwen-reranker</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/ggerganov/llama.cpp:server-cpu</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="linenos"> 5</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8123:8080&quot;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/naj/qwen3-reranker-0.6b:/models/qwen3-reranker-0.6b:ro</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MODEL=/models/qwen3-reranker-0.6b</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="linenos">11</span><span class="w">      </span><span class="no">--model /models/qwen3-reranker-0.6b/model.gguf</span>
+<span class="linenos">12</span><span class="w">      </span><span class="no">--port 8080</span>
+<span class="linenos">13</span><span class="w">      </span><span class="no">--host 0.0.0.0</span>
+<span class="linenos">14</span><span class="w">      </span><span class="no">--n-gpu-layers 0</span>
+<span class="linenos">15</span><span class="w">      </span><span class="no">--ctx-size 8192</span>
+<span class="linenos">16</span><span class="w">      </span><span class="no">--threads 6</span>
+<span class="linenos">17</span><span class="w">      </span><span class="no">--temp 0.0</span>
+<span class="linenos">18</span><span class="w">      </span><span class="no">--rpc</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;6&#39;</span>
+<span class="linenos">23</span><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10G</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nt">shm_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4g</span>
+<span class="linenos">25</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">  </span><span class="nt">llama3.1-chat</span><span class="p">:</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/ggerganov/llama.cpp:server-cpu</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="linenos">30</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8124:8080&quot;</span>
+<span class="linenos">31</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="linenos">32</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/naj/llama3.1:/models/llama3.1:ro</span>
+<span class="linenos">33</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MODEL=/models/llama3.1</span>
+<span class="linenos">35</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="linenos">36</span><span class="w">      </span><span class="no">--model /models/llama3.1/model.gguf</span>
+<span class="linenos">37</span><span class="w">      </span><span class="no">--port 8080</span>
+<span class="linenos">38</span><span class="w">      </span><span class="no">--host 0.0.0.0</span>
+<span class="linenos">39</span><span class="w">      </span><span class="no">--n-gpu-layers 0</span>
+<span class="linenos">40</span><span class="w">      </span><span class="no">--ctx-size 8192</span>
+<span class="linenos">41</span><span class="w">      </span><span class="no">--threads 10</span>
+<span class="linenos">42</span><span class="w">      </span><span class="no">--temp 0.7</span>
+<span class="linenos">43</span><span class="w">      </span><span class="no">--rpc</span>
+<span class="linenos">44</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="linenos">45</span><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="linenos">46</span><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="linenos">47</span><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10&#39;</span>
+<span class="linenos">48</span><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20G</span>
+<span class="linenos">49</span><span class="w">    </span><span class="nt">shm_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8g</span>
+<span class="linenos">50</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+</pre></div>
+</div>
+</section>
+<section id="key-configuration-notes">
+<h2>Key Configuration Notes<a class="headerlink" href="#key-configuration-notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Images</strong>: Both services use the official CPU-optimized <code class="docutils literal notranslate"><span class="pre">llama.cpp</span></code> server image.</p></li>
+<li><p><strong>Ports</strong>:
+- Reranker exposed on <code class="docutils literal notranslate"><span class="pre">8123</span></code> → internal <code class="docutils literal notranslate"><span class="pre">8080</span></code>
+- Chat model exposed on <code class="docutils literal notranslate"><span class="pre">8124</span></code> → internal <code class="docutils literal notranslate"><span class="pre">8080</span></code></p></li>
+<li><p><strong>Volumes</strong>: Model directories are mounted read-only (<code class="docutils literal notranslate"><span class="pre">:ro</span></code>) from the host.</p></li>
+<li><p><strong>Environment</strong>: <code class="docutils literal notranslate"><span class="pre">MODEL</span></code> variable simplifies path references in commands.</p></li>
+<li><p><strong>Command Flags</strong>:
+- <code class="docutils literal notranslate"><span class="pre">--n-gpu-layers</span> <span class="pre">0</span></code>: Forces CPU-only inference.
+- <code class="docutils literal notranslate"><span class="pre">--ctx-size</span> <span class="pre">8192</span></code>: Sets context length.
+- <code class="docutils literal notranslate"><span class="pre">--temp</span></code>: Controls randomness (0.0 for deterministic reranking, 0.7 for chat).
+- <code class="docutils literal notranslate"><span class="pre">--rpc</span></code>: Enables RPC interface for external control.</p></li>
+<li><p><strong>Resource Limits</strong>: CPU and memory capped via <code class="docutils literal notranslate"><span class="pre">deploy.resources.limits</span></code>.</p></li>
+<li><p><strong>Shared Memory (shm_size)</strong>: Increased to support larger contexts and batching.</p></li>
+<li><p><strong>Restart Policy</strong>: <code class="docutils literal notranslate"><span class="pre">unless-stopped</span></code> ensures containers restart on failure or reboot.</p></li>
+</ul>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Start the services:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+<p>Access the models:</p>
+<ul class="simple">
+<li><p>Reranker: <code class="docutils literal notranslate"><span class="pre">http://localhost:8123</span></code></p></li>
+<li><p>Chat:     <code class="docutils literal notranslate"><span class="pre">http://localhost:8124</span></code></p></li>
+</ul>
+<p>Send requests using the OpenAI-compatible API or <code class="docutils literal notranslate"><span class="pre">llama.cpp</span></code> client tools.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="llama-cpp.html" class="btn btn-neutral float-left" title="Running Llama 3.1 with llama.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hybrid.html" class="btn btn-neutral float-right" title="Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

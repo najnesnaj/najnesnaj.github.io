@@ -1,0 +1,142 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Context &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Agent Context</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent-context.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-context">
+<h1>Agent Context<a class="headerlink" href="#agent-context" title="Link to this heading"></a></h1>
+<p>Deconstructing context composition clearly shows that Context Engineering’s core task is still retrieval based on the three major data sources Agents need:</p>
+<ul class="simple">
+<li><p>Retrieval of enterprise-private, unstructured domain document data—i.e., RAG.</p></li>
+<li><p>Retrieval of conversation history and state data generated during Agent interactions, especially LLM-generated content—i.e., Memory.</p></li>
+<li><p>Retrieval of tool description and usage guide data from encapsulated enterprise services and APIs—termed Tool Retrieval. This data can also reside in a dedicated area like Memory.</p></li>
+</ul>
+<p>Thus, in the AI Agent era, RAG technology will undeniably evolve. It is no longer just a step in “Retrieval-Augmented Generation.” With “retrieval” as its core capability, expanding its data scope, it evolves into a Context Engine supporting all context assembly needs, becoming the unified Context Layer and data foundation serving LLM applications.</p>
+<figure class="align-default">
+<img alt="_images/agent-context.png" src="_images/agent-context.png" />
+</figure>
+<p>Therefore, retrieval systems for Agents face unprecedented new demands: extremely high request frequency (potentially one to two orders of magnitude higher than human requests in the traditional search era), diverse query types (semantic queries on documents, keyword matching for tools, parameter matching for tool usage guides, associative queries on memory), stringent latency requirements (directly impacting Agent response speed), and the need for tight coupling with the Agent’s reasoning flow.</p>
+<p>A standalone search engine or vector database is far from sufficient. It requires building an intelligent intermediate service layer atop storage and indexing. This layer understands Agent intent, dynamically coordinates retrieval requests to different underlying data sources (document stores, memory stores, tool libraries) based on context assembly strategies, and performs necessary fusion, deduplication, ranking, and formatting of results, finally packaging them into LLM-ready context.</p>
+<p>This usage pattern means the most intricate and specialized “Context Engineering” part of Agent development—currently highly manual and hardcoded in prompts—has the potential to move towards declarative configuration or even automation. This could significantly reduce Agent development and maintenance complexity while improving consistency and reusability.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

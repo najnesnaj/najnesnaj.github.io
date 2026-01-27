@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphrag &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chat" href="chat.html" />
+    <link rel="prev" title="upload document" href="upload-document.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ragflow-gpu-cpu.html">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Graphrag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reponse-json">reponse (json)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">graphrag</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gin-2025-11-25-10-15-40-200-5m44s-172-17-0-1-post-api-chat">[GIN] 2025/11/25 - 10:15:40 | 200 |         5m44s |      172.17.0.1 | POST     “/api/chat”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#so-slow-need-to-see-progress">So slow, need to see progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stuck-what-now">Stuck ???? what now????</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Graphrag</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/graphrag.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="graphrag">
+<h1>Graphrag<a class="headerlink" href="#graphrag" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt>curl –request POST </dt><dd><p>–url <a class="reference external" href="http:/">http:/</a>/{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &lt;YOUR_API_KEY&gt;’</p>
+</dd>
+</dl>
+<p>-&gt; get dataset ID</p>
+<blockquote>
+<div><p>curl -H “Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw”         <a class="reference external" href="http://192.168.0.213/api/v1/datasets">http://192.168.0.213/api/v1/datasets</a></p>
+</div></blockquote>
+<section id="reponse-json">
+<h2>reponse (json)<a class="headerlink" href="#reponse-json" title="Link to this heading"></a></h2>
+<p>{“code”:0,”data”:[{“avatar”:null,”chunk_count”:698,”chunk_method”:”paper”,”create_date”:”Tue, 28 Oct 2025 22:47:44 GMT”,”create_time”:1761662864024,”created_by”:”b61ff88eb40611f08d0f0242ac170006”,”description”:”  “,”document_count”:6,”embedding_model”:”mxbai-embed-large:latest&#64;Ollama”,”graphrag_task_finish_at”:null,”graphrag_task_id”:null,”id”:”0fbeb780b40d11f0bf690242ac170006”,”language”:”English”,”mindmap_task_finish_at”:null,”mindmap_task_id”:null,”name”:”testaankoop”,”pagerank”:15,”parser_config”:{“auto_keywords”:5,”auto_questions”:2,”chunk_token_num”:512,”delimiter”:”n”,”graphrag”:{“community”:true,”entity_types”:[“organization”,”person”,”geo”,”event”,”category”],”method”:”general”,”resolution”:true,”use_graphrag”:true},”html4excel”:false,”layout_recognize”:”DeepDOC”,”raptor”:{“max_cluster”:64,”max_token”:256,”prompt”:”Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n      {cluster_content}nThe above is the content you need to summarize.”,”random_seed”:0,”scope”:”file”,”threshold”:0.1,”use_raptor”:true},”tag_kb_ids”:[],”toc_extraction”:false,”topn_tags”:3},”permission”:”me”,”pipeline_id”:””,”raptor_task_finish_at”:null,”raptor_task_id”:null,”similarity_threshold”:0.2,”status”:”1”,”tenant_id”:”b61ff88eb40611f08d0f0242ac170006”,”token_num”:90496,”update_date”:”Mon, 24 Nov 2025 23:09:25 GMT”,”update_time”:1763996965365,”vector_similarity_weight”:0.3}],”total_datasets”:1}</p>
+<p>–&gt; we need: testaankoop
+“id”:”0fbeb780b40d11f0bf690242ac170006”</p>
+</section>
+<section id="id1">
+<h2>graphrag<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>curl –request POST </dt><dd><p>–url <a class="reference external" href="http:/">http:/</a>/{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &lt;YOUR_API_KEY&gt;’</p>
+</dd>
+<dt>curl –request POST </dt><dd><p>–url <a class="reference external" href="http://192.168.0.213/api/v1/datasets/0fbeb780b40d11f0bf690242ac170006/run_graphrag">http://192.168.0.213/api/v1/datasets/0fbeb780b40d11f0bf690242ac170006/run_graphrag</a> –header “Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw”</p>
+</dd>
+</dl>
+<p>respons : {“code”:0,”data”:{“graphrag_task_id”:”9512c8e8c9e511f09b860242ac170003”}}</p>
+<p>(very resource intensive!!!!!)</p>
+<p>[GIN] 2025/11/25 - 10:12:59 | 200 |         8m10s |      172.17.0.1 | POST     “/api/chat”</p>
+<p>[GIN] 2025/11/25 - 10:13:15 | 200 |         7m18s |      172.17.0.1 | POST     “/api/chat”</p>
+<p>[GIN] 2025/11/25 - 10:13:57 | 200 |         6m56s |      172.17.0.1 | POST     “/api/chat”</p>
+<p>[GIN] 2025/11/25 - 10:14:47 | 200 |          6m9s |      172.17.0.1 | POST     “/api/chat”</p>
+<section id="gin-2025-11-25-10-15-40-200-5m44s-172-17-0-1-post-api-chat">
+<h3>[GIN] 2025/11/25 - 10:15:40 | 200 |         5m44s |      172.17.0.1 | POST     “/api/chat”<a class="headerlink" href="#gin-2025-11-25-10-15-40-200-5m44s-172-17-0-1-post-api-chat" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="so-slow-need-to-see-progress">
+<h2>So slow, need to see progress<a class="headerlink" href="#so-slow-need-to-see-progress" title="Link to this heading"></a></h2>
+<p>check log docker container docker-ragflow-cpu-1:</p>
+<p>2025-11-25 21:05:43,460 INFO     8082 task_executor_cedac6537903_0 reported heartbeat: {“ip_address”: “172.23.0.3”, “pid”: 8082, “name”: “task_executor_cedac6537903_0”, “now”: “2025-11-25T21:05:43.459+08:00”, “boot_at”: “2025-11-25T16:43:07.370+08:00”, “pending”: 1, “lag”: 0, “done”: 0, “failed”: 0, “current”: {“9512c8e8c9e511f09b860242ac170003”: {“id”: “9512c8e8c9e511f09b860242ac170003”, “doc_id”: “graph_raptor_x”, “from_page”: 100000000, “to_page”: 100000000, “retry_count”: 0, “kb_id”: “0fbeb780b40d11f0bf690242ac170006”, “parser_id”: “paper”, “parser_config”: {“layout_recognize”: “DeepDOC”, “chunk_token_num”: 512, “delimiter”: “n”, “auto_keywords”: 0, “auto_questions”: 0, “html4excel”: false, “topn_tags”: 3, “raptor”: {“use_raptor”: true, “prompt”: “Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n      {cluster_content}nThe above is the content you need to summarize.”, “max_token”: 256, “threshold”: 0.1, “max_cluster”: 64, “random_seed”: 0}, “graphrag”: {“use_graphrag”: true, “entity_types”: [“organization”, “person”, “geo”, “event”, “category”], “method”: “light”}}, “name”: “aai2225.pdf”, “type”: “pdf”, “location”: “aai2225.pdf”, “size”: 2893963, “tenant_id”: “b61ff88eb40611f08d0f0242ac170006”, “language”: “English”, “embd_id”: “mxbai-embed-large:latest&#64;Ollama”, “pagerank”: 15, “kb_parser_config”: {“layout_recognize”: “DeepDOC”, “chunk_token_num”: 512, “delimiter”: “n”, “auto_keywords”: 5, “auto_questions”: 2, “html4excel”: false, “tag_kb_ids”: [], “topn_tags”: 3, “toc_extraction”: false, “raptor”: {“use_raptor”: true, “prompt”: “Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n      {cluster_content}nThe above is the content you need to summarize.”, “max_token”: 256, “threshold”: 0.1, “max_cluster”: 64, “random_seed”: 0, “scope”: “file”}, “graphrag”: {“use_graphrag”: true, “entity_types”: [“organization”, “person”, “geo”, “event”, “category”], “method”: “general”, “resolution”: true, “community”: true}}, “img2txt_id”: “”, “asr_id”: “”, “llm_id”: “qwen2.5:14b&#64;Ollama”, “update_time”: 1764064833424, “doc_ids”: [“2d7ce1c0b40d11f0aad70242ac170006”, “2dbc4db0b40d11f0aad70242ac170006”, “2df27a3eb40d11f0aad70242ac170006”, “2e46ad98b40d11f0aad70242ac170006”, “2ed60b1eb40d11f0aad70242ac170006”, “67288092c92411f0953d0242ac170003”], “task_type”: “graphrag”}}}
+2025-11-25 21:06:13,466 INFO     8082 task_executor_cedac6537903_0 reported heartbeat: {“ip_address”: “172.23.0.3”, “pid”: 8082, “name”: “task_executor_cedac6537903_0”, “now”: “2025-11-25T21:06:13.465+08:00”, “boot_at”: “2025-11-25T16:43:07.370+08:00”, “pending”: 1, “lag”: 0, “done”: 0, “failed”: 0, “current”: {“9512c8e8c9e511f09b860242ac170003”: {“id”: “9512c8e8c9e511f09b860242ac170003”, “doc_id”: “graph_raptor_x”, “from_page”: 100000000, “to_page”: 100000000, “retry_count”: 0, “kb_id”: “0fbeb780b40d11f0bf690242ac170006”, “parser_id”: “paper”, “parser_config”: {“layout_recognize”: “DeepDOC”, “chunk_token_num”: 512, “delimiter”: “n”, “auto_keywords”: 0, “auto_questions”: 0, “html4excel”: false, “topn_tags”: 3, “raptor”: {“use_raptor”: true, “prompt”: “Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n      {cluster_content}nThe above is the content you need to summarize.”, “max_token”: 256, “threshold”: 0.1, “max_cluster”: 64, “random_seed”: 0}, “graphrag”: {“use_graphrag”: true, “entity_types”: [“organization”, “person”, “geo”, “event”, “category”], “method”: “light”}}, “name”: “aai2225.pdf”, “type”: “pdf”, “location”: “aai2225.pdf”, “size”: 2893963, “tenant_id”: “b61ff88eb40611f08d0f0242ac170006”, “language”: “English”, “embd_id”: “mxbai-embed-large:latest&#64;Ollama”, “pagerank”: 15, “kb_parser_config”: {“layout_recognize”: “DeepDOC”, “chunk_token_num”: 512, “delimiter”: “n”, “auto_keywords”: 5, “auto_questions”: 2, “html4excel”: false, “tag_kb_ids”: [], “topn_tags”: 3, “toc_extraction”: false, “raptor”: {“use_raptor”: true, “prompt”: “Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n      {cluster_content}nThe above is the content you need to summarize.”, “max_token”: 256, “threshold”: 0.1, “max_cluster”: 64, “random_seed”: 0, “scope”: “file”}, “graphrag”: {“use_graphrag”: true, “entity_types”: [“organization”, “person”, “geo”, “event”, “category”], “method”: “general”, “resolution”: true, “community”: true}}, “img2txt_id”: “”, “asr_id”: “”, “llm_id”: “qwen2.5:14b&#64;Ollama”, “update_time”: 1764064833424, “doc_ids”: [“2d7ce1c0b40d11f0aad70242ac170006”, “2dbc4db0b40d11f0aad70242ac170006”, “2df27a3eb40d11f0aad70242ac170006”, “2e46ad98b40d11f0aad70242ac170006”, “2ed60b1eb40d11f0aad70242ac170006”, “67288092c92411f0953d0242ac170003”], “task_type”: “graphrag”}}}</p>
+</section>
+<section id="stuck-what-now">
+<h2>Stuck ???? what now????<a class="headerlink" href="#stuck-what-now" title="Link to this heading"></a></h2>
+<p>stopped the container ….</p>
+<p>2025-11-25 21:18:25,668 INFO     36 task_executor_cedac6537903_0 reported heartbeat: {“ip_address”: “172.23.0.3”, “pid”: 36, “name”: “task_executor_cedac6537903_0”, “now”: “2025-11-25T21:18:25.667+08:00”, “boot_at”: “2025-11-25T21:15:55.594+08:00”, “pending”: 0, “lag”: 0, “done”: 0, “failed”: 1, “current”: {}}</p>
+<p>(failed state task_executor)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="upload-document.html" class="btn btn-neutral float-left" title="upload document" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="chat.html" class="btn btn-neutral float-right" title="Chat" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

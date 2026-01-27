@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAGFlow GPU vs CPU: Full Explanation (2025 Edition) &mdash; Ragflow 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Upgrade to latest release :" href="upgrade.html" />
+    <link rel="prev" title="How InfiniFlow RAGFlow Uses gVisor" href="gvisor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ragflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-concerns.html">Security Concerns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">RAGFlow System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog-dec-2025.html">From RAG to Context - A 2025 Year-End Review of RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html">example:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rerank.html#synergy-of-the-three-models">Synergy of the Three Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm.html">Why vLLM is Used to Serve the Reranker Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-cpu.html">Serving vLLM Reranker Using Docker (CPU-Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vllm-network.html">Integrating vLLM with RAGFlow via Docker Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Batch Processing and Metadata Management in Infiniflow RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">How the Knowledge Graph in Infiniflow/RAGFlow Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llama-cpp.html">Running Llama 3.1 with llama.cpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-models-llamacpp.html">Running Multiple Models on llama.cpp Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid.html">Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gvisor.html">How InfiniFlow RAGFlow Uses gVisor</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-does-ragflow-still-need-a-gpu-even-when-using-ollama">Why Does RAGFlow Still Need a GPU Even When Using Ollama?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#complete-ragflow-pipeline-with-gpu-usage-marked">Complete RAGFlow Pipeline (with GPU usage marked)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-deepdoc-actually-does-and-why-gpu-makes-it-520-faster">What DeepDoc Actually Does (and Why GPU Makes It 5–20× Faster)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-world-performance-numbers">Real-World Performance Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#when-do-you-actually-need-ragflow-gpu">When Do You Actually Need ragflow-gpu?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recommended-setup-in-2025-best-of-both-worlds">Recommended Setup in 2025 (Best of Both Worlds)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monitoring-verification">Monitoring &amp; Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade to latest release :</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload-document.html">upload document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphrag.html">Graphrag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat.html">Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infinity.html">Why Infinity is a Good Alternative in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minerU.html">MinerU and Its Use in RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-context-engine.html">What is Agent context engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searxng.html">Using SearXNG with RAGFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homelab.html">homelab</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ragflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">RAGFlow GPU vs CPU: Full Explanation (2025 Edition)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ragflow-gpu-cpu.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ragflow-gpu-vs-cpu-full-explanation-2025-edition">
+<h1>RAGFlow GPU vs CPU: Full Explanation (2025 Edition)<a class="headerlink" href="#ragflow-gpu-vs-cpu-full-explanation-2025-edition" title="Link to this heading"></a></h1>
+<section id="why-does-ragflow-still-need-a-gpu-even-when-using-ollama">
+<h2>Why Does RAGFlow Still Need a GPU Even When Using Ollama?<a class="headerlink" href="#why-does-ragflow-still-need-a-gpu-even-when-using-ollama" title="Link to this heading"></a></h2>
+<p>You are absolutely right to ask this question.</p>
+<p>Most people configure RAGFlow to use <strong>external services</strong> (Ollama, Xinference, vLLM, OpenAI, etc.) for:</p>
+<ul class="simple">
+<li><p>Embedding model</p></li>
+<li><p>Re-ranking model</p></li>
+<li><p>Inference LLM (the actual answer generator)</p></li>
+</ul>
+<p>Ollama runs these models <strong>entirely on your GPU</strong> — RAGFlow only sends HTTP requests.
+So why does the official documentation and community still strongly recommend the <strong>ragflow-gpu</strong> image (or setting <code class="docutils literal notranslate"><span class="pre">DEVICE=gpu</span></code>)?</p>
+<p>The answer is simple: <strong>Deep Document Understanding (DeepDoc)</strong> — the part that happens <em>before</em> any embedding or LLM call.</p>
+</section>
+<section id="complete-ragflow-pipeline-with-gpu-usage-marked">
+<h2>Complete RAGFlow Pipeline (with GPU usage marked)<a class="headerlink" href="#complete-ragflow-pipeline-with-gpu-usage-marked" title="Link to this heading"></a></h2>
+<table class="docutils align-center">
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Component</p></th>
+<th class="head"><p>Runs inside RAGFlow?</p></th>
+<th class="head"><p>Uses GPU when?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="arabic simple">
+<li><p>Document Upload</p></li>
+</ol>
+</td>
+<td><p>DeepDoc parser</p></td>
+<td><p>Yes (core of RAGFlow)</p></td>
+<td><p><strong>YES</strong> — heavily</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="2">
+<li><p>Chunking</p></li>
+</ol>
+</td>
+<td><p>Text splitting</p></td>
+<td><p>Yes</p></td>
+<td><p>No (pure CPU)</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="3">
+<li><p>Embedding</p></li>
+</ol>
+</td>
+<td><p>Sentence-Transformers, BGE…</p></td>
+<td><p>External (Ollama, etc.)</p></td>
+<td><p>GPU via Ollama/vLLM</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="4">
+<li><p>Vector storage</p></li>
+</ol>
+</td>
+<td><p>Elasticsearch / InfiniFlow DB</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="5">
+<li><p>Retrieval</p></li>
+</ol>
+</td>
+<td><p>Vector + keyword search</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="6">
+<li><p>Re-ranking</p></li>
+</ol>
+</td>
+<td><p>Cross-encoder (optional)</p></td>
+<td><p>External or local</p></td>
+<td><p>GPU via external service</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="7">
+<li><p>Answer generation</p></li>
+</ol>
+</td>
+<td><p>LLM (Llama 3, Qwen2, etc.)</p></td>
+<td><p>External (Ollama, etc.)</p></td>
+<td><p>GPU via Ollama/vLLM</p></td>
+</tr>
+</tbody>
+</table>
+<p>→ The <strong>only part that RAGFlow itself accelerates with GPU</strong> is Step 1 — but it is by far the most compute-intensive for real-world documents.</p>
+</section>
+<section id="what-deepdoc-actually-does-and-why-gpu-makes-it-520-faster">
+<h2>What DeepDoc Actually Does (and Why GPU Makes It 5–20× Faster)<a class="headerlink" href="#what-deepdoc-actually-does-and-why-gpu-makes-it-520-faster" title="Link to this heading"></a></h2>
+<p>When you upload a PDF, scanned image, or complex report, DeepDoc performs these AI-heavy tasks:</p>
+<ol class="arabic simple">
+<li><p><strong>Layout Detection</strong>
+Detects columns, headers, footers, reading order using CNN-based models (LayoutLM-style).</p></li>
+<li><p><strong>Table Structure Recognition (TSR)</strong>
+Identifies table boundaries, row/column spans, merged cells — extremely important for accurate retrieval.</p></li>
+<li><p><strong>Formula &amp; Math Recognition</strong>
+Converts LaTeX/math images into readable text.</p></li>
+<li><p><strong>Enhanced OCR</strong>
+For scanned PDFs: runs deep-learning OCR models (not just Tesseract CPU).</p></li>
+<li><p><strong>Visual Language Model Tasks</strong> (charts, diagrams, screenshots)
+Optionally calls lightweight VLMs (Qwen2-VL, LLaVA, etc.) to describe images inside the document.</p></li>
+</ol>
+<p>All of these run <strong>inside RAGFlow’s deepdoc module</strong> using PyTorch + CUDA when <code class="docutils literal notranslate"><span class="pre">DEVICE=gpu</span></code> is enabled.</p>
+</section>
+<section id="real-world-performance-numbers">
+<h2>Real-World Performance Numbers<a class="headerlink" href="#real-world-performance-numbers" title="Link to this heading"></a></h2>
+</section>
+<section id="when-do-you-actually-need-ragflow-gpu">
+<h2>When Do You Actually Need ragflow-gpu?<a class="headerlink" href="#when-do-you-actually-need-ragflow-gpu" title="Link to this heading"></a></h2>
+<p><strong>YES – You need it if your documents contain any of the following:</strong>
+- Scanned pages (images instead of selectable text)
+- Complex tables or financial reports
+- Charts, graphs, screenshots
+- Mixed layouts (multi-column, sidebars, footnotes)
+- Handwritten notes or formulas</p>
+<p><strong>NO – You can stay on ragflow-cpu if:</strong>
+- All documents are clean, born-digital text (Word → PDF, Markdown, etc.)
+- You only do quick prototypes with a few simple files
+- You have no NVIDIA GPU available</p>
+</section>
+<section id="recommended-setup-in-2025-best-of-both-worlds">
+<h2>Recommended Setup in 2025 (Best of Both Worlds)<a class="headerlink" href="#recommended-setup-in-2025-best-of-both-worlds" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># .env file</span>
+<span class="nv">DEVICE</span><span class="o">=</span>gpu<span class="w">                     </span><span class="c1"># ← Enables DeepDoc GPU acceleration</span>
+<span class="nv">SVR_HTTP_PORT</span><span class="o">=</span><span class="m">80</span>
+
+<span class="c1"># Use Ollama (or vLLM) for embeddings + LLM</span>
+<span class="nv">EMBEDDING_MODEL</span><span class="o">=</span>ollama/bge-large
+<span class="nv">RERANK_MODEL</span><span class="o">=</span>reranker<span class="w">  </span><span class="o">(</span>this<span class="w"> </span>cannnot<span class="w"> </span>be<span class="w"> </span>served<span class="w"> </span>by<span class="w"> </span>ollama,<span class="w"> </span>vLLM<span class="w"> </span>or<span class="w"> </span>llama.cpp<span class="w"> </span>is<span class="w"> </span>needed<span class="o">)</span>
+<span class="nv">LLM_MODEL</span><span class="o">=</span>ollama/llama3.1:70b
+</pre></div>
+</div>
+<p>Result:
+- DeepDoc parsing → blazing fast on your NVIDIA GPU (inside RAGFlow container)
+- Embeddings + LLM → also blazing fast on the same GPU (inside Ollama container)
+- No bottlenecks anywhere</p>
+</section>
+<section id="monitoring-verification">
+<h2>Monitoring &amp; Verification<a class="headerlink" href="#monitoring-verification" title="Link to this heading"></a></h2>
+<p>During document upload:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>watch<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>nvidia-smi
+</pre></div>
+</div>
+<p>You will see:
+- RAGFlow container using 4–12 GB VRAM during parsing
+- Ollama container using VRAM only when embedding or generatinging</p>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ragflow-cpu</strong>  → fine for clean text only</p></li>
+<li><p><strong>ragflow-gpu</strong>  → mandatory for real-world unstructured documents</p></li>
+</ul>
+<p>Even if Ollama handles your LLM and embeddings perfectly, <strong>without ragflow-gpu, the very first step (understanding the document) will be painfully slow or inaccurate</strong>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">DEVICE=gpu</span></code> — it’s the difference between a toy and a true enterprise-grade RAG system.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gvisor.html" class="btn btn-neutral float-left" title="How InfiniFlow RAGFlow Uses gVisor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade.html" class="btn btn-neutral float-right" title="Upgrade to latest release :" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jansen Jan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
