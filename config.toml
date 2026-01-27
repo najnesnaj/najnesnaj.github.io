@@ -21,4 +21,7 @@ theme = "xmin"
   pre = "<i class='fa fa-road'></i>"
   url = '/investing/'
   weight = -100
-
+[[menu.main]]
+  name = 'RAGflow Docs'
+  url = '/ragflow/'
+  weight = 5
