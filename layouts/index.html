@@ -1,0 +1,9 @@
+{{ define "main" }}
+<h1>Welcome to {{ .Site.Title }}</h1>
+<p>Select a project:</p>
+<ul>
+{{ range where .Site.RegularPages "Section" "ragflow" }}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+{{ end }}
+</ul>
+{{ end }}

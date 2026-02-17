@@ -1,0 +1,16 @@
+baseURL: https://example.org/
+languageCode: en-us
+title: Documentation Hub
+theme: []
+
+enableRobotsTXT: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+outputs:
+  home:
+    - HTML
+    - RSS

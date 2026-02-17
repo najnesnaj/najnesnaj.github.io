@@ -1,0 +1,22 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+
+{{- if hasPrefix $src "http" -}}
+<img src="{{ $src | safeURL }}" alt="{{ $alt }}" {{ with $title }}title="{{ . }}"{{ end }}>
+{{- else -}}
+{{- $page := .Page -}}
+{{- $image := "" -}}
+
+{{- with $page.Resources.Get $src -}}
+  {{- $image = .RelPermalink -}}
+{{- else -}}
+  {{- with $page.Resources.GetMatch (printf "*%s*" (path.Base $src)) -}}
+    {{- $image = .RelPermalink -}}
+  {{- else -}}
+    {{- $image = $src -}}
+  {{- end -}}
+{{- end -}}
+
+<img src="{{ $image | safeURL }}" alt="{{ $alt }}" {{ with $title }}title="{{ . }}"{{ end }}>
+{{- end -}}
