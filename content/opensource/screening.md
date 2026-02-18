@@ -1,3 +1,8 @@
+---
+title: 'Open Source Software Security Screening'
+draft: false
+---
+
 **Yes, there are well-established, practical ways to screen open source software (OSS) for security risks.** OSS actually has a big advantage here compared to closed-source (proprietary) software: the source code is publicly available, so you (or your security team) can inspect it, build it yourself, and verify exactly what's inside. However, it's **not trivial**—even popular OSS projects have had serious vulnerabilities slip through (e.g., Log4Shell, Heartbleed, or the XZ Utils backdoor attempt). "Many eyes" on the code doesn't mean every line gets a thorough security review; large projects can have millions of lines plus deep dependency trees.
 
 Automated tools and structured processes make screening routine and scalable for companies. This is standard practice in DevSecOps pipelines today. The core idea is **inventory + scan + assess + monitor + verify**.
