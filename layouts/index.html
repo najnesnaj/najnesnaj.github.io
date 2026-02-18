@@ -6,4 +6,10 @@
   <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
 {{ end }}
 </ul>
+<h2>Open Source</h2>
+<ul>
+{{ range where .Site.RegularPages "Section" "opensource" }}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+{{ end }}
+</ul>
 {{ end }}

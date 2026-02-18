@@ -2,70 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.org/ragflow/about/</loc>
+    <loc>http://localhost:1313/ragflow/about/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/agent-context/</loc>
+    <loc>http://localhost:1313/ragflow/agent-context/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/agent-context-engine/</loc>
+    <loc>http://localhost:1313/ragflow/agent-context-engine/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/agentic-example/</loc>
+    <loc>http://localhost:1313/ragflow/agentic-example/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/api/</loc>
+    <loc>http://localhost:1313/ragflow/api/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/architecture/</loc>
+    <loc>http://localhost:1313/ragflow/architecture/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/blog-dec-2025/</loc>
+    <loc>http://localhost:1313/ragflow/blog-dec-2025/</loc>
   </url><url>
-    <loc>https://example.org/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/chat/</loc>
+    <loc>http://localhost:1313/ragflow/chat/</loc>
   </url><url>
-    <loc>https://example.org/</loc>
+    <loc>http://localhost:1313/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/graph/</loc>
+    <loc>http://localhost:1313/ragflow/graph/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/graphrag/</loc>
+    <loc>http://localhost:1313/ragflow/graphrag/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/gvisor/</loc>
+    <loc>http://localhost:1313/ragflow/gvisor/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/homelab/</loc>
+    <loc>http://localhost:1313/ragflow/homelab/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/hybrid/</loc>
+    <loc>http://localhost:1313/ragflow/hybrid/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/index-doc/</loc>
+    <loc>http://localhost:1313/opensource/index-doc/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/infinity/</loc>
+    <loc>http://localhost:1313/ragflow/index-doc/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/langchain/</loc>
+    <loc>http://localhost:1313/ragflow/infinity/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/llama-cpp/</loc>
+    <loc>http://localhost:1313/ragflow/langchain/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/mineru/</loc>
+    <loc>http://localhost:1313/ragflow/llama-cpp/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/multiple-models-llamacpp/</loc>
+    <loc>http://localhost:1313/ragflow/mineru/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/ragflow-gpu-cpu/</loc>
+    <loc>http://localhost:1313/ragflow/multiple-models-llamacpp/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/</loc>
+    <loc>http://localhost:1313/opensource/screening/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/rerank/</loc>
+    <loc>http://localhost:1313/opensource/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/searxng/</loc>
+    <loc>http://localhost:1313/ragflow/ragflow-gpu-cpu/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/security-concerns/</loc>
+    <loc>http://localhost:1313/ragflow/</loc>
   </url><url>
-    <loc>https://example.org/tags/</loc>
+    <loc>http://localhost:1313/ragflow/rerank/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/upgrade/</loc>
+    <loc>http://localhost:1313/ragflow/searxng/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/upload-document/</loc>
+    <loc>http://localhost:1313/opensource/unix/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/vllm/</loc>
+    <loc>http://localhost:1313/ragflow/security-concerns/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/vllm-cpu/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/vllm-network/</loc>
+    <loc>http://localhost:1313/ragflow/upgrade/</loc>
   </url><url>
-    <loc>https://example.org/ragflow/web-design/</loc>
+    <loc>http://localhost:1313/ragflow/upload-document/</loc>
+  </url><url>
+    <loc>http://localhost:1313/ragflow/vllm/</loc>
+  </url><url>
+    <loc>http://localhost:1313/ragflow/vllm-cpu/</loc>
+  </url><url>
+    <loc>http://localhost:1313/ragflow/vllm-network/</loc>
+  </url><url>
+    <loc>http://localhost:1313/ragflow/web-design/</loc>
   </url>
 </urlset>
