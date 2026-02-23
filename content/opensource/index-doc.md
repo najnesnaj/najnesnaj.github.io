@@ -8,4 +8,5 @@ draft: false
 
 {{< relref "screening.md" >}}  
 {{< relref "unix.md" >}}
+{{< relref "nixos.md" >}}
 {{< relref "proxnix.md" >}}
