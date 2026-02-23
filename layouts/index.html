@@ -1,15 +1,64 @@
 {{ define "main" }}
 <h1>Welcome to {{ .Site.Title }}</h1>
-<p>Select a project:</p>
-<ul>
-{{ range where .Site.RegularPages "Section" "ragflow" }}
-  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-{{ end }}
-</ul>
-<h2>Open Source</h2>
-<ul>
-{{ range where .Site.RegularPages "Section" "opensource" }}
-  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-{{ end }}
-</ul>
+
+<div class="tabs">
+  <button class="tab-btn active" data-target="opensource">Open Source</button>
+  <button class="tab-btn" data-target="ragflow">Ragflow</button>
+  <button class="tab-btn" data-target="kubernetes">Kubernetes</button>
+</div>
+
+<div id="opensource" class="tab-content active">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "opensource" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+</div>
+
+<div id="ragflow" class="tab-content">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "ragflow" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+</div>
+
+
+<div id="kubernetes" class="tab-content">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "kubernetes" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+</div>
+
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+</script>
+
+<style>
+.tabs { margin: 20px 0; }
+.tab-btn {
+  padding: 10px 20px;
+  margin-right: 5px;
+  cursor: pointer;
+  background: #eee;
+  border: 1px solid #ccc;
+}
+.tab-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+</style>
 {{ end }}

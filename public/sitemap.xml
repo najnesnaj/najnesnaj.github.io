@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/kubernetes/about/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/about/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/agent-context/</loc>
@@ -10,17 +12,45 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/agentic-example/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/ana-overview/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/ana-report/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/api/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/architecture/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/azure-cli/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/blog-dec-2025/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/certificates/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/chat/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/classification/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/cloud-setup/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/conclusion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/deutz/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/docker/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/docker-registry-workaround/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/dockerhub/</loc>
+  </url><url>
     <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/explain-project/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/gitignore/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/graph/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/graph/</loc>
   </url><url>
@@ -28,9 +58,15 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/gvisor/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/helm/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/helmify/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/homelab/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/hybrid/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/index-doc/</loc>
   </url><url>
     <loc>http://localhost:1313/opensource/index-doc/</loc>
   </url><url>
@@ -38,11 +74,35 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/infinity/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/kompose/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/kubernetes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/kubernetes-extra/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/langchain/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/laptop/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/links/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/llama-cpp/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/local-repository/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/longhorn/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/markdown/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/market_cap/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/metallb/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/mineru/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/modules/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/multiple-models-llamacpp/</loc>
   </url><url>
@@ -50,11 +110,35 @@
   </url><url>
     <loc>http://localhost:1313/opensource/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/portainer/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/portainer-kubernetes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/postgres-cloud-native/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/postgresql/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/prometheus/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/proxmox/</loc>
+  </url><url>
+    <loc>http://localhost:1313/opensource/proxnix/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/ragflow-gpu-cpu/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/randomizer/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/registry/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/rerank/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/results/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/routing-table/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/sda/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/searxng/</loc>
   </url><url>
@@ -62,7 +146,15 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/security-concerns/</loc>
   </url><url>
+    <loc>http://localhost:1313/kubernetes/sphinx/</loc>
+  </url><url>
     <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/talos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/traefic/</loc>
+  </url><url>
+    <loc>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/upgrade/</loc>
   </url><url>
