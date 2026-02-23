@@ -179,20 +179,17 @@ az containerapp env create --name myapp-env2-jja --location westeurope
 --ingress internal \
 --registry-server myappacrjja.azurecr.io \
 --registry-username myappacrjja \
---registry-password  \
 --min-replicas 1 \
 --max-replicas 1
 
 
- az containerapp create   --name adminer-app-jja   --environment myapp-env2-jja   --image myappacrjja.azurecr.io/adminer:latest  --env-vars ADMINER_DEFAULT_SERVER=postgres-buticosus-app   --target-port 8080   --ingress external  --registry-username myappacrjja --registry-password --registry-server myappacrjja.azurecr.io
+ az containerapp create   --name adminer-app-jja   --environment myapp-env2-jja   --image myappacrjja.azurecr.io/adminer:latest  --env-vars ADMINER_DEFAULT_SERVER=postgres-buticosus-app   --target-port 8080   --ingress external  --registry-username myappacrjja --registry-server myappacrjja.azurecr.io
 
 
  az containerapp create \
 --name ana-report-app \
 --resource-group HAC9909-MasterclassDeployingAISolutions\
---environment myapp-env2-jja \
---env-vars POSTGRES_USER=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydatabase POSTGRES_HOST=postgres-buticosus-app \
---registry-password  \
+--environment myapp-env2-jja \ --env-vars POSTGRES_USER=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydatabase POSTGRES_HOST=postgres-buticosus-app \
 --image myappacrjja.azurecr.io/ana_report:latest \
 --registry-server myappacrjja.azurecr.io \
 --target-port 8001 \
