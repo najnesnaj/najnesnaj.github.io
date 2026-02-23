@@ -179,12 +179,12 @@ az containerapp env create --name myapp-env2-jja --location westeurope
 --ingress internal \
 --registry-server myappacrjja.azurecr.io \
 --registry-username myappacrjja \
---registry-password f4Kl31+A0+p9079IqAgtMf1/4nI/UOnmTvTcFH1fKe+ACRCnl67c \
+--registry-password  \
 --min-replicas 1 \
 --max-replicas 1
 
 
- az containerapp create   --name adminer-app-jja   --environment myapp-env2-jja   --image myappacrjja.azurecr.io/adminer:latest  --env-vars ADMINER_DEFAULT_SERVER=postgres-buticosus-app   --target-port 8080   --ingress external  --registry-username myappacrjja --registry-password f4Kl31+A0+p9079IqAgtMf1/4nI/UOnmTvTcFH1fKe+ACRCnl67c --registry-server myappacrjja.azurecr.io
+ az containerapp create   --name adminer-app-jja   --environment myapp-env2-jja   --image myappacrjja.azurecr.io/adminer:latest  --env-vars ADMINER_DEFAULT_SERVER=postgres-buticosus-app   --target-port 8080   --ingress external  --registry-username myappacrjja --registry-password --registry-server myappacrjja.azurecr.io
 
 
  az containerapp create \
@@ -192,7 +192,7 @@ az containerapp env create --name myapp-env2-jja --location westeurope
 --resource-group HAC9909-MasterclassDeployingAISolutions\
 --environment myapp-env2-jja \
 --env-vars POSTGRES_USER=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydatabase POSTGRES_HOST=postgres-buticosus-app \
---registry-password f4Kl31+A0+p9079IqAgtMf1/4nI/UOnmTvTcFH1fKe+ACRCnl67c \
+--registry-password  \
 --image myappacrjja.azurecr.io/ana_report:latest \
 --registry-server myappacrjja.azurecr.io \
 --target-port 8001 \
