@@ -2,14 +2,14 @@
 <h1>Welcome to {{ .Site.Title }}</h1>
 
 <div class="tabs">
-  <button class="tab-btn active" data-target="SecureSource">SecureSource</button>
+  <button class="tab-btn active" data-target="securesource">SecureSource</button>
   <button class="tab-btn" data-target="ragflow">Ragflow</button>
   <button class="tab-btn" data-target="kubernetes">Kubernetes</button>
 </div>
 
-<div id="SecureSource" class="tab-content active">
+<div id="securesource" class="tab-content active">
   <ul>
-  {{ range where .Site.RegularPages "Section" "SecureSource" }}
+  {{ range where .Site.RegularPages "Section" "securesource" }}
     <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
   {{ end }}
   </ul>
