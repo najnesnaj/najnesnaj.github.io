@@ -10,3 +10,5 @@ draft: false
 {{< relref "unix.md" >}}
 {{< relref "nixos.md" >}}
 {{< relref "proxnix.md" >}}
+{{< relref "source-checkin.md" >}}
+{{< relref "trivy.md" >}}
