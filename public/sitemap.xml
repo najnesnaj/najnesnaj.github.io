@@ -148,13 +148,19 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/security-concerns/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/source-checkin/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/sphinx/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/talos/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/talos/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/traefic/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/trivy/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</loc>
   </url><url>

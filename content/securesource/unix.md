@@ -5,7 +5,7 @@ draft: false
 
 
 
-**Yes, there are excellent, responsible ways to handle this on Linux—especially when you're already using open-source tools like Python.** Building/compiling from source yourself (or via trusted, reproducible mechanisms) is exactly the right approach, and it directly mitigates concerns about any software's origin (Chinese maintainers, hosting, etc.). You control the exact source code, verify it, compile it in an isolated environment, and deploy only what *you* built. No pre-compiled binaries from anywhere enter your network.
+**There are excellent, responsible ways to handle this on Linux—especially when you're already using open-source tools like Python.** Building/compiling from source yourself (or via trusted, reproducible mechanisms) is exactly the right approach, and it directly mitigates concerns about any software's origin (Chinese maintainers, hosting, etc.). You control the exact source code, verify it, compile it in an isolated environment, and deploy only what *you* built. No pre-compiled binaries from anywhere enter your network.
 
 This is far from theoretical—**entire distributions and package managers were designed with exactly this security/auditability mindset** (supply-chain integrity, reproducible builds, full source control). Reproducible builds (bit-for-bit identical output from the same source) are now a core best practice across the industry, driven by incidents like XZ Utils.
 
