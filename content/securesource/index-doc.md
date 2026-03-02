@@ -8,6 +8,9 @@ draft: false
 
 # Contents:
 
+{{< relref "xz.md" >}}  
+{{< relref "xz-nix.md" >}}  
+{{< relref "yubikey.md" >}}  
 {{< relref "screening.md" >}}  
 {{< relref "unix.md" >}}
 {{< relref "nixos.md" >}}

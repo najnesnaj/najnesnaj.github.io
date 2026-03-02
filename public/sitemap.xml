@@ -108,6 +108,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/nixos/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/xz-nix/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/screening/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/portainer/</loc>
@@ -158,6 +160,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/talos/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/xz/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/traefic/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/trivy/</loc>
@@ -175,5 +179,7 @@
     <loc>http://localhost:1313/ragflow/vllm-network/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/web-design/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/yubikey/</loc>
   </url>
 </urlset>
