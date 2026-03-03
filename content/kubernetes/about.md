@@ -1,5 +1,6 @@
 ---
 title: 'About'
+weight: 90
 draft: false
 ---
 

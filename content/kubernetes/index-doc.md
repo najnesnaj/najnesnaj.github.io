@@ -1,5 +1,6 @@
 ---
 title: 'Index'
+weight: 1750
 draft: false
 ---
 
@@ -153,8 +154,10 @@ draft: false
   * [starting containers](azure-cli.md#starting-containers)
 * [Module Documentation](modules.md)
   * [correlation.py](modules.md#module-advisor.correlation)
-  * [fastapp.py](modules.md#module-ana_report.fastapp)
-  * [report.py](modules.md#module-ana_report.report)
+  * [fastapp.py](modules.md#fastapp-py)
+  * [report.py](modules.md#report-py)
+  * [update_postgres.py](modules.md#update-postgres-py)
+  * [show-json.py](modules.md#show-json-py)
 * [Graph](graph.md)
   * [swagger](graph.md#swagger)
 * [SDA (software defined architecture)](SDA.md)
@@ -175,12 +178,6 @@ draft: false
   * [make route permanent](laptop.md#make-route-permanent)
 * [Kernel IP Routing Table](routing-table.md)
 * [Troubleshooting Kubernetes](troubleshoot-kubernetes.md)
-* [Defining time series classification](classification.md)
-* [Time Series Distances](classification.md#time-series-distances)
-* [Docker registry kubernetes workaround](docker-registry-workaround.md)
-* [Explain project](explain-project.md)
-* [postgres cloud Native](postgres-cloud-native.md)
-* [prometheus](prometheus.md)
 * [Usefull links:](links.md)
 
 # Indices and tables

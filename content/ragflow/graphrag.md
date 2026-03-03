@@ -1,5 +1,6 @@
 ---
 title: 'Graphrag'
+weight: 960
 draft: false
 ---
 

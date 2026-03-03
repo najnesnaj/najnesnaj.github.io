@@ -1,5 +1,6 @@
 ---
 title: 'Conclusion'
+weight: 240
 draft: false
 ---
 

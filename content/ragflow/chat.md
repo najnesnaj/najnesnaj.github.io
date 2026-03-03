@@ -1,5 +1,6 @@
 ---
 title: 'Chat'
+weight: 1020
 draft: false
 ---
 

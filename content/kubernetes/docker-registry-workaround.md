@@ -1,5 +1,6 @@
 ---
 title: 'Docker Registry Workaround'
+weight: 1730
 draft: false
 ---
 

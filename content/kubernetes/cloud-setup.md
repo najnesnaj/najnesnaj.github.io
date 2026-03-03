@@ -1,5 +1,6 @@
 ---
 title: 'Cloud Setup'
+weight: 350
 draft: false
 ---
 

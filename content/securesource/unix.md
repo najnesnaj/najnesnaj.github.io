@@ -1,6 +1,7 @@
 ---
 title: 'securing unix'
 draft: false
+weight: 50
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: 'Registry'
+weight: 1140
 draft: false
 ---
 

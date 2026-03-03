@@ -1,5 +1,6 @@
 ---
 title: 'Blog Dec 2025'
+weight: 170
 draft: false
 ---
 

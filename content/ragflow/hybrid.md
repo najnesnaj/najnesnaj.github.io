@@ -1,5 +1,6 @@
 ---
 title: 'Hybrid'
+weight: 730
 draft: false
 ---
 

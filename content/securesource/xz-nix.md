@@ -1,6 +1,7 @@
 ---
 title: 'nix os vulnerable for xz hack?'
 draft: false
+weight: 30
 ---
 
 
@@ -10,7 +11,7 @@ draft: false
 
 
 
-** NixOS would score meaningfully better than most other major Linux distributions in the context of the XZ backdoor incident (CVE-2024-3094), but not for the reasons people sometimes assume.**
+**NixOS would score meaningfully better than most other major Linux distributions in the context of the XZ backdoor incident (CVE-2024-3094), but not for the reasons people sometimes assume.**
 
 The XZ backdoor (in versions 5.6.0 and 5.6.1) was a sophisticated supply-chain attack where malicious code was hidden in release tarballs (not in the upstream git repo). It only activated during builds that matched certain conditions (mainly distributions that patched OpenSSH to use libsystemd notifications, like Fedora and Debian sid/testing at the time).
 

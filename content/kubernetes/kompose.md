@@ -1,5 +1,6 @@
 ---
 title: 'Kompose'
+weight: 820
 draft: false
 ---
 

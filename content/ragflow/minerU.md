@@ -1,5 +1,6 @@
 ---
 title: 'Mineru'
+weight: 1140
 draft: false
 ---
 

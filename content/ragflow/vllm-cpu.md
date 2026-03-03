@@ -1,5 +1,6 @@
 ---
 title: 'Vllm Cpu'
+weight: 330
 draft: false
 ---
 

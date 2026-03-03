@@ -33,7 +33,36 @@ mkdir -p "$STATIC_IMAGES_DIR"
 
 # Copy and process markdown files
 echo "Processing markdown files..."
-for md_file in "$SOURCE_DIR"/*.md; do
+
+# Get ordered list of markdown files from index.md if it exists
+index_file="$SOURCE_DIR/index.md"
+ordered_files=()
+if [ -f "$index_file" ]; then
+    echo "Using order from index.md..."
+    while IFS= read -r line; do
+        f=$(echo "$line" | grep -oE '[a-zA-Z0-9_-]+\.md' | head -1)
+        if [ -n "$f" ] && [ -f "$SOURCE_DIR/$f" ]; then
+            ordered_files+=("$SOURCE_DIR/$f")
+        fi
+    done < "$index_file"
+    
+    # Add any remaining files not in index.md
+    for f in "$SOURCE_DIR"/*.md; do
+        if [ -f "$f" ]; then
+            bf=$(basename "$f")
+            if [[ ! " ${ordered_files[@]} " =~ " ${f} " ]]; then
+                ordered_files+=("$f")
+            fi
+        fi
+    done
+    md_files=("${ordered_files[@]}")
+else
+    echo "No index.md found, using alphabetical order..."
+    mapfile -t md_files < <(ls -1 "$SOURCE_DIR"/*.md 2>/dev/null | sort)
+fi
+
+weight=10
+for md_file in "${md_files[@]}"; do
     if [ -f "$md_file" ]; then
         filename=$(basename "$md_file")
         
@@ -56,13 +85,16 @@ for md_file in "$SOURCE_DIR"/*.md; do
         {
             echo "---"
             echo "title: '$title'"
+            echo "weight: $weight"
             echo "draft: false"
             echo "---"
             echo ""
             echo "$content"
         } > "$CONTENT_DIR/$filename"
         
-        echo "  Processed: $filename -> $filename"
+        echo "  Processed: $filename -> $filename (weight: $weight)"
+        
+        weight=$((weight + 10))
     fi
 done
 

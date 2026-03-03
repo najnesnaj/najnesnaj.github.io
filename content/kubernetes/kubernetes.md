@@ -1,5 +1,6 @@
 ---
 title: 'Kubernetes'
+weight: 410
 draft: false
 ---
 

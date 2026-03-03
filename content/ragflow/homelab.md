@@ -1,5 +1,6 @@
 ---
 title: 'Homelab'
+weight: 1360
 draft: false
 ---
 

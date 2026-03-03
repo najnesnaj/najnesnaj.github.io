@@ -1,5 +1,6 @@
 ---
 title: 'Kubernetes Extra'
+weight: 920
 draft: false
 ---
 

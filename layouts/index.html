@@ -5,6 +5,7 @@
   <button class="tab-btn active" data-target="securesource">SecureSource</button>
   <button class="tab-btn" data-target="ragflow">Ragflow</button>
   <button class="tab-btn" data-target="kubernetes">Kubernetes</button>
+  <button class="tab-btn" data-target="homelab">Homelab</button>
 </div>
 
 <div id="securesource" class="tab-content active">
@@ -31,6 +32,15 @@
   {{ end }}
   </ul>
 </div>
+
+<div id="homelab" class="tab-content">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "homelab" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+</div>
+
 
 
 <script>

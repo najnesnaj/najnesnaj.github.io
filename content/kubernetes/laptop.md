@@ -1,5 +1,6 @@
 ---
 title: 'Laptop'
+weight: 1680
 draft: false
 ---
 

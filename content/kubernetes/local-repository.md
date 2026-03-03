@@ -1,5 +1,6 @@
 ---
 title: 'Local Repository'
+weight: 630
 draft: false
 ---
 

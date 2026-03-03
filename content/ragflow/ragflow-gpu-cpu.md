@@ -1,5 +1,6 @@
 ---
 title: 'Ragflow Gpu Cpu'
+weight: 880
 draft: false
 ---
 

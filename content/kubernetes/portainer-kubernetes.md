@@ -1,5 +1,6 @@
 ---
 title: 'Portainer Kubernetes'
+weight: 550
 draft: false
 ---
 

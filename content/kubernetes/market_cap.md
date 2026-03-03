@@ -1,5 +1,6 @@
 ---
 title: 'Market Cap'
+weight: 110
 draft: false
 ---
 

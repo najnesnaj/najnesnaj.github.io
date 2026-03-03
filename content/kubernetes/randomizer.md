@@ -1,5 +1,6 @@
 ---
 title: 'Randomizer'
+weight: 150
 draft: false
 ---
 

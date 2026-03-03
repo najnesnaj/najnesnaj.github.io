@@ -1,6 +1,7 @@
 ---
 title: 'nix os '
 draft: false
+weight: 20
 ---
 
 

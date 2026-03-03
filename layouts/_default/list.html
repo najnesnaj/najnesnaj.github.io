@@ -2,8 +2,8 @@
 <h1>{{ .Title }}</h1>
 {{ .Content }}
 <ul>
-{{ range .Pages }}
-  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+{{ range sort .Pages "Weight" "asc" }}
+  <!-- pages with lower weight appear first -->
 {{ end }}
 </ul>
 {{ end }}

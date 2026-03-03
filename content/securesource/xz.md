@@ -1,6 +1,7 @@
 ---
 title: 'the xz hack attempt '
 draft: false
+weight: 10
 ---
 
 

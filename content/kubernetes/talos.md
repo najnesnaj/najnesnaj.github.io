@@ -1,5 +1,6 @@
 ---
 title: 'Talos'
+weight: 860
 draft: false
 ---
 

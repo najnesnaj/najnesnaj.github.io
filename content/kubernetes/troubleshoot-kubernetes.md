@@ -1,5 +1,6 @@
 ---
 title: 'Troubleshoot Kubernetes'
+weight: 1700
 draft: false
 ---
 

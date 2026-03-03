@@ -91,6 +91,16 @@ trivy fs --scanners vuln,secret,misconfig \
   /usr/src/ragflow
 ```
 
+
+Generate true SBOM, OWASP native (cyclonedx)
+
+
+```bash
+trivy fs --scanners vuln,secret,misconfig   --format cyclonedx   --output trivy_results/combined.json   /usr/src/ragflow
+```
+
+
+
 ## Output Files
 
 All results are saved to `/usr/src/ragflow/trivy_results/`:

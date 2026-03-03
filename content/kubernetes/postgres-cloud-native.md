@@ -1,5 +1,6 @@
 ---
 title: 'Postgres Cloud Native'
+weight: 1760
 draft: false
 ---
 

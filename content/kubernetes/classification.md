@@ -1,5 +1,6 @@
 ---
 title: 'Classification'
+weight: 1720
 draft: false
 ---
 
