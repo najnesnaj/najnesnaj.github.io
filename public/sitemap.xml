@@ -10,6 +10,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/xz-nix/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/trivy-sbom/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/about/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/unix/</loc>

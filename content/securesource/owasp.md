@@ -58,6 +58,3 @@ It's free (Apache 2.0 license), community-driven, and scales well for enterprise
 - Self-hosting means you manage updates, backups, scaling, and security of the instance.
 - For very advanced features (e.g., supplier portals, automated remediation workflows), some orgs layer it with commercial tools or build custom extensions.
 
-If you're looking to try it, the quickest way is the Docker quickstart (one command to spin up a demo instance). Many start there for PoC, then move to production with PostgreSQL + persistent storage.
-
-Let me know if you want setup guides, integration examples, comparisons to Anchore/Sonatype, or help evaluating it for your use case!

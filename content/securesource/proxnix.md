@@ -68,4 +68,3 @@ Here are the main realistic paths, ordered from "most Proxmox-like" to more ligh
 
 All of these are doable today on current NixOS (unstable or 25.05+ channels have good module support). Start with the NixOS wiki pages on libvirt/Incus, or search Discourse/Reddit for recent configs — people share full `configuration.nix` examples for hypervisor setups.
 
-Let me know what your main use case is (e.g., mostly containers, Windows VMs, ZFS, clustering), and I can give more targeted config pointers!

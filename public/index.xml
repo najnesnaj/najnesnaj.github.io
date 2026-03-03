@@ -36,6 +36,13 @@
       <description>&lt;p&gt;&lt;strong&gt;NixOS would score meaningfully better than most other major Linux distributions in the context of the XZ backdoor incident (CVE-2024-3094), but not for the reasons people sometimes assume.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;The XZ backdoor (in versions 5.6.0 and 5.6.1) was a sophisticated supply-chain attack where malicious code was hidden in release tarballs (not in the upstream git repo). It only activated during builds that matched certain conditions (mainly distributions that patched OpenSSH to use libsystemd notifications, like Fedora and Debian sid/testing at the time).&lt;/p&gt;</description>
     </item>
     <item>
+      <title>trivy OWASP Dependency-Track</title>
+      <link>http://localhost:1313/securesource/trivy-sbom/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/trivy-sbom/</guid>
+      <description>&lt;p&gt;OWASP &lt;strong&gt;Dependency-Track&lt;/strong&gt; fully supports importing &lt;strong&gt;CycloneDX&lt;/strong&gt; SBOMs in JSON format (the default when you use &lt;code&gt;--format cyclonedx&lt;/code&gt;):&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trivy fs --scanners vuln,secret,misconfig --format cyclonedx --output trivy_results/combined.json /usr/src/ragflow&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This generates a valid CycloneDX JSON SBOM (typically specVersion 1.4–1.6 depending on your Trivy version in 2026; Dependency-Track handles these well, usually up through 1.6 in versions 4.13+).&lt;/p&gt;&#xA;&lt;p&gt;Dependency-Track focuses on ingesting the &lt;strong&gt;component inventory&lt;/strong&gt; (libraries, packages, OS packages, etc.) from the SBOM and correlating them against its vulnerability databases (NVD, OSS Index, GitHub Advisories, etc.). It will &lt;strong&gt;not&lt;/strong&gt; directly display Trivy&amp;rsquo;s detected vulnerabilities, secrets, or misconfigurations from the SBOM — those extra scanner findings (in &lt;code&gt;vulnerabilities&lt;/code&gt;, &lt;code&gt;secrets&lt;/code&gt;, &lt;code&gt;service&lt;/code&gt; extensions) are mostly ignored during import. Instead, Dependency-Track re-analyzes the components independently for the most up-to-date vuln data.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>About</title>
       <link>http://localhost:1313/ragflow/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -754,7 +761,7 @@
       <link>http://localhost:1313/securesource/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/securesource/index-doc/</guid>
-      <description>&lt;h1 id=&#34;welcome-to-secure-open-source&#34;&gt;Welcome to Secure Open Source!&lt;/h1&gt;&#xA;&lt;h1 id=&#34;contents&#34;&gt;Contents:&lt;/h1&gt;&#xA;&lt;p&gt;/securesource/xz/&lt;br&gt;&#xA;/securesource/xz-nix/&lt;br&gt;&#xA;/securesource/yubikey/&lt;br&gt;&#xA;/securesource/screening/&lt;br&gt;&#xA;/securesource/unix/&#xA;/securesource/nixos/&#xA;/securesource/proxnix/&#xA;/securesource/source-checkin/&#xA;/securesource/trivy/&#xA;/securesource/owasp/&#xA;/securesource/talos/&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;welcome-to-secure-open-source&#34;&gt;Welcome to Secure Open Source!&lt;/h1&gt;&#xA;&lt;h1 id=&#34;contents&#34;&gt;Contents:&lt;/h1&gt;&#xA;&lt;p&gt;/securesource/xz/&lt;br&gt;&#xA;/securesource/xz-nix/&lt;br&gt;&#xA;/securesource/yubikey/&lt;br&gt;&#xA;/securesource/screening/&lt;br&gt;&#xA;/securesource/unix/&#xA;/securesource/nixos/&#xA;/securesource/proxnix/&#xA;/securesource/source-checkin/&#xA;/securesource/trivy/&#xA;/securesource/trivy-sbom/&#xA;/securesource/owasp/&#xA;/securesource/talos/&lt;/p&gt;</description>
     </item>
     <item>
       <title>Open Source Software Security Screening</title>

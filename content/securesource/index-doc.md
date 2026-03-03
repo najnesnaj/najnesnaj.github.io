@@ -17,5 +17,6 @@ draft: false
 {{< relref "proxnix.md" >}}
 {{< relref "source-checkin.md" >}}
 {{< relref "trivy.md" >}}
+{{< relref "trivy-sbom.md" >}}
 {{< relref "owasp.md" >}}
 {{< relref "talos.md" >}}
