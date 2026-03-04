@@ -20,3 +20,6 @@ draft: false
 {{< relref "trivy-sbom.md" >}}
 {{< relref "owasp.md" >}}
 {{< relref "talos.md" >}}
+{{< relref "app-armor.md" >}}
+{{< relref "opendesk.md" >}}
+{{< relref "e2ee.md" >}}

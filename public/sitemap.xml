@@ -28,6 +28,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/nvme/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/opendesk/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/market_cap/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/templates/</loc>
@@ -43,6 +45,8 @@
     <loc>http://localhost:1313/ragflow/blog-dec-2025/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/ramdisk/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/e2ee/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/rerank/</loc>
   </url><url>
@@ -215,6 +219,8 @@
     <loc>http://localhost:1313/kubernetes/postgres-cloud-native/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/prometheus/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/app-armor/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
