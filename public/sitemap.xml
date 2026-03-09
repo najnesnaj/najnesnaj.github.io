@@ -68,6 +68,8 @@
   </url><url>
     <loc>http://localhost:1313/kubernetes/docker/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/paranoid/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/dockerhub/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/portainer/</loc>
@@ -81,6 +83,8 @@
     <loc>http://localhost:1313/homelab/ollama/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/docker/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/reproducable/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/kubernetes/</loc>
   </url><url>
@@ -100,6 +104,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/raid/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/docker/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/api/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/melborp/</loc>
@@ -109,6 +115,8 @@
     <loc>http://localhost:1313/kubernetes/portainer-kubernetes/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/graph/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/ragflow/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/llama-cpp/</loc>
   </url><url>
@@ -122,6 +130,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/laptop/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/ragflow-image/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/helm/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/hybrid/</loc>
@@ -131,6 +141,8 @@
     <loc>http://localhost:1313/kubernetes/helmify/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/gvisor/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/ragflow-nix/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/talos/</loc>
   </url><url>
