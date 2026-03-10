@@ -3,6 +3,7 @@
 
 <div class="tabs">
   <button class="tab-btn active" data-target="securesource">SecureSource</button>
+  <button class="tab-btn" data-target="planb">planb</button>
   <button class="tab-btn" data-target="ragflow">Ragflow</button>
   <button class="tab-btn" data-target="kubernetes">Kubernetes</button>
   <button class="tab-btn" data-target="homelab">Homelab</button>
@@ -15,6 +16,15 @@
   {{ end }}
   </ul>
 </div>
+
+<div id="planb" class="tab-content active">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "planb" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+</div>
+
 
 <div id="ragflow" class="tab-content">
   <ul>
