@@ -30,3 +30,8 @@ draft: false
 {{< relref "ragflow-image.md" >}}
 {{< relref "ragflow-nix.md" >}}
 {{< relref "podman.md" >}}
+{{< relref "scratch.md" >}}
+{{< relref "container.md" >}}
+{{< relref "native-container.md" >}}
+{{< relref "virtual-machine.md" >}}
+{{< relref "bandit.md" >}}

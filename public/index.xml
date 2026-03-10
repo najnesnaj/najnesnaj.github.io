@@ -596,6 +596,20 @@
       <description>Graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ -&amp;gt; get dataset ID&#xA;curl -H “Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw” http://192.168.0.213/api/v1/datasets&#xA;reponse (json) {“code”:0,”data”:[{“avatar”:null,”chunk_count”:698,”chunk_method”:”paper”,”create_date”:”Tue, 28 Oct 2025 22:47:44 GMT”,”create_time”:1761662864024,”created_by”:”b61ff88eb40611f08d0f0242ac170006”,”description”:” “,”document_count”:6,”embedding_model”:”mxbai-embed-large:latest@Ollama”,”graphrag_task_finish_at”:null,”graphrag_task_id”:null,”id”:”0fbeb780b40d11f0bf690242ac170006”,”language”:”English”,”mindmap_task_finish_at”:null,”mindmap_task_id”:null,”name”:”testaankoop”,”pagerank”:15,”parser_config”:{“auto_keywords”:5,”auto_questions”:2,”chunk_token_num”:512,”delimiter”:”n”,”graphrag”:{“community”:true,”entity_types”:[“organization”,”person”,”geo”,”event”,”category”],”method”:”general”,”resolution”:true,”use_graphrag”:true},”html4excel”:false,”layout_recognize”:”DeepDOC”,”raptor”:{“max_cluster”:64,”max_token”:256,”prompt”:”Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n {cluster_content}nThe above is the content you need to summarize.”,”random_seed”:0,”scope”:”file”,”threshold”:0.1,”use_raptor”:true},”tag_kb_ids”:[],”toc_extraction”:false,”topn_tags”:3},”permission”:”me”,”pipeline_id”:””,”raptor_task_finish_at”:null,”raptor_task_id”:null,”similarity_threshold”:0.2,”status”:”1”,”tenant_id”:”b61ff88eb40611f08d0f0242ac170006”,”token_num”:90496,”update_date”:”Mon, 24 Nov 2025 23:09:25 GMT”,”update_time”:1763996965365,”vector_similarity_weight”:0.3}],”total_datasets”:1}&#xA;–&amp;gt; we need: testaankoop “id”:”0fbeb780b40d11f0bf690242ac170006”&#xA;graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ curl –request POST –url http://192.</description>
     </item>
     <item>
+      <title>rebuild</title>
+      <link>http://localhost:1313/securesource/rebuild/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/rebuild/</guid>
+      <description>To verify that the Podman binary you are using on your NixOS system was built faithfully from its declared source code (i.e., that you can reproduce the exact same binary bits by compiling everything yourself), you can perform a local reproducibility check.&#xA;Nix makes this relatively straightforward thanks to its deterministic build model and the --check / --rebuild flags. However, Podman itself is a fairly complex package (Go + C dependencies + many transitive deps), and full bit-for-bit reproducibility is not guaranteed for every package in nixpkgs — even in 2026, nixpkgs overall hovers around high-90% reproducibility rates for sampled packages, but individual large ones like podman may have minor non-determinism (timestamps, build paths in debug info, ordering issues in Go, etc.</description>
+    </item>
+    <item>
+      <title>scratch</title>
+      <link>http://localhost:1313/securesource/scratch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/scratch/</guid>
+      <description>In Nix (and therefore NixOS/Hydra builds like the zlib example ), there are multiple independent layers that together provide strong assurance that the source code has not been tampered with and that the resulting binary faithfully comes from the declared sources. No single mechanism is perfect on its own, but the combination makes supply-chain tampering extremely difficult and — in many cases — detectable.&#xA;1. Integrity of the original source tarball (upstream source code) The line you see:</description>
+    </item>
+    <item>
       <title>Agentic Example</title>
       <link>http://localhost:1313/ragflow/agentic-example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -622,6 +636,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/ragflow/infinity/</guid>
       <description>Why Infinity is a Good Alternative in RAGFlow Tailored for RAG/LLM Workloads Infinity is an AI-native database built from the ground up for hybrid search (dense vectors, sparse vectors, multi-vectors/tensors, full-text, structured data) with fused ranking and reranking. It outperforms Elasticsearch in benchmarks for RAG-specific tasks (e.g., faster query latency ~0.1ms on million-scale vectors, higher QPS, better hybrid recall).&#xA;Performance &amp;amp; Efficiency Claims several times faster than Elasticsearch for multi-recall scenarios, lower resource consumption, and advanced features like real-time search, better pruning for phrase queries, and native support for RAG needs (e.</description>
+    </item>
+    <item>
+      <title>container</title>
+      <link>http://localhost:1313/securesource/container/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/container/</guid>
+      <description>Here are the two main ways to run an NGINX container on your NixOS system with Podman already enabled (via virtualisation.podman.enable = true; and friends).&#xA;1. The standard way (imperative / Podman CLI — same as on any Linux distro) This is the classic Podman command-line approach. It&amp;rsquo;s quick for testing and works identically to Docker.&#xA;# Pull the official NGINX image (alpine variant is small &amp;amp; common) podman pull docker.</description>
     </item>
     <item>
       <title>Certificates</title>
@@ -652,6 +673,13 @@
       <description>What is Agent context engine? From 2025, a silent revolution began beneath the dazzling surface of AI Agents. While the world marveled at agents that could write code, analyze data, and automate workflows, a fundamental bottleneck emerged: why do even the most advanced agents still stumble on simple questions, forget previous conversations, or misuse available tools?&#xA;The answer lies not in the intelligence of the Large Language Model (LLM) itself, but in the quality of the Context it receives.</description>
     </item>
     <item>
+      <title>native container</title>
+      <link>http://localhost:1313/securesource/native-container/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/native-container/</guid>
+      <description>There is a fully Nix-native way to run NGINX in isolation on NixOS without relying on any Alpine Linux (or any other foreign distro/image like the official nginx:alpine OCI image).&#xA;NixOS provides two main isolation mechanisms that stay entirely within the Nix ecosystem:&#xA;NixOS declarative containers (using boot.enableContainers = true; + containers.&amp;lt;name&amp;gt;)&#xA;→ These are lightweight systemd-nspawn containers running a full (but minimal) NixOS instance inside.&#xA;→ You configure NGINX exactly like on the host — using the native services.</description>
+    </item>
+    <item>
       <title>Longhorn</title>
       <link>http://localhost:1313/kubernetes/longhorn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -671,6 +699,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/kubernetes/ana-report/</guid>
       <description>ana-report (custom pod/svc) deploy-ana-report.yaml apiVersion: apps/v1 kind: Deployment metadata: name: nosql-ana-report namespace: default spec: replicas: 1 selector: matchLabels: app: nosql-ana-report template: metadata: labels: app: nosql-ana-report spec: containers: - name: nosql-ana-report image: 10.110.130.109:5000/nosql-ana-report:latest imagePullPolicy: Always env: - name: POSTGRES_HOST value: &amp;#34;postgres-postgresql.postgres.svc.cluster.local&amp;#34; - name: POSTGRES_PORT value: &amp;#34;5432&amp;#34; - name: POSTGRES_USER value: &amp;#34;myuser&amp;#34; - name: POSTGRES_PASSWORD value: &amp;#34;mypassword&amp;#34; - name: POSTGRES_DB value: &amp;#34;mydatabase&amp;#34; ports: - containerPort: 8001 # Adjust to the port your app uses securityContext: allowPrivilegeEscalation: false capabilities: drop: [&amp;#34;ALL&amp;#34;] runAsNonRoot: false seccompProfile: type: RuntimeDefault service.</description>
+    </item>
+    <item>
+      <title>virtual machine</title>
+      <link>http://localhost:1313/securesource/virtual-machine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/virtual-machine/</guid>
+      <description>To use a virtual machine (VM) is a solid and safe approach for testing an open source application on NixOS, especially if the app involves potential risks like network access, file system modifications, or untrusted dependencies. NixOS&amp;rsquo;s declarative nature makes it easy to spin up isolated VMs using tools like QEMU (via nixos-rebuild build-vm), where you can define the entire system configuration in a .nix file, test the app, and discard the VM afterward.</description>
     </item>
     <item>
       <title>Searxng</title>
@@ -715,11 +750,25 @@
       <description>Yes, you can use RAGFlow with LangChain by integrating RAGFlow as an external retriever/context provider. The recommended approach is to use RAGFlow’s REST API or Python SDK to fetch relevant context chunks from your knowledge base, then pass those results into LangChain for orchestration and LLM calls. There’s no dedicated LangChain integration, but the API/SDK pattern is straightforward: call RAGFlow’s /retrieval endpoint (or use the retrieve method in the Python SDK) with your query, API token, and knowledge base ID, and use the returned chunks as context in your LangChain pipeline.</description>
     </item>
     <item>
+      <title>bandit</title>
+      <link>http://localhost:1313/securesource/bandit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/bandit/</guid>
+      <description>Bandit is excellent for Python-focused static security scanning (SAST — Static Application Security Testing). It excels at detecting issues like injection risks, insecure deserialization, weak crypto, and more, with low false positives in Python codebases.&#xA;Here are some of the most popular and effective equivalent or complementary tools for other programming languages in 2026. These are primarily open-source or widely used tools (since Bandit is open-source and free), but I&amp;rsquo;ve included a few strong commercial/enterprise options that dominate in practice.</description>
+    </item>
+    <item>
       <title>Azure Cli</title>
       <link>http://localhost:1313/kubernetes/azure-cli/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/kubernetes/azure-cli/</guid>
       <description>Configuring the Azure CLI The Azure CLI is a command-line tool that allows you to manage Azure resources. You can configure the CLI to use different authentication methods, set default values for commands, and customize the output format. This document provides an overview of the configuration options available in the Azure CLI and how to set them up.&#xA;Installation https://learn.microsoft.com/nl-nl/cli/azure/&#xA;first : activate azure (portal)&#xA;To install the Azure CLI, follow these steps: 1.</description>
+    </item>
+    <item>
+      <title>effort</title>
+      <link>http://localhost:1313/securesource/effort/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/effort/</guid>
+      <description>Security Issue Remediation Effort Assessment Application: RAGFlow&#xA;Context: Intranet deployment (not exposed to the public internet)&#xA;Assessment based on Bandit scan results&#xA;Summary Severity Count Description HIGH 7 SQL injection, unsafe XML, pickle, weak crypto MEDIUM 89 Requests without timeout, bind to all interfaces, hardcoded tmp LOW 612 Assert statements, try/except/pass, hardcoded password strings For an intranet-only deployment, many security concerns are reduced since attackers cannot directly reach the application from the internet.</description>
     </item>
     <item>
       <title>Modules</title>
@@ -831,7 +880,7 @@
       <link>http://localhost:1313/securesource/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/securesource/index-doc/</guid>
-      <description>Welcome to Secure Open Source! Contents: /securesource/xz/&#xA;/securesource/xz-nix/&#xA;/securesource/yubikey/&#xA;/securesource/screening/&#xA;/securesource/unix/ /securesource/nixos/ /securesource/proxnix/ /securesource/source-checkin/ /securesource/trivy/ /securesource/trivy-sbom/ /securesource/owasp/ /securesource/talos/ /securesource/app-armor/ /securesource/opendesk/ /securesource/e2ee/ /securesource/paranoid/ /securesource/reproducable/ /securesource/docker/ /securesource/ragflow/ /securesource/ragflow-image/ /securesource/ragflow-nix/ /securesource/podman/</description>
+      <description>Welcome to Secure Open Source! Contents: /securesource/xz/&#xA;/securesource/xz-nix/&#xA;/securesource/yubikey/&#xA;/securesource/screening/&#xA;/securesource/unix/ /securesource/nixos/ /securesource/proxnix/ /securesource/source-checkin/ /securesource/trivy/ /securesource/trivy-sbom/ /securesource/owasp/ /securesource/talos/ /securesource/app-armor/ /securesource/opendesk/ /securesource/e2ee/ /securesource/paranoid/ /securesource/reproducable/ /securesource/docker/ /securesource/ragflow/ /securesource/ragflow-image/ /securesource/ragflow-nix/ /securesource/podman/ /securesource/scratch/ /securesource/container/ /securesource/native-container/ /securesource/virtual-machine/ /securesource/bandit/</description>
     </item>
     <item>
       <title>Open Source Software Security Screening</title>

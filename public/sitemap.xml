@@ -170,6 +170,10 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/graphrag/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/rebuild/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/scratch/</loc>
+  </url><url>
     <loc>http://localhost:1313/ragflow/agentic-example/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/chat/</loc>
@@ -177,6 +181,8 @@
     <loc>http://localhost:1313/kubernetes/traefic/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/infinity/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/container/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/certificates/</loc>
   </url><url>
@@ -186,11 +192,15 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/agent-context-engine/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/native-container/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/longhorn/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/web-design/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/ana-report/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/virtual-machine/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/searxng/</loc>
   </url><url>
@@ -204,7 +214,11 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/langchain/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/bandit/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/azure-cli/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/effort/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/modules/</loc>
   </url><url>
