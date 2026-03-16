@@ -29,6 +29,7 @@ draft: false
 {{< relref "ragflow.md" >}}
 {{< relref "ragflow-image.md" >}}
 {{< relref "ragflow-nix.md" >}}
+{{< relref "podman-vs-docker.md" >}}
 {{< relref "podman.md" >}}
 {{< relref "scratch.md" >}}
 {{< relref "container.md" >}}

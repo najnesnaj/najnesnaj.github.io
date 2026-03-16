@@ -2,947 +2,1003 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Documentation Hub</title>
-    <link>http://localhost:46663/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Documentation Hub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:46663/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Index</title>
-      <link>http://localhost:46663/planb/index-doc/</link>
+      <link>http://localhost:1313/planb/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/planb/index-doc/</guid>
-      <description>Contents: /planb/planb/ </description>
+      <guid>http://localhost:1313/planb/index-doc/</guid>
+      <description>Contents: /planb/planb/ /planb/lasuite/ /planb/lasuite-messagerie/ /planb/opendesk/ /planb/lasuite-vs-opendesk/ /planb/url/ /planb/clusterip/ /planb/os/</description>
     </item>
     <item>
       <title>the xz hack attempt </title>
-      <link>http://localhost:46663/securesource/xz/</link>
+      <link>http://localhost:1313/securesource/xz/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/xz/</guid>
+      <guid>http://localhost:1313/securesource/xz/</guid>
       <description>Understanding the XZ Backdoor Incident The XZ Utils backdoor (CVE-2024-3094) was a sophisticated supply chain attack discovered in March 2024, where malicious code was inserted into versions 5.6.0 and 5.6.1 of the popular open-source compression library. This was likely the result of a long-term social engineering effort targeting maintainers, allowing remote code execution via SSH in affected Linux systems. While the attack was caught before widespread exploitation, it highlighted vulnerabilities in open-source ecosystems, including maintainer burnout and dependency risks.</description>
     </item>
     <item>
       <title>nix os </title>
-      <link>http://localhost:46663/securesource/nixos/</link>
+      <link>http://localhost:1313/securesource/nixos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/nixos/</guid>
+      <guid>http://localhost:1313/securesource/nixos/</guid>
       <description>Why Nix Makes the “One Tool to Rule Them All” Dream Real Flakes pin your entire world (Nixpkgs version, inputs, outputs) so nix build or nixos-rebuild on your laptop in 2026 produces the exact same artifact as your CI or production. Nix language is fully declarative and functional — you describe what you want, not how to build it step-by-step. Nix store gives bit-for-bit reproducibility, shared layers/caching, and zero “it works on my machine”.</description>
     </item>
     <item>
       <title>Intro</title>
-      <link>http://localhost:46663/homelab/intro/</link>
+      <link>http://localhost:1313/homelab/intro/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/intro/</guid>
+      <guid>http://localhost:1313/homelab/intro/</guid>
       <description>intro This doc does not belong here, but did not want to create multiple github repo’s.&#xA;This is a personal account of venturing into the Proxmox virutualised world:&#xA;running containers running local LLM no GPU cheap I try to document as much as I can, to avoid solving the same problem twice.&#xA;homelab I bought hp dl380p g8 (generation8) with 16 cores and 32 threads and 256 GIGA bytes of RAM!</description>
     </item>
     <item>
       <title>nix os vulnerable for xz hack?</title>
-      <link>http://localhost:46663/securesource/xz-nix/</link>
+      <link>http://localhost:1313/securesource/xz-nix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/xz-nix/</guid>
+      <guid>http://localhost:1313/securesource/xz-nix/</guid>
       <description>NixOS would score meaningfully better than most other major Linux distributions in the context of the XZ backdoor incident (CVE-2024-3094), but not for the reasons people sometimes assume.&#xA;The XZ backdoor (in versions 5.6.0 and 5.6.1) was a sophisticated supply-chain attack where malicious code was hidden in release tarballs (not in the upstream git repo). It only activated during builds that matched certain conditions (mainly distributions that patched OpenSSH to use libsystemd notifications, like Fedora and Debian sid/testing at the time).</description>
     </item>
     <item>
       <title>trivy OWASP Dependency-Track</title>
-      <link>http://localhost:46663/securesource/trivy-sbom/</link>
+      <link>http://localhost:1313/securesource/trivy-sbom/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/trivy-sbom/</guid>
+      <guid>http://localhost:1313/securesource/trivy-sbom/</guid>
       <description>OWASP Dependency-Track fully supports importing CycloneDX SBOMs in JSON format (the default when you use --format cyclonedx):&#xA;trivy fs --scanners vuln,secret,misconfig --format cyclonedx --output trivy_results/combined.json /usr/src/ragflow This generates a valid CycloneDX JSON SBOM (typically specVersion 1.4–1.6 depending on your Trivy version in 2026; Dependency-Track handles these well, usually up through 1.6 in versions 4.13+).&#xA;Dependency-Track focuses on ingesting the component inventory (libraries, packages, OS packages, etc.) from the SBOM and correlating them against its vulnerability databases (NVD, OSS Index, GitHub Advisories, etc.</description>
     </item>
     <item>
       <title>About</title>
-      <link>http://localhost:46663/ragflow/about/</link>
+      <link>http://localhost:1313/ragflow/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/about/</guid>
+      <guid>http://localhost:1313/ragflow/about/</guid>
       <description>About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects October 28, 2025 · 3 min read&#xA;The release of GitHub’s 2025 Octoverse report marks a pivotal moment for the open source ecosystem—and for projects like RAGFlow, which has emerged as one of the fastest-growing open source projects by contributors this year.&#xA;With a remarkable 2,596% year-over-year growth in contributor engagement, RAGFlow isn’t just gaining traction—it’s defining the next wave of AI-powered development.</description>
     </item>
     <item>
       <title>planB</title>
-      <link>http://localhost:46663/planb/planb/</link>
+      <link>http://localhost:1313/planb/planb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/planb/planb/</guid>
+      <guid>http://localhost:1313/planb/planb/</guid>
       <description>&amp;lsquo;Plan B&amp;rsquo;: Gaining Insight into Potential Alternative Platforms for Office 365&#xA;Assessing alternatives to Office 365 requires more than desk research and comparing features and prices. Building a minimum level of expertise is essential: setup, ease of use, maintenance, cost, functionality, interoperability, etc. To achieve this, the alternatives should be effectively installed and tested on a server.&#xA;Possible alternatives:&#xA;LaSuite (for the French government) OpenDesk (for the German government) Nextcloud Geens.</description>
     </item>
     <item>
       <title>securing unix</title>
-      <link>http://localhost:46663/securesource/unix/</link>
+      <link>http://localhost:1313/securesource/unix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/unix/</guid>
+      <guid>http://localhost:1313/securesource/unix/</guid>
       <description>There are excellent, responsible ways to handle this on Linux—especially when you&amp;rsquo;re already using open-source tools like Python. Building/compiling from source yourself (or via trusted, reproducible mechanisms) is exactly the right approach, and it directly mitigates concerns about any software&amp;rsquo;s origin (Chinese maintainers, hosting, etc.). You control the exact source code, verify it, compile it in an isolated environment, and deploy only what you built. No pre-compiled binaries from anywhere enter your network.</description>
     </item>
     <item>
       <title>Hpdl380p</title>
-      <link>http://localhost:46663/homelab/hpdl380p/</link>
+      <link>http://localhost:1313/homelab/hpdl380p/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/hpdl380p/</guid>
+      <guid>http://localhost:1313/homelab/hpdl380p/</guid>
       <description>Upgrading homelab HP DL 380p latest BIOS download latest firmware (BIOS) for linux in RPM format firmware-system-p70-2019.05.24-1.1 on ubuntu (unpack with Ark) look for CPQP7013.6B8 (4MB in size) use ilo to upload firmware (update) M2 disk drive M.2 NGFF SSD naar PCI-E 3.0 X16 High-Speed SSD (ashata = 5euro) need MVME (one notch) m2 card it shows up in BIOS / PCI devices on linux :#lsblk it should show up Sata m2 to sata adapter case (aliexpress) cable female sata to female Slimline 13pin 7 + 6 (aliexpress) m2 sata disk 128G Bootconfig there is a</description>
     </item>
     <item>
       <title>About</title>
-      <link>http://localhost:46663/kubernetes/about/</link>
+      <link>http://localhost:1313/kubernetes/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/about/</guid>
+      <guid>http://localhost:1313/kubernetes/about/</guid>
       <description>About Warning : This project is in development and not ready for production. The documentation is a work in progress. The document is rather a quick reminder than a full blown manual.&#xA;I attended a course, but I learn by doing. So I decided to create a project to apply the knowledge I gained. The project is about investing in the stock market, but also about setting up Kubernetes, Docker, Helm, ML, CI/CD, github actions and other tools.</description>
     </item>
     <item>
       <title>Avx</title>
-      <link>http://localhost:46663/homelab/avx/</link>
+      <link>http://localhost:1313/homelab/avx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/avx/</guid>
+      <guid>http://localhost:1313/homelab/avx/</guid>
       <description>AVX https://github.com/Mintplex-Labs/anything-llm/issues/1331&#xA;I ran into a problem using lancedb container that needs avx2. turns out that my old hp dl380p g8 with xeon e5-2650 v2 does not have AVX2….&#xA;AVX (Advanced Vector Extensions) and AVX2 are sets of CPU instructions designed to improve performance for tasks that involve heavy mathematical computations, like simulations, scientific calculations, or multimedia processing.&#xA;AVX (Advanced Vector Extensions): Introduced with Intel’s Sandy Bridge processors (2011). Supports 256-bit wide vector operations, allowing for parallel processing of multiple data points in a single instruction.</description>
     </item>
     <item>
       <title>Security Concerns</title>
-      <link>http://localhost:46663/ragflow/security-concerns/</link>
+      <link>http://localhost:1313/ragflow/security-concerns/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/security-concerns/</guid>
+      <guid>http://localhost:1313/ragflow/security-concerns/</guid>
       <description>Security Concerns The origin of ragflow is Chinese. Infiniflow is a Chinese company. It was open-sourced in 2024.&#xA;Chinese origin of RAGFlow is not a material security concern in practice — the project is one of the technically strongest deep-document-understanding RAG engines available right now.For organizations that must comply with very strict procurement rules, national security guidelines, or have board-level “no Chinese tech” policies → yes, it’s frequently considered a blocking factor, even if the technical risk is low.</description>
     </item>
     <item>
       <title>Deutz</title>
-      <link>http://localhost:46663/kubernetes/deutz/</link>
+      <link>http://localhost:1313/kubernetes/deutz/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/deutz/</guid>
+      <guid>http://localhost:1313/kubernetes/deutz/</guid>
       <description>Deutz as a starting point the stock data of a German company Deutz was used.&#xA;Why?&#xA;The marketcap is very cyclical. Say history repeats itself, you can make money in buying low, selling high, multiple times!</description>
     </item>
     <item>
-      <title>Nvme</title>
-      <link>http://localhost:46663/homelab/nvme/</link>
+      <title>lasuite</title>
+      <link>http://localhost:1313/planb/lasuite/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/nvme/</guid>
+      <guid>http://localhost:1313/planb/lasuite/</guid>
+      <description>LaSuite (La Suite numérique) is an open-source, sovereign digital workspace developed by the French government’s DINUM (Direction interministérielle du numérique) in collaboration with ANCT and European partners (e.g., Germany, Netherlands). It provides a full set of collaborative tools as a secure alternative to proprietary suites like Microsoft 365 or Google Workspace.&#xA;It is designed primarily for French public agents (used by &amp;gt;500,000 monthly across 15+ ministries) but is fully open-source (mostly MIT/AGPL/Apache licenses) so any organization or individual can self-host their own instance under their own responsibility.</description>
+    </item>
+    <item>
+      <title>Nvme</title>
+      <link>http://localhost:1313/homelab/nvme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/nvme/</guid>
       <description>nvme insert M2 into pci&#xA;check temperature : nvme smart-log /dev/nvme0 Smart Log for NVME device:nvme0 namespace-id:ffffffff critical_warning : 0 temperature : 33°C (306 Kelvin) available_spare : 100% available_spare_threshold : 10% percentage_used : 0% endurance group critical warning summary: 0 Data Units Read : 7,871 (4.03 GB) Data Units Written : 167,622 (85.82 GB) host_read_commands : 152,308 host_write_commands : 676,518 controller_busy_time : 1 power_cycles : 2 power_on_hours : 0 unsafe_shutdowns : 2 media_errors : 0 num_err_log_entries : 0 Warning Temperature Time : 0 Critical Composite Temperature Time : 0 Temperature Sensor 1 : 33°C (306 Kelvin) Thermal Management T1 Trans Count : 0 Thermal Management T2 Trans Count : 0 Thermal Management T1 Total Time : 0 Thermal Management T2 Total Time : 0</description>
     </item>
     <item>
       <title>securing opendesk</title>
-      <link>http://localhost:46663/securesource/opendesk/</link>
+      <link>http://localhost:1313/securesource/opendesk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/opendesk/</guid>
+      <guid>http://localhost:1313/securesource/opendesk/</guid>
       <description>Overview of openDesk and Security Focus openDesk is an open-source, modular office and collaboration suite developed primarily for German public administration as a sovereign alternative to Microsoft 365. It integrates established tools like Nextcloud (file storage/sync), Collabora/ONLYOFFICE (document editing), Jitsi/Element (video/chat), OpenProject (project management), CryptPad (encrypted collaboration), and XWiki (knowledge base), all coordinated by the Center for Digital Sovereignty (ZenDiS). The suite emphasizes data sovereignty, transparency, and security through open standards, local hosting, and avoidance of vendor lock-in.</description>
     </item>
     <item>
       <title>Market Cap</title>
-      <link>http://localhost:46663/kubernetes/market_cap/</link>
+      <link>http://localhost:1313/kubernetes/market_cap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/market_cap/</guid>
+      <guid>http://localhost:1313/kubernetes/market_cap/</guid>
       <description>Market Cap This is a plot of the market capitalisation per quarter for Deutz. The color green is OK, orange is a drop till 7%, and red is NOK.</description>
     </item>
     <item>
       <title>Templates</title>
-      <link>http://localhost:46663/homelab/templates/</link>
+      <link>http://localhost:1313/homelab/templates/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/templates/</guid>
+      <guid>http://localhost:1313/homelab/templates/</guid>
       <description>Where can I find more Templates? Use: pveam update&#xA;to update the container template database, then: pveam available</description>
     </item>
     <item>
       <title>Usb</title>
-      <link>http://localhost:46663/homelab/usb/</link>
+      <link>http://localhost:1313/homelab/usb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/usb/</guid>
+      <guid>http://localhost:1313/homelab/usb/</guid>
       <description>reading data from USB stick the USB stick is readable from the proxmox host:&#xA;(do a dmesg to get the device: in this case /dev/sdb1) mount /dev/sdb1 /usbdrive&#xA;create a mp on CT (container02) /dev/mapper/pve-vm–102–disk–1 51290592 28 48652740 1% /container02mp&#xA;transfer to CT (name = container02) on the host mkdir /drive_container02 mount /dev/mapper/pve-vm–102–disk–1 /drive_container02/</description>
     </item>
     <item>
       <title>Architecture</title>
-      <link>http://localhost:46663/ragflow/architecture/</link>
+      <link>http://localhost:1313/ragflow/architecture/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/architecture/</guid>
+      <guid>http://localhost:1313/ragflow/architecture/</guid>
       <description>RAGFlow System Architecture Overview RAGFlow is a fully containerized, micro-service-based RAG (Retrieval-Augmented Generation) engine. When you run the official docker-compose.yml (or docker-compose-gpu.yml), the following Docker containers are launched automatically:&#xA;Core Infrastructure Containers Container Responsibility mysql Persistent storage for users, knowledge bases, datasets, conversation history, API keys, etc. redis Cache layer + task queue (Celery) for asynchronous jobs (document parsing, chunking, embedding) elasticsearch Hybrid search engine: stores text chunks, keyword indices, and (optionally) dense vectors minio S3-compatible object storage for original uploaded files (PDFs, Word, images, etc.</description>
     </item>
     <item>
-      <title>Randomizer</title>
-      <link>http://localhost:46663/kubernetes/randomizer/</link>
+      <title>lasuite-messagerie</title>
+      <link>http://localhost:1313/planb/lasuite-messagerie/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/randomizer/</guid>
+      <guid>http://localhost:1313/planb/lasuite-messagerie/</guid>
+      <description>Dans LaSuite (la Suite numérique de la DINUM), l&amp;rsquo;envoi de mails (courriels électroniques classiques, comme avec Outlook ou Gmail) se fait via l&amp;rsquo;outil dédié nommé simplement &amp;ldquo;Messagerie&amp;rdquo;.&#xA;C&amp;rsquo;est l&amp;rsquo;équivalent souverain et sécurisé d&amp;rsquo;une messagerie électronique professionnelle (remplaçant Outlook, Gmail, etc.). Il est conçu pour les agents publics et les entités du secteur public, avec des données hébergées en France et une forte emphase sur la sécurité et la souveraineté.&#xA;Comment ça fonctionne concrètement ?</description>
+    </item>
+    <item>
+      <title>Randomizer</title>
+      <link>http://localhost:1313/kubernetes/randomizer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/kubernetes/randomizer/</guid>
       <description>Randomizer This application plots a graph that mimics the real curve. A pythonscript that states 4 times above 80% and the quarters being 7 quarters apart. The visual plot is handy to check the performance of the script. As I found out later, it is much easier to let an LLM describe the differences, based on the distinction have it generate a prompt to have it in another go, generate a python script.</description>
     </item>
     <item>
       <title>Ana Overview</title>
-      <link>http://localhost:46663/kubernetes/ana-overview/</link>
+      <link>http://localhost:1313/kubernetes/ana-overview/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/ana-overview/</guid>
+      <guid>http://localhost:1313/kubernetes/ana-overview/</guid>
       <description>Overview ana_report this contains the Docker container with a FastAPI to consult&amp;amp;plot the data&#xA;ana_model here the model is generated, this is used for experimenting with an LLM&#xA;ana_github_actions the purpose is to use github actions to build the Docker container. I want to have github build the model as well, based on an LLM generated python function that describes the disered pattern. This way a user can feed any pattern into the container and filter the database for similar patterns.</description>
     </item>
     <item>
       <title>Blog Dec 2025</title>
-      <link>http://localhost:46663/ragflow/blog-dec-2025/</link>
+      <link>http://localhost:1313/ragflow/blog-dec-2025/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/blog-dec-2025/</guid>
+      <guid>http://localhost:1313/ragflow/blog-dec-2025/</guid>
       <description>From RAG to Context - A 2025 Year-End Review of RAG https://ragflow.io/blog. On the ragflow website appears frequently a very insightful blog!&#xA;Date: December 22, 2025 Source: RAGFlow Blog As 2025 draws to a close, the field of Retrieval-Augmented Generation (RAG) has undergone profound reflection, vigorous debate, and marked evolution. Far from fading into obsolescence as some bold predictions foresaw—amid lingering scepticism over its supposedly transient role—RAG has solidified its indispensability as a cornerstone of data infrastructure in the demanding arena of enterprise AI adoption.</description>
     </item>
     <item>
       <title>Ramdisk</title>
-      <link>http://localhost:46663/homelab/ramdisk/</link>
+      <link>http://localhost:1313/homelab/ramdisk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/ramdisk/</guid>
+      <guid>http://localhost:1313/homelab/ramdisk/</guid>
       <description>ramdisk My dl380p gen8 has 256Gb of RAM&#xA;Can I use RAM as a disk? mkdir /tmp/ramdisk chmod 777 /tmp/ramdisk mount -t tmpfs -o size=1024m myramdisk /tmp/ramdisk&#xA;or to get something extra…&#xA;sudo mount -t tmpfs -o size=10G myramdisk /tmp/ramdisk&#xA;speedtest For Write: dd if=/dev/zero of=/dev/shm/ram bs=1048576 count=4096 oflag=nocache conv=fsync 4096+0 records in 4096+0 records out 4294967296 bytes (4.3 GB, 4.0 GiB) copied, 2.79948 s, 1.5 GB/s&#xA;or: dd if=/dev/zero of=/tmp/ramdisk/blok bs=1048576 count=1024 oflag=nocache conv=fsync 1024+0 records in 1024+0 records out 1073741824 bytes (1.</description>
     </item>
     <item>
       <title>e2ee</title>
-      <link>http://localhost:46663/securesource/e2ee/</link>
+      <link>http://localhost:1313/securesource/e2ee/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/e2ee/</guid>
+      <guid>http://localhost:1313/securesource/e2ee/</guid>
       <description>Using End-to-End Encryption (E2EE) folders in openDesk is done through the integrated Nextcloud component, as openDesk uses Nextcloud for file storage, synchronization, and sharing. E2EE provides true zero-knowledge protection: files are encrypted on your device before upload, and the server (including admins) never sees plaintext data or keys. This is folder-level (not account-wide), and it&amp;rsquo;s client-driven.&#xA;Important notes before starting (as of March 2026):&#xA;Your openDesk instance admin must have the End-to-End Encryption app enabled in Nextcloud (it&amp;rsquo;s usually available in sovereign/public-sector setups like openDesk, but confirm with your admin if you don&amp;rsquo;t see the option).</description>
     </item>
     <item>
-      <title>Rerank</title>
-      <link>http://localhost:46663/ragflow/rerank/</link>
+      <title>lasuite-vs-opendesk</title>
+      <link>http://localhost:1313/planb/lasuite-vs-opendesk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/rerank/</guid>
+      <guid>http://localhost:1313/planb/lasuite-vs-opendesk/</guid>
+      <description>Suite Numérique (also called La Suite or La Suite numérique) and openDesk are both major European open-source initiatives aimed at creating sovereign digital workplaces as alternatives to Microsoft 365 and Google Workspace. They target public administrations with a strong emphasis on data sovereignty, GDPR compliance, security, and independence from non-EU tech giants. Both emerged in the mid-2020s as part of national strategies for digital autonomy.&#xA;Suite Numérique (France) Origin &amp;amp; Governance — Developed and operated by DINUM (Direction interministérielle du numérique), under the French Prime Minister&amp;rsquo;s authority, with involvement from ANCT (for territorial adaptations) and partnerships (e.</description>
+    </item>
+    <item>
+      <title>opendesk</title>
+      <link>http://localhost:1313/planb/opendesk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/planb/opendesk/</guid>
+      <description>OpenDesk (often stylized as openDesk) is the German federal government&amp;rsquo;s sovereign, open-source digital workplace suite, developed and maintained by ZenDiS (Zentrum für Digitale Souveränität in der öffentlichen Verwaltung), a publicly owned GmbH under the Federal Ministry of the Interior (BMI). Launched around 2024 (with version 1.0 in October 2024), it serves as a secure, EU-sovereign alternative to Microsoft 365 or Google Workspace for public administrations.&#xA;It integrates mature open-source tools into a unified, customizable platform:</description>
+    </item>
+    <item>
+      <title>Rerank</title>
+      <link>http://localhost:1313/ragflow/rerank/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ragflow/rerank/</guid>
       <description>example: curl -X POST http://localhost:8000/v1/rerank -H “Content-Type: application/json” -d ‘{ “model”: “uw-modelnaam.gguf”, “query”: “Wat is het weer in Lokeren?”, “documents”: [ “Het is vandaag zonnig in Brussel.”, “Lokeren ligt in Oost-Vlaanderen.”, “Het KNMI voorspelt regen voor morgen.” ] }’&#xA;Why Infiniflow RAGFlow Uses a Reranker, an Embedding Model, and a Chat Model Infiniflow RAGFlow is a Retrieval-Augmented Generation (RAG) framework designed to build high-quality, traceable question-answering systems over complex data sources.</description>
     </item>
     <item>
       <title>Share</title>
-      <link>http://localhost:46663/homelab/share/</link>
+      <link>http://localhost:1313/homelab/share/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/share/</guid>
+      <guid>http://localhost:1313/homelab/share/</guid>
       <description>sharing a directory for LXC on the host (pve node) create a shared directory (jan): (created on M2 storage) chown -R nobody:nogroup jan chmod 777 jan&#xA;root@pve:/etc/pve/lxc#&#xA;modify the lxc create a directory /mnt/shared (which will be the mounting point)&#xA;on PVE modify the lxc config </description>
     </item>
     <item>
-      <title>Moving</title>
-      <link>http://localhost:46663/homelab/moving/</link>
+      <title>url</title>
+      <link>http://localhost:1313/planb/url/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/moving/</guid>
+      <guid>http://localhost:1313/planb/url/</guid>
+      <description>La Suite numérique – Ressources et Aperçu Comparatif Date : 16 mars 2026&#xA;Objectif : Ce document recense des ressources clés sur La Suite numérique (espace de travail souverain open source développé par la DINUM pour les agents publics français) et un aperçu d&amp;rsquo;OpenDesk, son équivalent allemand.&#xA;1. Vidéo de test / Review de La Suite Titre de la vidéo : « On a testé LaSuite de l&amp;rsquo;État : C&amp;rsquo;est vraiment top !</description>
+    </item>
+    <item>
+      <title>Moving</title>
+      <link>http://localhost:1313/homelab/moving/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/moving/</guid>
       <description>moving a LXC container I had a container on a logical volume SCSI and I wanted to move it to logical volume M2&#xA;Cloning?&#xA;The container shared a directory, and cloning and displacing would mess this up.&#xA;Solution: backup &amp;amp; restore from backup on other volume</description>
     </item>
     <item>
       <title>Results</title>
-      <link>http://localhost:46663/kubernetes/results/</link>
+      <link>http://localhost:1313/kubernetes/results/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/results/</guid>
+      <guid>http://localhost:1313/kubernetes/results/</guid>
       <description>Results The stockdata of Deutz, is in a fact timeseriesdata.&#xA;Approach 1 since I have a large database of timeseries data, which is unlabelled. I used the stockdata of Deutz as a starting point. I tried to describe the timeseries in a mathematical way.&#xA;I tried different scripts, with a simple description : data exceeds a threshold multiple times and at least 6 quarters apart.&#xA;Next I could visualize the data, using a script that randomly applies the criteria.</description>
     </item>
     <item>
       <title>Conclusion</title>
-      <link>http://localhost:46663/kubernetes/conclusion/</link>
+      <link>http://localhost:1313/kubernetes/conclusion/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/conclusion/</guid>
+      <guid>http://localhost:1313/kubernetes/conclusion/</guid>
       <description>Conclusion This project aimed to develop a containerized, cloud-based application to identify stocks with behavior similar to Deutz using a NoSQL PostgreSQL database with JSONB data. Five distinct approaches were explored to analyze and match time series patterns, including threshold-based filtering, machine learning with Keras, LLM-generated scripts, randomized data variation, PyCaret’s automated model selection, and Dynamic Time Warping (DTW) with the dtaidistance library. Despite these efforts, none of the approaches yielded conclusive results, as each identified too many companies that did not closely resemble Deutz’s stock behavior.</description>
     </item>
     <item>
       <title>Nfs Netwerk</title>
-      <link>http://localhost:46663/homelab/nfs_netwerk/</link>
+      <link>http://localhost:1313/homelab/nfs_netwerk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/nfs_netwerk/</guid>
+      <guid>http://localhost:1313/homelab/nfs_netwerk/</guid>
       <description>nfs network between linux containers set up a bridge A Linux bridge interface (commonly called vmbrX) is needed to connect guests to the underlying physical network. It can be thought of as a virtual switch which the guests and physical interfaces are connected to.&#xA;define an extra network interface in range 10.0.0.X </description>
     </item>
     <item>
       <title>Vllm</title>
-      <link>http://localhost:46663/ragflow/vllm/</link>
+      <link>http://localhost:1313/ragflow/vllm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/vllm/</guid>
+      <guid>http://localhost:1313/ragflow/vllm/</guid>
       <description>Why vLLM is Used to Serve the Reranker Model vLLM is a high-throughput, memory-efficient inference engine specifically designed for serving large language models (LLMs). In Infiniflow RAGFlow, the reranker model—responsible for fine-grained relevance scoring of retrieved document chunks—is served using vLLM to ensure low-latency, scalable, and production-ready performance.&#xA;Key Reasons for Using vLLM to Serve the Reranker PagedAttention for Memory Efficiency vLLM uses PagedAttention, a novel attention mechanism that manages KV cache in non-contiguous memory pages.</description>
     </item>
     <item>
       <title>Nfs Proxmox Setup</title>
-      <link>http://localhost:46663/homelab/nfs_proxmox_setup/</link>
+      <link>http://localhost:1313/homelab/nfs_proxmox_setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/nfs_proxmox_setup/</guid>
+      <guid>http://localhost:1313/homelab/nfs_proxmox_setup/</guid>
       <description>NFS Host and Client Setup in Proxmox This guide will explain how to set up an NFS (Network File Sharing) server and add it as a remote storage in Proxmox.&#xA;Install NFS Server&#xA;First, log in to the LXC container or the machine where the NFS server will be hosted. Then update the package list and install NFS:&#xA;apt-get update apt-get install sudo -y sudo apt install nfs-kernel-server Once installed, create a shared folder:</description>
     </item>
     <item>
       <title>Nfs Client</title>
-      <link>http://localhost:46663/homelab/nfs_client/</link>
+      <link>http://localhost:1313/homelab/nfs_client/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/nfs_client/</guid>
+      <guid>http://localhost:1313/homelab/nfs_client/</guid>
       <description>nfs client apt install nfs-common&#xA;mount -t nfs 10.0.0.104:/share /mnt/nfson104&#xA;under node pve watch out for features</description>
     </item>
     <item>
       <title>Docker</title>
-      <link>http://localhost:46663/kubernetes/docker/</link>
+      <link>http://localhost:1313/kubernetes/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/docker/</guid>
+      <guid>http://localhost:1313/kubernetes/docker/</guid>
       <description>Docker practice changes to python code within a container after making changes to the python code, you need to rebuild the image and restart the container&#xA;docker-compose -f compose.yml up -d error &amp;amp; solution if you get an error like this:&#xA;ERROR: for nosql_ana_report_1 ‘ContainerConfig’&#xA;docker-compose -f compose.yml down --remove-orphans docker system prune -f docker system prune --volumes -f requirements.txt if you add new packages to the python code, you need to update the requirements.</description>
     </item>
     <item>
-      <title>paranoid</title>
-      <link>http://localhost:46663/securesource/paranoid/</link>
+      <title>clusterIP</title>
+      <link>http://localhost:1313/planb/clusterip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/paranoid/</guid>
+      <guid>http://localhost:1313/planb/clusterip/</guid>
+      <description>ClusterIP is one of the fundamental Service types in Kubernetes (the default one, in fact). It provides a stable, internal virtual IP address (often called the &amp;ldquo;Cluster IP&amp;rdquo;) that allows reliable communication only within the Kubernetes cluster — never directly from outside.&#xA;Key characteristics of a ClusterIP Service Internal-only access&#xA;The IP address assigned to the Service exists only inside the cluster&amp;rsquo;s network.&#xA;Pods, other Services, or any workload running in the same Kubernetes cluster can reach it (via the IP or via DNS name like my-service.</description>
+    </item>
+    <item>
+      <title>os</title>
+      <link>http://localhost:1313/planb/os/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/planb/os/</guid>
+      <description>Here’s a ranked comparison of the main Linux distribution alternatives to Windows 11 that align well with your interest in La Suite numérique (sovereignty, cost savings, European ties, and compatibility for public-sector-like use). These are the most relevant options based on current adoption (as of March 2026), real-world deployments in Europe (especially France), ease of transition from Windows, stability, and community/enterprise support.&#xA;Ranking Criteria (in rough order of priority for your context): Proven use in French/European public sector (sovereignty + real deployments like Gendarmerie).</description>
+    </item>
+    <item>
+      <title>paranoid</title>
+      <link>http://localhost:1313/securesource/paranoid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/securesource/paranoid/</guid>
       <description>Advanced/Paranoid Verification (Reduces Trust in Distributor) For those deeply concerned about state actors or compromised distributors (e.g., inspired by real incidents like the 2024 XZ utils backdoor, where source code was tampered upstream), the goal is an independently verifiable path from source code to binary. This assumes you trust the source code (which you can audit or rely on community review) but not the pre-built binaries.&#xA;Reproducible Builds:&#xA;This practice ensures that compiling the same source code in a defined environment always produces bit-for-bit identical binaries, regardless of who builds them.</description>
     </item>
     <item>
       <title>Dockerhub</title>
-      <link>http://localhost:46663/kubernetes/dockerhub/</link>
+      <link>http://localhost:1313/kubernetes/dockerhub/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/dockerhub/</guid>
+      <guid>http://localhost:1313/kubernetes/dockerhub/</guid>
       <description>Using dockerhub Dockerhub is a public registry for Docker images. It is the default registry used by Docker when you run the docker pull command. You can use Docker Hub to store and share your Docker images with others. You can also use it to find and download images created by other users. Docker Hub provides a web interface for browsing and searching for images, as well as a command-line interface for managing your images and repositories.</description>
     </item>
     <item>
       <title>Portainer</title>
-      <link>http://localhost:46663/homelab/portainer/</link>
+      <link>http://localhost:1313/homelab/portainer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/portainer/</guid>
+      <guid>http://localhost:1313/homelab/portainer/</guid>
       <description>Portainer using a script use a template for the linux container&#xA;a script from : https://raw.githubusercontent.com/tteck/Proxmox/refs/heads/main/install/docker-install.sh&#xA;systemctl start docker systemctl status docker&#xA;https://192.168.0.182:9443 (your IP)&#xA;by hand create CT ubuntu22 with template apt update sudo apt install docker.io -y sudo systemctl status docker sudo usermod -aG docker $USER (add current logged on user to docker group) docker pull portainer/portainer-ce:latest docker run -d -p 9000:9000 –restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer-ce:latest exporting &amp;amp; importing this seems to work between systems:</description>
     </item>
     <item>
       <title>Vllm Cpu</title>
-      <link>http://localhost:46663/ragflow/vllm-cpu/</link>
+      <link>http://localhost:1313/ragflow/vllm-cpu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/vllm-cpu/</guid>
+      <guid>http://localhost:1313/ragflow/vllm-cpu/</guid>
       <description>Serving vLLM Reranker Using Docker (CPU-Only) To ensure reproducibility, portability, and isolation, vLLM can be deployed using Docker. This is especially useful in environments with restricted internet access (e.g., corporate networks behind proxies or firewalls), where Hugging Face Hub may be blocked or rate-limited.&#xA;In this setup, vLLM runs on CPU only because:&#xA;Laptop has no GPU Home server has an old NVIDIA GPU (not supported by vLLM’s CUDA requirements) Thus, we use the official CPU-optimized vLLM image built from: https://github.</description>
     </item>
     <item>
       <title>Blender</title>
-      <link>http://localhost:46663/homelab/blender/</link>
+      <link>http://localhost:1313/homelab/blender/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/blender/</guid>
+      <guid>http://localhost:1313/homelab/blender/</guid>
       <description>server for blender Although the hp dl380 was 5 times faster than my i7 laptop, it is still slow, takes half an hour to render a picture.&#xA;One can adjust setting within blender to speed up things a bit, but still …&#xA;howto render? download blender 4.2 cd blender-4.2.0-linux-x64/&#xA;./blender -b /home/naj/misvormde-donut1.blend -E CYCLES -f 1&#xA;faster / less good ./blender -b /home/naj/misvormde-donut1.blend -E BLENDER_EEVEE_NEXT -f 1&#xA;at the movies .</description>
     </item>
     <item>
       <title>Cloud Setup</title>
-      <link>http://localhost:46663/kubernetes/cloud-setup/</link>
+      <link>http://localhost:1313/kubernetes/cloud-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/cloud-setup/</guid>
+      <guid>http://localhost:1313/kubernetes/cloud-setup/</guid>
       <description>Cloud Setup Documentation This document provides an overview of the files used to set up Docker containers and Kubernetes deployments for the project. It explains the purpose of each file and how to use them.&#xA;Docker Setup `Dockerfile`&#xA;Purpose: Defines the instructions to build the Docker image for the API service. Usage: The Dockerfile is used by Docker to create a containerized environment for the API. It includes the necessary dependencies and configurations for running the application.</description>
     </item>
     <item>
       <title>Ollama</title>
-      <link>http://localhost:46663/homelab/ollama/</link>
+      <link>http://localhost:1313/homelab/ollama/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/ollama/</guid>
+      <guid>http://localhost:1313/homelab/ollama/</guid>
       <description>ollama install and use curl -fsSL https://ollama.com/install.sh | sh&#xA;using a container ollama-model-gemma2 was mounted using a volume and the image exported&#xA;sudo docker import ollama.tar ollama:latest</description>
     </item>
     <item>
       <title>Docker</title>
-      <link>http://localhost:46663/homelab/docker/</link>
+      <link>http://localhost:1313/homelab/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/docker/</guid>
+      <guid>http://localhost:1313/homelab/docker/</guid>
       <description>docker using ubuntu 22, I found out that the docker that came with it does not work like it should&#xA;uninstall docker docker version Client: Docker Engine - Community&#xA;Version: 27.3.1 API version: 1.47 Go version: go1.22.7 Git commit: ce12230 Built: Fri Sep 20 11:41:00 2024 OS/Arch: linux/amd64&#xA;running openwebui running it from within portainer did not allow to change the host command prompt sudo docker run -d -p 3000:8080 –add-host=host.</description>
     </item>
     <item>
       <title>reproducable</title>
-      <link>http://localhost:46663/securesource/reproducable/</link>
+      <link>http://localhost:1313/securesource/reproducable/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/reproducable/</guid>
+      <guid>http://localhost:1313/securesource/reproducable/</guid>
       <description>https://reproducible-builds.org is the official website for the Reproducible Builds project, an open initiative focused on improving software supply chain security through verifiable compilation practices.&#xA;Core Purpose The project promotes reproducible builds — a set of software development practices that create an independently-verifiable path from human-readable source code to the binary code that computers actually run.&#xA;In simple terms:&#xA;If multiple people (or independent rebuilders) take the exact same source code, use the same documented build environment and instructions, they should always produce bit-for-bit identical binaries.</description>
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>http://localhost:46663/kubernetes/kubernetes/</link>
+      <link>http://localhost:1313/kubernetes/kubernetes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/kubernetes/</guid>
+      <guid>http://localhost:1313/kubernetes/kubernetes/</guid>
       <description>Kubernetes activate my own docker image docker images | grep nosql_ana_report (nosql_ana_report latest af6498f8153e 18 hours ago 474MB) (in microk8s the registry is localhost:32000, where 32000 is the nodeport) docker tag nosql_ana_report:latest localhost:32000/nosql_ana_report:latest docker push localhost:32000/nosql_ana_report:latest (check from other machine) curl http://192.168.0.103:32000/v2/nosql_ana_report/tags/list Create a Kubernetes Deployment Create a YAML file to define a Deployment for your image.&#xA;# nosql-ana-report-deployment.yaml apiVersion: apps/v1 kind: Deployment metadata: name: nosql-ana-report labels: app: nosql-ana-report spec: replicas: 1 # Adjust as needed selector: matchLabels: app: nosql-ana-report template: metadata: labels: app: nosql-ana-report spec: containers: - name: nosql-ana-report image: localhost:32000/nosql_ana_report:latest # Replace with your registry address env: - name: ENVIRONMENT value: &amp;#34;DOCKER&amp;#34; - name: POSTGRES_HOST value: &amp;#34;postgres&amp;#34; # Use the service name, not the IP - name: POSTGRES_PORT value: &amp;#34;5432&amp;#34; # Use the port number, not a URL - name: POSTGRES_USER value: &amp;#34;myuser&amp;#34; # Replace with your actual user - name: POSTGRES_PASSWORD value: &amp;#34;mypassword&amp;#34; # Replace with your actual password - name: POSTGRES_DB value: &amp;#34;mydatabase&amp;#34; # Replace with your actual database name ports: - containerPort: 8001 # Adjust to your app’s port, if any --- apiVersion: v1 kind: Service metadata: name: nosql-ana-report spec: type: ClusterIP ports: - port: 8001 targetPort: 8001 selector: app: nosql-ana-report deploy the image sudo microk8s kubectl apply -f nosql-ana-report-deployment.</description>
     </item>
     <item>
       <title>Vllm Network</title>
-      <link>http://localhost:46663/ragflow/vllm-network/</link>
+      <link>http://localhost:1313/ragflow/vllm-network/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/vllm-network/</guid>
+      <guid>http://localhost:1313/ragflow/vllm-network/</guid>
       <description>Integrating vLLM with RAGFlow via Docker Network To enable Infiniflow RAGFlow (running in Docker) to communicate with a vLLM reranker container, both services must be on the same Docker network. By default, containers are isolated and cannot resolve each other by service name unless explicitly networked.&#xA;In this setup, we ensure seamless internal communication between:&#xA;RAGFlow (web + backend containers) vLLM reranker (serving Qwen3-Reranker-0.6B) —&#xA;Why Network Configuration is Required RAGFlow runs inside Docker (typically via docker-compose).</description>
     </item>
     <item>
       <title>Elastic</title>
-      <link>http://localhost:46663/homelab/elastic/</link>
+      <link>http://localhost:1313/homelab/elastic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/elastic/</guid>
+      <guid>http://localhost:1313/homelab/elastic/</guid>
       <description>configure elasticview elasticsearch password connect with term to container: bin/elasticsearch-reset-password -u elastic bin/elasticsearch-reset-password -u elastic -i (this allows for setting it yourself)&#xA;testing elasticview connection curl -X GET -k -u elastic:ebktuBhBHtE7N+JeBbIV “https://192.168.0.121:9200/_cluster/health/?pretty”&#xA;{ “cluster_name” : “docker-cluster”, “status” : “green”, “timed_out” : false, “number_of_nodes” : 1, “number_of_data_nodes” : 1, “active_primary_shards” : 1, “active_shards” : 1, “relocating_shards” : 0, “initializing_shards” : 0, “unassigned_shards” : 0, “delayed_unassigned_shards” : 0, “number_of_pending_tasks” : 0, “number_of_in_flight_fetch” : 0, “task_max_waiting_in_queue_millis” : 0, “active_shards_percent_as_number” : 100.</description>
     </item>
     <item>
       <title>Gitignore</title>
-      <link>http://localhost:46663/kubernetes/gitignore/</link>
+      <link>http://localhost:1313/kubernetes/gitignore/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/gitignore/</guid>
+      <guid>http://localhost:1313/kubernetes/gitignore/</guid>
       <description>Gitignore tricks most likely, you would like to avoid some files getting published on github (especially if you are using a public repository). Here are some common files that you might want to ignore: (files containing api tokens, passwords, etc.)&#xA;If you are anything like me, you’ll notice this too late in the process.&#xA;trick: git rm -r --cached source/_build git rm -r --cached source/ git reset HEAD source/ vi .</description>
     </item>
     <item>
       <title>Sphinx</title>
-      <link>http://localhost:46663/kubernetes/sphinx/</link>
+      <link>http://localhost:1313/kubernetes/sphinx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/sphinx/</guid>
+      <guid>http://localhost:1313/kubernetes/sphinx/</guid>
       <description>Sphinx sphinx is used to document the project. It generates HTML documentation from reStructuredText files. Or even pdfs, if you want to.&#xA;sphinx-quickstart (to install sphinx) make html (to generate the html files) make latexpdf (to generate the pdf files) make clean (to clean the generated files) make livehtml (to generate the html files and keep updating them as you make changes) NOTE documenting the python code is done using sphinx as well.</description>
     </item>
     <item>
       <title>Mounting</title>
-      <link>http://localhost:46663/homelab/mounting/</link>
+      <link>http://localhost:1313/homelab/mounting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/mounting/</guid>
+      <guid>http://localhost:1313/homelab/mounting/</guid>
       <description>mounting mkdir /SCSIdata for the data on the scsidisk /dev/sdb mkdir /M2data for the data on the M2 disk /dev/nvme0n1p2&#xA;mount /dev/sdb /SCSIdata mount /dev/nvme0n1p2 /M2data edit /etc/fstab /dev/nvme0n1p2 /M2data ext4 defaults 0 2 /dev/sdb /SCSIdata ext4 defaults 0 2</description>
     </item>
     <item>
       <title>Backuppve</title>
-      <link>http://localhost:46663/homelab/backuppve/</link>
+      <link>http://localhost:1313/homelab/backuppve/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/backuppve/</guid>
+      <guid>http://localhost:1313/homelab/backuppve/</guid>
       <description>Backup pve Proxmox node now start from a sata m2 in the CDrom slot&#xA;A tar copy is made to M2data from /etc directory&#xA;In case of crash : reinstall proxmox on sata disk en copy backup.tar to /etc</description>
     </item>
     <item>
       <title>Markdown</title>
-      <link>http://localhost:46663/kubernetes/markdown/</link>
+      <link>http://localhost:1313/kubernetes/markdown/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/markdown/</guid>
+      <guid>http://localhost:1313/kubernetes/markdown/</guid>
       <description>Markdown Markdown: A lightweight, human-readable markup language widely used for documentation, blogs, and README files (e.g., on GitHub). It’s simple, portable, and supported by many tools.&#xA;In a recent post, AI researcher Andrej Karpathy made a bold observation:&#xA;“It’s 2025 and most content is still written for humans instead of LLMs. 99.9% of attention is about to be LLM attention, not human attention.”&#xA;He argues that documentation, knowledge bases, and even entire content ecosystems are still designed with human readability in mind, when in reality, large language models (LLMs) are rapidly becoming the dominant consumers of information.</description>
     </item>
     <item>
       <title>Raid</title>
-      <link>http://localhost:46663/homelab/raid/</link>
+      <link>http://localhost:1313/homelab/raid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/raid/</guid>
+      <guid>http://localhost:1313/homelab/raid/</guid>
       <description>RAID previously 2 600GB SAS disks were in RAID1 in the same volumegroup.&#xA;I have no spare disk, nor do I want to spend money on old tech.&#xA;Reconfigure : each disk is within own volume group, no more RAID, more (free) space. Tool would not let me otherwise.&#xA;No more raid : machine on one disk are backupped to other disk, and vice versa one disk remains VG (volume group) within proxmox : used for LXC en VM images, backup other disk contains ext4 filesystem and is a directory</description>
     </item>
     <item>
       <title>docker</title>
-      <link>http://localhost:46663/securesource/docker/</link>
+      <link>http://localhost:1313/securesource/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/docker/</guid>
+      <guid>http://localhost:1313/securesource/docker/</guid>
       <description>If you&amp;rsquo;re approaching Docker with a high level of paranoia—meaning you want to minimize trust in third-party builds, reduce attack surfaces, ensure verifiability, and prioritize reproducibility—the key is to treat every layer and dependency as a potential risk. Standard bases like Ubuntu (e.g., FROM ubuntu:22.04) are convenient but introduce trust in the Canonical team&amp;rsquo;s builds, package repositories, and any upstream changes over time. To substitute this with something you control entirely, focus on building as much as possible from source or using empty bases like scratch, while incorporating security hardening throughout.</description>
     </item>
     <item>
       <title>Api</title>
-      <link>http://localhost:46663/ragflow/api/</link>
+      <link>http://localhost:1313/ragflow/api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/api/</guid>
+      <guid>http://localhost:1313/ragflow/api/</guid>
       <description>Batch Processing and Metadata Management in Infiniflow RAGFlow Infiniflow RAGFlow provides a RESTful API (/api/v1) that enables programmatic control over datasets and documents, making it ideal for batch processing large volumes of documents, automated ingestion pipelines, and metadata enrichment.&#xA;This is essential in enterprise settings where thousands of PDFs, reports, or web pages need to be:&#xA;Ingested in bulk Tagged with structured metadata (author, date, source, category, etc.) Updated post-ingestion Queried or filtered later via the RAG system —</description>
     </item>
     <item>
       <title>Melborp</title>
-      <link>http://localhost:46663/homelab/melborp/</link>
+      <link>http://localhost:1313/homelab/melborp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/melborp/</guid>
+      <guid>http://localhost:1313/homelab/melborp/</guid>
       <description>melborp server solution for problem running pgadmin container and nginx Configure Nginx: Create a new configuration file for your domain in /etc/nginx/sites-available/melborp.solutions:&#xA;nginx&#xA;server { listen 80; server_name www.melborp.solutions; location / { proxy_pass http://localhost:8888; # Forward traffic to the pgAdmin container proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme; } }</description>
     </item>
     <item>
       <title>Portainer</title>
-      <link>http://localhost:46663/kubernetes/portainer/</link>
+      <link>http://localhost:1313/kubernetes/portainer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/portainer/</guid>
+      <guid>http://localhost:1313/kubernetes/portainer/</guid>
       <description>Portainer Community Edition was used.&#xA;Portainer is useful on linux as it provides a GUI for managing docker containers and kubernetes!&#xA;Usually it is available at https://localhost:9443 after installation.&#xA;install #!/bin/bash # Update system packages #sudo apt update #sudo apt upgrade -y # Install Docker (if not already installed) sudo apt install -y docker.io # Start and enable Docker service sudo systemctl start docker sudo systemctl enable docker # Create Docker volume for Portainer data sudo docker volume create portainer_data # Pull and run Portainer Community Edition sudo docker run -d \ -p 8000:8000 \ -p 9443:9443 \ --name portainer \ --restart=always \ -v /var/run/docker.</description>
     </item>
     <item>
       <title>Portainer Kubernetes</title>
-      <link>http://localhost:46663/kubernetes/portainer-kubernetes/</link>
+      <link>http://localhost:1313/kubernetes/portainer-kubernetes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/portainer-kubernetes/</guid>
+      <guid>http://localhost:1313/kubernetes/portainer-kubernetes/</guid>
       <description>Manage Kubernetes Clusters with portainer Portainer is useful on linux as it provides a GUI for managing docker containers and kubernetes!&#xA;sudo microk8s kubectl apply -f https://downloads.portainer.io/ce2-20/portainer-agent-k8s-nodeport.yaml sudo microk8s kubectl get nodes -o wide&#xA;Add Environment in portainer: Open Portainer in your browser.&#xA;Click Environments (left sidebar or under Home).&#xA;Click Add Environment (should be a button at the top-right).&#xA;In the wizard, select Kubernetes.&#xA;Choose Agent &amp;gt; Kubernetes via NodePort.</description>
     </item>
     <item>
       <title>Graph</title>
-      <link>http://localhost:46663/ragflow/graph/</link>
+      <link>http://localhost:1313/ragflow/graph/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/graph/</guid>
+      <guid>http://localhost:1313/ragflow/graph/</guid>
       <description>How the Knowledge Graph in Infiniflow/RAGFlow Works RAGFlow is an open-source Retrieval-Augmented Generation (RAG) engine developed by Infiniflow, designed to enhance LLM-based question-answering by integrating deep document understanding with structured data processing. The knowledge graph (KG) component plays a pivotal role in handling complex queries, particularly multi-hop question-answering, by extracting and organizing entities and relationships from documents into a graph structure. This enables more accurate and interconnected retrieval beyond simple vector-based searches.</description>
     </item>
     <item>
       <title>ragflow</title>
-      <link>http://localhost:46663/securesource/ragflow/</link>
+      <link>http://localhost:1313/securesource/ragflow/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/ragflow/</guid>
+      <guid>http://localhost:1313/securesource/ragflow/</guid>
       <description>Infiniflow/ragflow (RAGFlow) is Docker-based. It relies on Docker and Docker Compose for its primary deployment method, using pre-built images or custom builds to orchestrate services like MinIO for storage, Elasticsearch (or Infinity) for search, Redis for caching, and MySQL for the database. The official quickstart and documentation emphasize Docker as the recommended way to run it, with a docker-compose.yml file handling the multi-container setup.&#xA;To get it up and running on NixOS, you&amp;rsquo;ll need to enable and configure Docker declaratively (as NixOS manages system services this way), meet the hardware prerequisites (≥4 CPU cores, ≥16 GB RAM, ≥50 GB disk), and follow the standard RAGFlow setup.</description>
     </item>
     <item>
       <title>Llama Cpp</title>
-      <link>http://localhost:46663/ragflow/llama-cpp/</link>
+      <link>http://localhost:1313/ragflow/llama-cpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/llama-cpp/</guid>
+      <guid>http://localhost:1313/ragflow/llama-cpp/</guid>
       <description>Running Llama 3.1 with llama.cpp Table of Contents 1. Model Format: GGUF 2. Compile llama.cpp for Intel i7 (CPU-only) 3. Run the Model with Web Interface Features 4. Compile llama.cpp with NVIDIA GPU Support (CUDA) Prerequisites Build with CUDA Run with GPU offloading Summary 1. Model Format: GGUF llama.cpp uses the GGUF (GPT-Generated Unified Format) model format.&#xA;You can download a pre-quantized Llama 3.1 8B model in GGUF format directly from Hugging Face:</description>
     </item>
     <item>
       <title>Nvidia</title>
-      <link>http://localhost:46663/homelab/nvidia/</link>
+      <link>http://localhost:1313/homelab/nvidia/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/nvidia/</guid>
+      <guid>http://localhost:1313/homelab/nvidia/</guid>
       <description>Setting up NVIDIA Tesla P100 the P100 was choses for balance between performance and price (second hand ebay)&#xA;Aliexpress PCIE 4.0 3.0 16X Riser Kabel 90/180 Graden Mount Video Grafisch&#xA;Gpu 10pin Naar 1x8pin Dual 8(6 + 2)Pin Power Adapter Kabel Voor Hp Dl380 Gen8 Gen9 Server&#xA;Cutting the Riser a special Riser for the HP Proliant gen8 is a good idea because it has a PCIE 16x in the middle which allows for the GPU to be plugged in.</description>
     </item>
     <item>
       <title>Local Repository</title>
-      <link>http://localhost:46663/kubernetes/local-repository/</link>
+      <link>http://localhost:1313/kubernetes/local-repository/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/local-repository/</guid>
+      <guid>http://localhost:1313/kubernetes/local-repository/</guid>
       <description>Steps to Serve the Local Image on the Kubernetes Registry I’m using several local machines. To avoid pulling the image from Docker Hub every time, I set up a local registry. This allows me to push the image to the local registry and pull it from there. This is especially useful for testing and development purposes. This guide outlines the steps to push a local Docker image to a local Kubernetes registry and ensure it can be accessed by your Kubernetes cluster.</description>
     </item>
     <item>
       <title>Multiple Models Llamacpp</title>
-      <link>http://localhost:46663/ragflow/multiple-models-llamacpp/</link>
+      <link>http://localhost:1313/ragflow/multiple-models-llamacpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/multiple-models-llamacpp/</guid>
+      <guid>http://localhost:1313/ragflow/multiple-models-llamacpp/</guid>
       <description>Running Multiple Models on llama.cpp Using Docker This guide demonstrates how to run multiple language models simultaneously using llama.cpp in Docker via docker-compose. The example below defines two services: a lightweight reranker model (Qwen3 0.6B) and a general-purpose chat model (Llama 3.1).&#xA;Example docker-compose.yml services: qwen-reranker: image: ghcr.io/ggerganov/llama.cpp:server-cpu ports: - &amp;#34;8123:8080&amp;#34; volumes: - /home/naj/qwen3-reranker-0.6b:/models/qwen3-reranker-0.6b:ro environment: - MODEL=/models/qwen3-reranker-0.6b command: &amp;gt; --model /models/qwen3-reranker-0.6b/model.gguf --port 8080 --host 0.0.0.0 --n-gpu-layers 0 --ctx-size 8192 --threads 6 --temp 0.</description>
     </item>
     <item>
       <title>Fan</title>
-      <link>http://localhost:46663/homelab/fan/</link>
+      <link>http://localhost:1313/homelab/fan/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/fan/</guid>
+      <guid>http://localhost:1313/homelab/fan/</guid>
       <description>modify fan speed in proliant After inserting a Tesla P100 GPU, which has no fan, I monitored the temperature using “nvtop”. I noticed I went above 78 degrees celcius, causing it to throttle.&#xA;There is a method to change the ventilator speed in the BIOS. Switching it to performance is not a pleasent experience, as all fans turn at 100%.&#xA;usefull URL https://www.reddit.com/r/homelab/comments/hix44v/silence_of_the_fans_pt_2_hp_ilo_4_273_now_with/&#xA;https://www.reddit.com/r/homelab/comments/sx3ldo/hp_ilo4_v277_unlocked_access_to_fan_controls/&#xA;Patch ILO turn out there is a patched ILO rom.</description>
     </item>
     <item>
       <title>Laptop</title>
-      <link>http://localhost:46663/homelab/laptop/</link>
+      <link>http://localhost:1313/homelab/laptop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/laptop/</guid>
+      <guid>http://localhost:1313/homelab/laptop/</guid>
       <description>Laptop (or PC) mods /etc/hosts&#xA;10.10.10.50 nginx.example.com 10.10.10.50 registry.example.com&#xA;ip route add 10.10.10.0/24 via 192.168.0.251&#xA;sudo cp ca.crt /usr/local/share/ca-certificates/ca.crt sudo update-ca-certificates Updating certificates in /etc/ssl/certs…&#xA;make route permanent sudo nano /etc/netplan/01-netcfg.yaml network: version: 2 ethernets: wlp0s20f3: addresses: - 192.168.0.103/24 gateway4: 192.168.0.1 # Replace with your actual default gateway routes: - to: 10.10.10.0/24 via: 192.168.0.251 sudo netplan apply </description>
     </item>
     <item>
       <title>ragflow-image</title>
-      <link>http://localhost:46663/securesource/ragflow-image/</link>
+      <link>http://localhost:1313/securesource/ragflow-image/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/ragflow-image/</guid>
+      <guid>http://localhost:1313/securesource/ragflow-image/</guid>
       <description>For a more secure deployment of RAGFlow (infiniflow/ragflow) on NixOS, avoiding pre-built Docker images from public registries reduces potential supply chain risks, such as tampered images. The project is open-source, so the primary secure alternatives are:&#xA;Building Docker images locally from source: This lets you inspect and build the images yourself, ensuring you&amp;rsquo;re using verified code from GitHub. Running natively from source: This avoids container images for the core RAGFlow services (backend and frontend), though it still relies on Docker for dependent services (e.</description>
     </item>
     <item>
       <title>Helm</title>
-      <link>http://localhost:46663/kubernetes/helm/</link>
+      <link>http://localhost:1313/kubernetes/helm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/helm/</guid>
+      <guid>http://localhost:1313/kubernetes/helm/</guid>
       <description>helm on microk8s sudo microk8s enable helm3 sudo microk8s status&#xA;microk8s is running high-availability: no datastore master nodes: 192.168.0.103:19001 datastore standby nodes: none addons: enabled: dashboard # (core) The Kubernetes dashboard dns # (core) CoreDNS ha-cluster # (core) Configure high availability on the current node helm # (core) Helm - the package manager for Kubernetes helm3 # (core) Helm 3 - the package manager for Kubernetes hostpath-storage # (core) Storage class; allocates storage from host directory ingress # (core) Ingress controller for external access metallb # (core) Loadbalancer for your Kubernetes cluster metrics-server # (core) K8s Metrics Server for API access to service metrics minio # (core) MinIO object storage rbac # (core) Role-Based Access Control for authorisation registry # (core) Private image registry exposed on localhost:32000 storage # (core) Alias to hostpath-storage add-on, deprecated disabled: cert-manager # (core) Cloud native certificate management cis-hardening # (core) Apply CIS K8s hardening community # (core) The community addons repository gpu # (core) Alias to nvidia add-on host-access # (core) Allow Pods connecting to Host services smoothly kube-ovn # (core) An advanced network fabric for Kubernetes mayastor # (core) OpenEBS MayaStor nvidia # (core) NVIDIA hardware (GPU and network) support observability # (core) A lightweight observability stack for logs, traces and metrics prometheus # (core) Prometheus operator for monitoring and logging rook-ceph # (core) Distributed Ceph storage using Rook Create a new Helm chart helm create my-application</description>
     </item>
     <item>
       <title>Hybrid</title>
-      <link>http://localhost:46663/ragflow/hybrid/</link>
+      <link>http://localhost:1313/ragflow/hybrid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/hybrid/</guid>
+      <guid>http://localhost:1313/ragflow/hybrid/</guid>
       <description>`` ` rst .. _deployment-considerations:&#xA;Deploying LLMs in Hybrid Cloud: Why llama.cpp Wins for Us Table of Contents 1. Current Setup: Ollama in Testing 2. Production Requirements: Hybrid Cloud &amp;amp; Multi-User Access 3. Evaluation: vLLM vs llama.cpp 4. Why llama.cpp Is Our Production Choice Example: Production-Ready Server 5. Migration Path: From Ollama → llama.cpp Summary 1. Current Setup: Ollama in Testing We have been using Ollama in a test environment with excellent results:</description>
     </item>
     <item>
       <title>Cluster</title>
-      <link>http://localhost:46663/homelab/cluster/</link>
+      <link>http://localhost:1313/homelab/cluster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/cluster/</guid>
+      <guid>http://localhost:1313/homelab/cluster/</guid>
       <description>Proxmox remove firewall from talos worker node&#xA;root@pve:~# qm set 109 -net0 virtio,bridge=vmbr0,firewall=0 update VM 109: -net0 virtio,bridge=vmbr0,firewall=0 setting up an extra network bridge vmbr1 on lxc dedicated machine setup dhcp and routing&#xA;apt install dnsmasq -y apt install iptables-persistent -y vi /etc/dnsmasq.conf interface=eth0 dhcp-range=10.10.10.100,10.10.10.200,12h # DHCP range for Talos nodes dhcp-option=3,10.10.10.2 # Gateway (this machine’s eth0 IP) dhcp-option=6,192.168.0.1 # DNS (your home router’s DNS) systemctl restart dnsmasq echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward iptables -t nat -L -v ip route del default via 10.</description>
     </item>
     <item>
       <title>Helmify</title>
-      <link>http://localhost:46663/kubernetes/helmify/</link>
+      <link>http://localhost:1313/kubernetes/helmify/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/helmify/</guid>
+      <guid>http://localhost:1313/kubernetes/helmify/</guid>
       <description>helmify create a repository for helm sudo microk8s helm create my-helm&#xA;export your current resources microk8s kubectl get all -o yaml &amp;gt; current-state.yaml&#xA;install helmify (and go) sudo snap install go –classic go install github.com/arttor/helmify/cmd/helmify@latest&#xA;this installs under /home/user/go/bin&#xA;add to PATH : nano ~/.bashrc export PATH=”$PATH:/home/yourusername/go/bin”&#xA;cat current-state.yaml | helmify my-helm&#xA;(this creates helm templates from the current resources)&#xA;flawless while it seemed like easy sailing, the helmify command did not work as expected.</description>
     </item>
     <item>
       <title>Gvisor</title>
-      <link>http://localhost:46663/ragflow/gvisor/</link>
+      <link>http://localhost:1313/ragflow/gvisor/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/gvisor/</guid>
+      <guid>http://localhost:1313/ragflow/gvisor/</guid>
       <description>How InfiniFlow RAGFlow Uses gVisor InfiniFlow RAGFlow is an open-source RAG (Retrieval-Augmented Generation) engine that supports document understanding and LLM orchestration. To enhance security when executing untrusted or user-provided code (e.g., Python agents, dynamic data processing scripts, or custom tool functions), RAGFlow runs certain components inside isolated sandboxes.&#xA;gVisor Integration RAGFlow leverages gVisor as its primary sandboxing technology in containerized (Docker/Kubernetes) deployments.&#xA;What is gVisor? gVisor is an open-source project by Google that provides a user-space kernel (the Sentry component) and a lightweight virtual machine (runsc runtime).</description>
     </item>
     <item>
       <title>ragflow-nix</title>
-      <link>http://localhost:46663/securesource/ragflow-nix/</link>
+      <link>http://localhost:1313/securesource/ragflow-nix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/ragflow-nix/</guid>
+      <guid>http://localhost:1313/securesource/ragflow-nix/</guid>
       <description>Using NixOS with reproducible builds is a solid approach for minimizing supply chain risks, as it ensures exact dependency pinning and bit-for-bit identical outputs from source. For a Docker-based project like RAGFlow (an open-source RAG engine that typically deploys via Docker Compose with services like Elasticsearch, Redis, and MySQL), integrating it doesn&amp;rsquo;t inherently add massive overhead, but it does require some upfront configuration to align with Nix&amp;rsquo;s philosophy. Here&amp;rsquo;s a breakdown:</description>
     </item>
     <item>
       <title>Talos</title>
-      <link>http://localhost:46663/homelab/talos/</link>
+      <link>http://localhost:1313/homelab/talos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/talos/</guid>
+      <guid>http://localhost:1313/homelab/talos/</guid>
       <description>Talos Talos is a modern OS for Kubernetes. It is designed to be secure, immutable, and minimal. Talos is a self-hosted Kubernetes distribution that runs on bare metal or virtualized infrastructure. Talos is designed to be managed by a central Kubernetes control plane, which can be hosted on the same cluster or on a separate cluster.&#xA;talosctl config add my-cluster –endpoints 192.168.0.242&#xA;talosctl config info&#xA;talosctl config endpoint 192.168.0.242&#xA;talosctl gen config my-cluster https://192.</description>
     </item>
     <item>
       <title>Kompose</title>
-      <link>http://localhost:46663/kubernetes/kompose/</link>
+      <link>http://localhost:1313/kubernetes/kompose/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/kompose/</guid>
+      <guid>http://localhost:1313/kubernetes/kompose/</guid>
       <description>Kompose Kompose is a tool to help users who are familiar with docker-compose move to Kubernetes. It takes a Docker Compose file and translates it into Kubernetes resources.&#xA;Install Kompose curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.1/kompose-linux-amd64 -o kompose chmod +x kompose sudo mv ./kompose /usr/local/bin/kompose # Or with go go install github.com/kubernetes/kompose@latest kompose version # check the version of Kompose # On Linux create helm chart kompose convert -f compose.yml --chart # This will create a helm chart in the current directory # To create a helm chart in a specific directory kompose convert -f compose.</description>
     </item>
     <item>
       <title>Routing Table</title>
-      <link>http://localhost:46663/homelab/routing-table/</link>
+      <link>http://localhost:1313/homelab/routing-table/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/routing-table/</guid>
+      <guid>http://localhost:1313/homelab/routing-table/</guid>
       <description>Kernel IP Routing Table The following table represents the kernel IP routing table:&#xA;Kernel IP Routing Table Destination Gateway Genmask Flags Metric Ref Use Iface default 192.168.0.1 0.0.0.0 UG 100 0 0 eth1 default 192.168.0.1 0.0.0.0 UG 1024 0 0 eth1 10.10.10.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 192.168.0.0 0.0.0.0 255.255.255.0 U 1024 0 0 eth1 192.168.0.1 0.0.0.0 255.255.255.255 UH 1024 0 0 eth1 gent.dnscache01 192.168.0.1 255.255.255.255 UGH 1024 0 0 eth1 gent.</description>
     </item>
     <item>
       <title>Talos</title>
-      <link>http://localhost:46663/kubernetes/talos/</link>
+      <link>http://localhost:1313/kubernetes/talos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/talos/</guid>
+      <guid>http://localhost:1313/kubernetes/talos/</guid>
       <description>Talos Talos is a modern OS for Kubernetes. It is designed to be secure, immutable, and minimal. Talos is a self-hosted Kubernetes distribution that runs on bare metal or virtualized infrastructure. Talos is designed to be managed by a central Kubernetes control plane, which can be hosted on the same cluster or on a separate cluster.&#xA;talosctl config add my-cluster –endpoints 192.168.0.242&#xA;talosctl config info&#xA;talosctl config endpoint 192.168.0.242&#xA;talosctl gen config my-cluster https://192.</description>
     </item>
     <item>
       <title>Ragflow Gpu Cpu</title>
-      <link>http://localhost:46663/ragflow/ragflow-gpu-cpu/</link>
+      <link>http://localhost:1313/ragflow/ragflow-gpu-cpu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/ragflow-gpu-cpu/</guid>
+      <guid>http://localhost:1313/ragflow/ragflow-gpu-cpu/</guid>
       <description>RAGFlow GPU vs CPU: Full Explanation (2025 Edition) Why Does RAGFlow Still Need a GPU Even When Using Ollama? You are absolutely right to ask this question.&#xA;Most people configure RAGFlow to use external services (Ollama, Xinference, vLLM, OpenAI, etc.) for:&#xA;Embedding model Re-ranking model Inference LLM (the actual answer generator) Ollama runs these models entirely on your GPU — RAGFlow only sends HTTP requests. So why does the official documentation and community still strongly recommend the ragflow-gpu image (or setting DEVICE=gpu)?</description>
     </item>
     <item>
-      <title>Sda</title>
-      <link>http://localhost:46663/homelab/sda/</link>
+      <title>podman-vs-docker</title>
+      <link>http://localhost:1313/securesource/podman-vs-docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/sda/</guid>
+      <guid>http://localhost:1313/securesource/podman-vs-docker/</guid>
+      <description>Podman is frequently considered better than Docker in 2026 — especially on Linux servers, in security-conscious environments, enterprises, self-hosted setups, and Kubernetes-heavy workflows — for several strong architectural and practical reasons.&#xA;Here are the main reasons why many teams and developers prefer Podman over Docker today:&#xA;Aspect Podman advantage Docker situation (2026) Why it matters Architecture Daemonless — no permanent background service Still relies on central dockerd daemon No single point of failure / no always-running root process Security (rootless) Rootless by default — containers run as your normal user Root daemon by default; rootless possible but not default &amp;amp; more complex Dramatically smaller attack surface; better for shared servers, CI, cloud VMs Privilege &amp;amp; exploits Container escape → only affects your user (very limited damage) Container escape → potentially full root on host Critical in production, multi-tenant, government, finance environments Resource usage Lower idle memory (~80-90 MB less), faster startup (often 20-40% quicker) Higher baseline memory + daemon overhead Noticeable on edge devices, small VMs, massive container density Kubernetes alignment Native pod concept + podman generate kube / podman play kube No native pods; needs extra tools Much smoother dev → prod workflow when using Kubernetes / OpenShift System integration Excellent systemd unit generation, runs naturally as systemd services Possible but clunkier Cleaner auto-start, logging, resource control on servers Licensing &amp;amp; cost Pure open source (Apache 2.</description>
+    </item>
+    <item>
+      <title>Sda</title>
+      <link>http://localhost:1313/homelab/sda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/sda/</guid>
       <description>SDA (software defined architecture) Physical Infrastructure Proxmox Server Specifications The foundation of the architecture is a physical server running Proxmox VE hypervisor.&#xA;Component Description Hypervisor Proxmox Virtual Environment (VE) Virtual Machines Multiple Talos OS nodes forming a Kubernetes cluster Containers LXC container serving as a router Virtual Machine Configuration # Example Talos configuration structure (simplified) machine: type: controlplane # or worker network: hostname: talos-node-1 kubernetes: version: v1.26.0 Networking Architecture Network Components Component Function Proxmox Virtual Bridge Creates isolated network segments for VMs and containers LXC Router Routes traffic between internal and external networks Kubernetes Overlay Network Enables pod-to-pod communication (Cilium, Flannel, etc.</description>
     </item>
     <item>
       <title>Upgrade</title>
-      <link>http://localhost:46663/ragflow/upgrade/</link>
+      <link>http://localhost:1313/ragflow/upgrade/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/upgrade/</guid>
+      <guid>http://localhost:1313/ragflow/upgrade/</guid>
       <description>Upgrade to latest release : clone the github-repo : https://github.com/infiniflow/ragflow (git pull to get the latest)&#xA;in the docker directory :&#xA;sudo docker compose -f docker-compose.yml pull sudo docker compose -f docker-compose.yml up -d</description>
     </item>
     <item>
       <title>Index</title>
-      <link>http://localhost:46663/homelab/index-doc/</link>
+      <link>http://localhost:1313/homelab/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/homelab/index-doc/</guid>
+      <guid>http://localhost:1313/homelab/index-doc/</guid>
       <description>Welcome to proxmox-dox’s documentation! Contents: intro homelab software Upgrading homelab HP DL 380p latest BIOS M2 disk drive Sata Bootconfig AVX nvme Where can I find more Templates? reading data from USB stick create a mp on CT (container02) transfer to CT (name = container02) ramdisk Can I use RAM as a disk? speedtest sharing a directory for LXC modify the lxc on PVE modify the lxc config moving a LXC container nfs network between linux containers set up a bridge define an extra network interface in range 10.</description>
     </item>
     <item>
       <title>podman</title>
-      <link>http://localhost:46663/securesource/podman/</link>
+      <link>http://localhost:1313/securesource/podman/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/podman/</guid>
+      <guid>http://localhost:1313/securesource/podman/</guid>
       <description>Here is a structured, document-style explanation of how to manage Podman on NixOS (based on the declarative approach we discussed earlier). This covers applying changes, checking/verifying, and uninstalling/removing it cleanly.&#xA;Podman on NixOS: Apply, Check, Verify &amp;amp; Uninstall Guide Goal&#xA;Declaratively enable Podman (with Docker compatibility) via your NixOS configuration. This makes containers reproducible, auditable, and easy to manage/rollback.&#xA;1. Applying / Enabling Podman (Installation) Edit your configuration file (usually /etc/nixos/configuration.</description>
     </item>
     <item>
       <title>Upload Document</title>
-      <link>http://localhost:46663/ragflow/upload-document/</link>
+      <link>http://localhost:1313/ragflow/upload-document/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/upload-document/</guid>
+      <guid>http://localhost:1313/ragflow/upload-document/</guid>
       <description>upload document first get dataset_id (0fbeb780b40d11f0bf690242ac170006)&#xA;curl –request POST –url http://192.168.0.213/api/v1/datasets/0fbeb780b40d11f0bf690242ac170006/documents –header ‘Content-Type: multipart/form-data’ –header ‘Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw’ –form ‘file=@./aai2228.pdf’ response {“code”:0,”data”:[{“chunk_method”:”paper”,”created_by”:”b61ff88eb40611f08d0f0242ac170006”,”dataset_id”:”0fbeb780b40d11f0bf690242ac170006”,”id”:”67288092c92411f0953d0242ac170003”,”location”:”aai2228.pdf”,”name”:”aai2228.pdf”,”parser_config”:{“auto_keywords”:0,”auto_questions”:0,”chunk_token_num”:512,”delimiter”:”n”,”graphrag”:{“entity_types”:[“organization”,”person”,”geo”,”event”,”category”],”method”:”light”,”use_graphrag”:true},”html4excel”:false,”layout_recognize”:”Docling”,”raptor”:{“max_cluster”:64,”max_token”:256,”prompt”:”Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n {cluster_content}nThe above is the content you need to summarize.”,”random_seed”:0,”scope”:”file”,”threshold”:0.1,”use_raptor”:true},”toc_extraction”:false,”topn_tags”:3},”pipeline_id”:””,”run”:”UNSTART”,”size”:2128247,”source_type”:”local”,”suffix”:”pdf”,”thumbnail”:”thumbnail_67288092c92411f0953d0242ac170003.png”,”type”:”pdf”}]}</description>
     </item>
     <item>
       <title>Kubernetes Extra</title>
-      <link>http://localhost:46663/kubernetes/kubernetes-extra/</link>
+      <link>http://localhost:1313/kubernetes/kubernetes-extra/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/kubernetes-extra/</guid>
+      <guid>http://localhost:1313/kubernetes/kubernetes-extra/</guid>
       <description>Kubernetes extra join the party sudo snap install microk8s --classic connecting a node to the cluster : sudo microk8s join 192.168.0.103:25000/ec0284a420056e7a3b427ef767ff6045/a7e4cd55b373 velero velero is a backup and restore tool for Kubernetes resources. It can be used to backup and restore the state of the cluster, including persistent volumes, namespaces, and resources.&#xA;Velero needs a place to store the backup. This can be a cloud storage service like AWS S3, Google Cloud Storage, or Azure Blob Storage.</description>
     </item>
     <item>
       <title>Metallb</title>
-      <link>http://localhost:46663/kubernetes/metallb/</link>
+      <link>http://localhost:1313/kubernetes/metallb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/metallb/</guid>
+      <guid>http://localhost:1313/kubernetes/metallb/</guid>
       <description>metallb helm install metallb metallb/metallb&#xA;Configuring MetalLB with Custom Resources MetalLB uses CRs like IPAddressPool and L2Advertisement (for Layer 2 mode) or BGPPeer and BGPAdvertisement (for BGP mode) to manage IP allocation and advertisement. Given your bare-metal Proxmox environment and Traefik’s IP issue, Layer 2 mode with MetalLB is likely the simplest and most appropriate starting point unless you have a BGP-enabled router. Here’s how to set it up:&#xA;talos Solution: Relax Pod Security for MetalLB You can either move MetalLB to a namespace with a privileged policy or adjust the default namespace to allow the speaker to run.</description>
     </item>
     <item>
       <title>Graphrag</title>
-      <link>http://localhost:46663/ragflow/graphrag/</link>
+      <link>http://localhost:1313/ragflow/graphrag/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/graphrag/</guid>
+      <guid>http://localhost:1313/ragflow/graphrag/</guid>
       <description>Graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ -&amp;gt; get dataset ID&#xA;curl -H “Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw” http://192.168.0.213/api/v1/datasets&#xA;reponse (json) {“code”:0,”data”:[{“avatar”:null,”chunk_count”:698,”chunk_method”:”paper”,”create_date”:”Tue, 28 Oct 2025 22:47:44 GMT”,”create_time”:1761662864024,”created_by”:”b61ff88eb40611f08d0f0242ac170006”,”description”:” “,”document_count”:6,”embedding_model”:”mxbai-embed-large:latest@Ollama”,”graphrag_task_finish_at”:null,”graphrag_task_id”:null,”id”:”0fbeb780b40d11f0bf690242ac170006”,”language”:”English”,”mindmap_task_finish_at”:null,”mindmap_task_id”:null,”name”:”testaankoop”,”pagerank”:15,”parser_config”:{“auto_keywords”:5,”auto_questions”:2,”chunk_token_num”:512,”delimiter”:”n”,”graphrag”:{“community”:true,”entity_types”:[“organization”,”person”,”geo”,”event”,”category”],”method”:”general”,”resolution”:true,”use_graphrag”:true},”html4excel”:false,”layout_recognize”:”DeepDOC”,”raptor”:{“max_cluster”:64,”max_token”:256,”prompt”:”Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n {cluster_content}nThe above is the content you need to summarize.”,”random_seed”:0,”scope”:”file”,”threshold”:0.1,”use_raptor”:true},”tag_kb_ids”:[],”toc_extraction”:false,”topn_tags”:3},”permission”:”me”,”pipeline_id”:””,”raptor_task_finish_at”:null,”raptor_task_id”:null,”similarity_threshold”:0.2,”status”:”1”,”tenant_id”:”b61ff88eb40611f08d0f0242ac170006”,”token_num”:90496,”update_date”:”Mon, 24 Nov 2025 23:09:25 GMT”,”update_time”:1763996965365,”vector_similarity_weight”:0.3}],”total_datasets”:1}&#xA;–&amp;gt; we need: testaankoop “id”:”0fbeb780b40d11f0bf690242ac170006”&#xA;graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ curl –request POST –url http://192.</description>
     </item>
     <item>
       <title>rebuild</title>
-      <link>http://localhost:46663/securesource/rebuild/</link>
+      <link>http://localhost:1313/securesource/rebuild/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/rebuild/</guid>
+      <guid>http://localhost:1313/securesource/rebuild/</guid>
       <description>To verify that the Podman binary you are using on your NixOS system was built faithfully from its declared source code (i.e., that you can reproduce the exact same binary bits by compiling everything yourself), you can perform a local reproducibility check.&#xA;Nix makes this relatively straightforward thanks to its deterministic build model and the --check / --rebuild flags. However, Podman itself is a fairly complex package (Go + C dependencies + many transitive deps), and full bit-for-bit reproducibility is not guaranteed for every package in nixpkgs — even in 2026, nixpkgs overall hovers around high-90% reproducibility rates for sampled packages, but individual large ones like podman may have minor non-determinism (timestamps, build paths in debug info, ordering issues in Go, etc.</description>
     </item>
     <item>
       <title>scratch</title>
-      <link>http://localhost:46663/securesource/scratch/</link>
+      <link>http://localhost:1313/securesource/scratch/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/scratch/</guid>
+      <guid>http://localhost:1313/securesource/scratch/</guid>
       <description>In Nix (and therefore NixOS/Hydra builds like the zlib example ), there are multiple independent layers that together provide strong assurance that the source code has not been tampered with and that the resulting binary faithfully comes from the declared sources. No single mechanism is perfect on its own, but the combination makes supply-chain tampering extremely difficult and — in many cases — detectable.&#xA;1. Integrity of the original source tarball (upstream source code) The line you see:</description>
     </item>
     <item>
       <title>Agentic Example</title>
-      <link>http://localhost:46663/ragflow/agentic-example/</link>
+      <link>http://localhost:1313/ragflow/agentic-example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/agentic-example/</guid>
+      <guid>http://localhost:1313/ragflow/agentic-example/</guid>
       <description>Equity Investment Research High-Level Structure The workflow runs in RAGFlow’s visual canvas (drag-and-drop nodes). It starts with a user query (e.g., “Analyze Apple’s financials” or “What’s the outlook for AAPL?”) and ends with a complete report including: - Financial metrics (tables from APIs) - Qualitative insights (from internal knowledge base + external sources) - Synthesized analysis (summary, overview, performance, trends, recommendation, citations)&#xA;Key flow: 1. Input → Ticker Extraction 2. Conditional check (valid ticker?</description>
     </item>
     <item>
       <title>Chat</title>
-      <link>http://localhost:46663/ragflow/chat/</link>
+      <link>http://localhost:1313/ragflow/chat/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/chat/</guid>
+      <guid>http://localhost:1313/ragflow/chat/</guid>
       <description>Chat do not forget the dataset!</description>
     </item>
     <item>
       <title>Traefic</title>
-      <link>http://localhost:46663/kubernetes/traefic/</link>
+      <link>http://localhost:1313/kubernetes/traefic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/traefic/</guid>
+      <guid>http://localhost:1313/kubernetes/traefic/</guid>
       <description>traefik Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy. It integrates with your existing infrastructure components and configures itself automatically and dynamically. It is designed to work with Docker, Kubernetes, and other orchestration tools. Traefik is a powerful tool for managing and routing traffic to your applications. It provides features like load balancing, SSL termination, and service discovery. It is designed to be easy to use and configure, making it a popular choice for developers and DevOps teams.</description>
     </item>
     <item>
       <title>Infinity</title>
-      <link>http://localhost:46663/ragflow/infinity/</link>
+      <link>http://localhost:1313/ragflow/infinity/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/infinity/</guid>
+      <guid>http://localhost:1313/ragflow/infinity/</guid>
       <description>Why Infinity is a Good Alternative in RAGFlow Tailored for RAG/LLM Workloads Infinity is an AI-native database built from the ground up for hybrid search (dense vectors, sparse vectors, multi-vectors/tensors, full-text, structured data) with fused ranking and reranking. It outperforms Elasticsearch in benchmarks for RAG-specific tasks (e.g., faster query latency ~0.1ms on million-scale vectors, higher QPS, better hybrid recall).&#xA;Performance &amp;amp; Efficiency Claims several times faster than Elasticsearch for multi-recall scenarios, lower resource consumption, and advanced features like real-time search, better pruning for phrase queries, and native support for RAG needs (e.</description>
     </item>
     <item>
       <title>container</title>
-      <link>http://localhost:46663/securesource/container/</link>
+      <link>http://localhost:1313/securesource/container/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/container/</guid>
+      <guid>http://localhost:1313/securesource/container/</guid>
       <description>Here are the two main ways to run an NGINX container on your NixOS system with Podman already enabled (via virtualisation.podman.enable = true; and friends).&#xA;1. The standard way (imperative / Podman CLI — same as on any Linux distro) This is the classic Podman command-line approach. It&amp;rsquo;s quick for testing and works identically to Docker.&#xA;# Pull the official NGINX image (alpine variant is small &amp;amp; common) podman pull docker.</description>
     </item>
     <item>
       <title>Certificates</title>
-      <link>http://localhost:46663/kubernetes/certificates/</link>
+      <link>http://localhost:1313/kubernetes/certificates/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/certificates/</guid>
+      <guid>http://localhost:1313/kubernetes/certificates/</guid>
       <description>Setting up Certificates for a Docker Registry on Talos Overview This guide explains how to configure certificate-based authentication for a private Docker registry running in a Talos Kubernetes cluster, using internal certificates rather than external ones.&#xA;Certificate Setup Approaches There are several approaches to solve this:&#xA;Use a self-signed certificate and configure Docker to trust it Set up an internal Certificate Authority (CA) in your cluster Use Kubernetes cert-manager for certificate management This guide focuses on approach #2, which provides a good balance of security and control.</description>
     </item>
     <item>
       <title>Mineru</title>
-      <link>http://localhost:46663/ragflow/mineru/</link>
+      <link>http://localhost:1313/ragflow/mineru/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/mineru/</guid>
+      <guid>http://localhost:1313/ragflow/mineru/</guid>
       <description>MinerU and Its Use in RAGFlow test : https://huggingface.co/spaces/opendatalab/MinerU&#xA;docker build -t mineru:latest -f Dockerfile . (34GB in size!!) docker run --gpus all --shm-size 32g -p 30000:30000 -p 7860:7860 -p 8003:8003 --ipc=host -it mineru:latest /bin/bash (normally with port 8000, but I used 8003) Introduction to MinerU MinerU is an open-source tool developed by OpenDataLab (Shanghai AI Laboratory) for converting complex PDF documents into machine-readable formats, such as Markdown or JSON. It excels at extracting text, tables (in HTML or LaTeX), mathematical formulas (in LaTeX), images (with captions), and preserving document structure, including headings, paragraphs, lists, and reading order for multi-column layouts.</description>
     </item>
     <item>
       <title>Registry</title>
-      <link>http://localhost:46663/kubernetes/registry/</link>
+      <link>http://localhost:1313/kubernetes/registry/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/registry/</guid>
+      <guid>http://localhost:1313/kubernetes/registry/</guid>
       <description>registry kubectl apply -f registry.yaml&#xA;apiVersion: v1 kind: Pod metadata: name: registry labels: app: registry spec: containers: - name: registry image: registry:2 ports: - containerPort: 5000 volumeMounts: - name: registry-storage mountPath: /var/lib/registry volumes: - name: registry-storage emptyDir: {} --- apiVersion: v1 kind: Service metadata: name: registry spec: selector: app: registry ports: - protocol: TCP port: 5000 targetPort: 5000 registry ingress kubectl apply -f registry_plain_ingress.yaml apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: registry annotations: traefik.</description>
     </item>
     <item>
       <title>Agent Context Engine</title>
-      <link>http://localhost:46663/ragflow/agent-context-engine/</link>
+      <link>http://localhost:1313/ragflow/agent-context-engine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/agent-context-engine/</guid>
+      <guid>http://localhost:1313/ragflow/agent-context-engine/</guid>
       <description>What is Agent context engine? From 2025, a silent revolution began beneath the dazzling surface of AI Agents. While the world marveled at agents that could write code, analyze data, and automate workflows, a fundamental bottleneck emerged: why do even the most advanced agents still stumble on simple questions, forget previous conversations, or misuse available tools?&#xA;The answer lies not in the intelligence of the Large Language Model (LLM) itself, but in the quality of the Context it receives.</description>
     </item>
     <item>
       <title>native container</title>
-      <link>http://localhost:46663/securesource/native-container/</link>
+      <link>http://localhost:1313/securesource/native-container/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/native-container/</guid>
+      <guid>http://localhost:1313/securesource/native-container/</guid>
       <description>There is a fully Nix-native way to run NGINX in isolation on NixOS without relying on any Alpine Linux (or any other foreign distro/image like the official nginx:alpine OCI image).&#xA;NixOS provides two main isolation mechanisms that stay entirely within the Nix ecosystem:&#xA;NixOS declarative containers (using boot.enableContainers = true; + containers.&amp;lt;name&amp;gt;)&#xA;→ These are lightweight systemd-nspawn containers running a full (but minimal) NixOS instance inside.&#xA;→ You configure NGINX exactly like on the host — using the native services.</description>
     </item>
     <item>
       <title>Longhorn</title>
-      <link>http://localhost:46663/kubernetes/longhorn/</link>
+      <link>http://localhost:1313/kubernetes/longhorn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/longhorn/</guid>
+      <guid>http://localhost:1313/kubernetes/longhorn/</guid>
       <description>Longhorn Longhorn is a cloud-native distributed block storage solution for Kubernetes. It is designed to provide highly available and durable storage for containerized applications. Longhorn is built on top of Kubernetes and leverages its features to provide a seamless experience for developers and operators. It is an open-source project that is part of the Cloud Native Computing Foundation (CNCF) and is designed to work with any Kubernetes cluster, regardless of the underlying infrastructure.</description>
     </item>
     <item>
       <title>Web Design</title>
-      <link>http://localhost:46663/ragflow/web-design/</link>
+      <link>http://localhost:1313/ragflow/web-design/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/web-design/</guid>
+      <guid>http://localhost:1313/ragflow/web-design/</guid>
       <description>What kind of animations ragflow.io uses 1. Lottie animations (very likely) Many of the smooth looping illustrations on the site resemble Lottie files. Lottie is a lightweight animation format exported from Adobe After Effects using the Bodymovin plugin. Why this fits what you see: Smooth vector animation No pixelation at any size Very small file size Transparent backgrounds Runs via JavaScript (lottie-web) How they’re created: Designer animates in Adobe After Effects Export using Bodymovin → produces a .</description>
     </item>
     <item>
       <title>Ana Report</title>
-      <link>http://localhost:46663/kubernetes/ana-report/</link>
+      <link>http://localhost:1313/kubernetes/ana-report/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/ana-report/</guid>
+      <guid>http://localhost:1313/kubernetes/ana-report/</guid>
       <description>ana-report (custom pod/svc) deploy-ana-report.yaml apiVersion: apps/v1 kind: Deployment metadata: name: nosql-ana-report namespace: default spec: replicas: 1 selector: matchLabels: app: nosql-ana-report template: metadata: labels: app: nosql-ana-report spec: containers: - name: nosql-ana-report image: 10.110.130.109:5000/nosql-ana-report:latest imagePullPolicy: Always env: - name: POSTGRES_HOST value: &amp;#34;postgres-postgresql.postgres.svc.cluster.local&amp;#34; - name: POSTGRES_PORT value: &amp;#34;5432&amp;#34; - name: POSTGRES_USER value: &amp;#34;myuser&amp;#34; - name: POSTGRES_PASSWORD value: &amp;#34;mypassword&amp;#34; - name: POSTGRES_DB value: &amp;#34;mydatabase&amp;#34; ports: - containerPort: 8001 # Adjust to the port your app uses securityContext: allowPrivilegeEscalation: false capabilities: drop: [&amp;#34;ALL&amp;#34;] runAsNonRoot: false seccompProfile: type: RuntimeDefault service.</description>
     </item>
     <item>
       <title>virtual machine</title>
-      <link>http://localhost:46663/securesource/virtual-machine/</link>
+      <link>http://localhost:1313/securesource/virtual-machine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/virtual-machine/</guid>
+      <guid>http://localhost:1313/securesource/virtual-machine/</guid>
       <description>To use a virtual machine (VM) is a solid and safe approach for testing an open source application on NixOS, especially if the app involves potential risks like network access, file system modifications, or untrusted dependencies. NixOS&amp;rsquo;s declarative nature makes it easy to spin up isolated VMs using tools like QEMU (via nixos-rebuild build-vm), where you can define the entire system configuration in a .nix file, test the app, and discard the VM afterward.</description>
     </item>
     <item>
       <title>Searxng</title>
-      <link>http://localhost:46663/ragflow/searxng/</link>
+      <link>http://localhost:1313/ragflow/searxng/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/searxng/</guid>
+      <guid>http://localhost:1313/ragflow/searxng/</guid>
       <description>Using SearXNG with RAGFlow Introduction to SearXNG in RAGFlow Agents RAGFlow provides powerful agent capabilities, including built-in web search tools for real-time information retrieval during reasoning or chat sessions. The default web search often relies on cloud providers like Tavily, which require API keys and may incur costs.&#xA;SearXNG serves as a privacy-focused, open-source metasearch engine that aggregates results from multiple sources (e.g., Google, Bing, DuckDuckGo) without tracking users. Deploying SearXNG locally offers a fully self-hosted alternative, ideal for enterprises prioritizing data privacy, avoiding external API dependencies, or operating in restricted networks.</description>
     </item>
     <item>
       <title>Postgresql</title>
-      <link>http://localhost:46663/kubernetes/postgresql/</link>
+      <link>http://localhost:1313/kubernetes/postgresql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/postgresql/</guid>
+      <guid>http://localhost:1313/kubernetes/postgresql/</guid>
       <description>PostgreSQL pre-requisites : Longhorn&#xA;Why We Need a Stateful Solution for PostgreSQL in Kubernetes (Using Longhorn) A stateful solution for PostgreSQL in Kubernetes, using Longhorn, is critical due to the unique requirements of stateful applications like databases. This document explains why such a solution is necessary and how Longhorn addresses these needs. Stateful Nature of PostgreSQL Data Persistence: PostgreSQL stores critical data (e.g., tables, schemas, transaction logs). Unlike stateless applications, it requires persistent storage to prevent data loss during pod restarts or rescheduling.</description>
     </item>
     <item>
       <title>Homelab</title>
-      <link>http://localhost:46663/ragflow/homelab/</link>
+      <link>http://localhost:1313/ragflow/homelab/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/homelab/</guid>
+      <guid>http://localhost:1313/ragflow/homelab/</guid>
       <description>homelab problem older hardware : Xeon E5-2690 v2 Tesla P100 16GB Driver CUDA 11.8 software : CUDA 12.8 AVX512 or AV2 (&amp;gt; xeon v3 problem reranking: compiled llama.cpp and gguf model which works OK unfortunately not recognised in infiniflow/ragflow (not anymore) possible solution: installing xinference (cpu version) (dockercontainer for GPU too big and CUDA 12.8)&#xA;docker run -d \ --name xinference-cpu \ -p 9997:9997 \ --shm-size=8g \ --restart unless-stopped \ -v /home/jan/models:/models \ xprobe/xinference:latest-cpu \ xinference-local -H 0.</description>
     </item>
     <item>
       <title>Agent Context</title>
-      <link>http://localhost:46663/ragflow/agent-context/</link>
+      <link>http://localhost:1313/ragflow/agent-context/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/agent-context/</guid>
+      <guid>http://localhost:1313/ragflow/agent-context/</guid>
       <description>Agent Context Deconstructing context composition clearly shows that Context Engineering’s core task is still retrieval based on the three major data sources Agents need:&#xA;Retrieval of enterprise-private, unstructured domain document data—i.e., RAG. Retrieval of conversation history and state data generated during Agent interactions, especially LLM-generated content—i.e., Memory. Retrieval of tool description and usage guide data from encapsulated enterprise services and APIs—termed Tool Retrieval. This data can also reside in a dedicated area like Memory.</description>
     </item>
     <item>
       <title>Index</title>
-      <link>http://localhost:46663/ragflow/index-doc/</link>
+      <link>http://localhost:1313/ragflow/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/index-doc/</guid>
+      <guid>http://localhost:1313/ragflow/index-doc/</guid>
       <description>Welcome to Ragflow’s documentation! Contents: About RAGFlow: Named Among GitHub’s Fastest-Growing Open Source Projects The Rise of Retrieval-Augmented Generation in Production Why RAGFlow Resonates in the AI Era A Project in Active Development Conclusion Security Concerns considerations: sandbox: elasticsearch: RAGFlow System Architecture Overview Core Infrastructure Containers RAGFlow Application Containers High-Level Architecture Diagram Data &amp;amp; Execution Flow From RAG to Context - A 2025 Year-End Review of RAG Can RAG Still Be Improved?</description>
     </item>
     <item>
       <title>Langchain</title>
-      <link>http://localhost:46663/ragflow/langchain/</link>
+      <link>http://localhost:1313/ragflow/langchain/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/ragflow/langchain/</guid>
+      <guid>http://localhost:1313/ragflow/langchain/</guid>
       <description>Yes, you can use RAGFlow with LangChain by integrating RAGFlow as an external retriever/context provider. The recommended approach is to use RAGFlow’s REST API or Python SDK to fetch relevant context chunks from your knowledge base, then pass those results into LangChain for orchestration and LLM calls. There’s no dedicated LangChain integration, but the API/SDK pattern is straightforward: call RAGFlow’s /retrieval endpoint (or use the retrieve method in the Python SDK) with your query, API token, and knowledge base ID, and use the returned chunks as context in your LangChain pipeline.</description>
     </item>
     <item>
       <title>bandit</title>
-      <link>http://localhost:46663/securesource/bandit/</link>
+      <link>http://localhost:1313/securesource/bandit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/bandit/</guid>
+      <guid>http://localhost:1313/securesource/bandit/</guid>
       <description>Bandit is excellent for Python-focused static security scanning (SAST — Static Application Security Testing). It excels at detecting issues like injection risks, insecure deserialization, weak crypto, and more, with low false positives in Python codebases.&#xA;Here are some of the most popular and effective equivalent or complementary tools for other programming languages in 2026. These are primarily open-source or widely used tools (since Bandit is open-source and free), but I&amp;rsquo;ve included a few strong commercial/enterprise options that dominate in practice.</description>
     </item>
     <item>
       <title>Azure Cli</title>
-      <link>http://localhost:46663/kubernetes/azure-cli/</link>
+      <link>http://localhost:1313/kubernetes/azure-cli/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/azure-cli/</guid>
+      <guid>http://localhost:1313/kubernetes/azure-cli/</guid>
       <description>Configuring the Azure CLI The Azure CLI is a command-line tool that allows you to manage Azure resources. You can configure the CLI to use different authentication methods, set default values for commands, and customize the output format. This document provides an overview of the configuration options available in the Azure CLI and how to set them up.&#xA;Installation https://learn.microsoft.com/nl-nl/cli/azure/&#xA;first : activate azure (portal)&#xA;To install the Azure CLI, follow these steps: 1.</description>
     </item>
     <item>
       <title>effort</title>
-      <link>http://localhost:46663/securesource/effort/</link>
+      <link>http://localhost:1313/securesource/effort/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/effort/</guid>
+      <guid>http://localhost:1313/securesource/effort/</guid>
       <description>Security Issue Remediation Effort Assessment Application: RAGFlow&#xA;Context: Intranet deployment (not exposed to the public internet)&#xA;Assessment based on Bandit scan results&#xA;Summary Severity Count Description HIGH 7 SQL injection, unsafe XML, pickle, weak crypto MEDIUM 89 Requests without timeout, bind to all interfaces, hardcoded tmp LOW 612 Assert statements, try/except/pass, hardcoded password strings For an intranet-only deployment, many security concerns are reduced since attackers cannot directly reach the application from the internet.</description>
     </item>
     <item>
       <title>Modules</title>
-      <link>http://localhost:46663/kubernetes/modules/</link>
+      <link>http://localhost:1313/kubernetes/modules/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/modules/</guid>
+      <guid>http://localhost:1313/kubernetes/modules/</guid>
       <description>Module Documentation correlation.py This script calculates financial correlations and stores the results in a PostgreSQL database.&#xA;Modules: psycopg2: For connecting to and interacting with a PostgreSQL database. pandas: For handling and processing tabular data. dotenv: For loading environment variables from a .env file. os: For accessing environment variables. numpy: For numerical operations. Environment Variables: POSTGRES_USER: PostgreSQL username (default: ‘myuser’). POSTGRES_PASSWORD: PostgreSQL password (default: ‘mypassword’). POSTGRES_DB: PostgreSQL database name (default: ‘mydatabase’). POSTGRES_HOST: PostgreSQL host (default: ‘localhost’).</description>
     </item>
     <item>
       <title>Graph</title>
-      <link>http://localhost:46663/kubernetes/graph/</link>
+      <link>http://localhost:1313/kubernetes/graph/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/graph/</guid>
+      <guid>http://localhost:1313/kubernetes/graph/</guid>
       <description>Graph fastapp has a built-in graphing library that can be used to plot data from the database.&#xA;http://127.0.0.1:8001/plot/BMW%3ADE?metric=market_cap&#xA;for each symbol there are 3 metrics: market_cap, price, volume&#xA;the bars have a color (red, green, blue) based on the metric value&#xA;swagger http://127.0.0.1:8001/docs</description>
     </item>
     <item>
       <title>Sda</title>
-      <link>http://localhost:46663/kubernetes/sda/</link>
+      <link>http://localhost:1313/kubernetes/sda/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/sda/</guid>
+      <guid>http://localhost:1313/kubernetes/sda/</guid>
       <description>SDA (software defined architecture) Physical Infrastructure Proxmox Server Specifications The foundation of the architecture is a physical server running Proxmox VE hypervisor.&#xA;Component Description Hypervisor Proxmox Virtual Environment (VE) Virtual Machines Multiple Talos OS nodes forming a Kubernetes cluster Containers LXC container serving as a router Virtual Machine Configuration # Example Talos configuration structure (simplified) machine: type: controlplane # or worker network: hostname: talos-node-1 kubernetes: version: v1.26.0 Networking Architecture Network Components Component Function Proxmox Virtual Bridge Creates isolated network segments for VMs and containers LXC Router Routes traffic between internal and external networks Kubernetes Overlay Network Enables pod-to-pod communication (Cilium, Flannel, etc.</description>
     </item>
     <item>
       <title>Proxmox</title>
-      <link>http://localhost:46663/kubernetes/proxmox/</link>
+      <link>http://localhost:1313/kubernetes/proxmox/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/proxmox/</guid>
+      <guid>http://localhost:1313/kubernetes/proxmox/</guid>
       <description>Proxmox remove firewall from talos worker node&#xA;root@pve:~# qm set 109 -net0 virtio,bridge=vmbr0,firewall=0 update VM 109: -net0 virtio,bridge=vmbr0,firewall=0 setting up an extra network bridge vmbr1 on lxc dedicated machine setup dhcp and routing&#xA;apt install dnsmasq -y apt install iptables-persistent -y vi /etc/dnsmasq.conf interface=eth0 dhcp-range=10.10.10.100,10.10.10.200,12h # DHCP range for Talos nodes dhcp-option=3,10.10.10.2 # Gateway (this machine’s eth0 IP) dhcp-option=6,192.168.0.1 # DNS (your home router’s DNS) systemctl restart dnsmasq echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward iptables -t nat -L -v ip route del default via 10.</description>
     </item>
     <item>
       <title>Laptop</title>
-      <link>http://localhost:46663/kubernetes/laptop/</link>
+      <link>http://localhost:1313/kubernetes/laptop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/laptop/</guid>
+      <guid>http://localhost:1313/kubernetes/laptop/</guid>
       <description>Laptop (or PC) mods /etc/hosts&#xA;10.10.10.50 nginx.example.com 10.10.10.50 registry.example.com&#xA;ip route add 10.10.10.0/24 via 192.168.0.251&#xA;sudo cp ca.crt /usr/local/share/ca-certificates/ca.crt sudo update-ca-certificates Updating certificates in /etc/ssl/certs…&#xA;make route permanent sudo nano /etc/netplan/01-netcfg.yaml network: version: 2 ethernets: wlp0s20f3: addresses: - 192.168.0.103/24 gateway4: 192.168.0.1 # Replace with your actual default gateway routes: - to: 10.10.10.0/24 via: 192.168.0.251 sudo netplan apply </description>
     </item>
     <item>
       <title>Routing Table</title>
-      <link>http://localhost:46663/kubernetes/routing-table/</link>
+      <link>http://localhost:1313/kubernetes/routing-table/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/routing-table/</guid>
+      <guid>http://localhost:1313/kubernetes/routing-table/</guid>
       <description>Kernel IP Routing Table The following table represents the kernel IP routing table:&#xA;Kernel IP Routing Table Destination Gateway Genmask Flags Metric Ref Use Iface default 192.168.0.1 0.0.0.0 UG 100 0 0 eth1 default 192.168.0.1 0.0.0.0 UG 1024 0 0 eth1 10.10.10.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 192.168.0.0 0.0.0.0 255.255.255.0 U 1024 0 0 eth1 192.168.0.1 0.0.0.0 255.255.255.255 UH 1024 0 0 eth1 gent.dnscache01 192.168.0.1 255.255.255.255 UGH 1024 0 0 eth1 gent.</description>
     </item>
     <item>
       <title>Troubleshoot Kubernetes</title>
-      <link>http://localhost:46663/kubernetes/troubleshoot-kubernetes/</link>
+      <link>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/troubleshoot-kubernetes/</guid>
+      <guid>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</guid>
       <description>Troubleshooting Kubernetes This section provides troubleshooting steps for common issues encountered in Kubernetes deployments, particularly focusing on PersistentVolumeClaims (PVCs) and scheduling problems.&#xA;kubectl get pods NAME READY STATUS RESTARTS AGE my-nginx-5c45c89568-bn47r 0/1 Pending 0 12h my-nginx-5c45c89568-ltqvs 0/1 Completed 0 12h postgres-deployment-b95b85d69-rfl88 0/1 Pending 0 13m kubectl describe pod postgres-deployment-b95b85d69-rfl88 Name: postgres-deployment-b95b85d69-rfl88 Namespace: default Priority: 0 Service Account: default Node: &amp;lt;none&amp;gt; Labels: app=postgres pod-template-hash=b95b85d69 Annotations: &amp;lt;none&amp;gt; Status: Pending IP: IPs: &amp;lt;none&amp;gt; Controlled By: ReplicaSet/postgres-deployment-b95b85d69 Containers: postgres: Image: postgres:16 Port: &amp;lt;none&amp;gt; Host Port: &amp;lt;none&amp;gt; Environment: POSTGRES_DB: mydb POSTGRES_USER: admin POSTGRES_PASSWORD: password Mounts: /var/lib/postgresql/data from postgres-storage (rw) /var/run/secrets/kubernetes.</description>
     </item>
     <item>
       <title>Links</title>
-      <link>http://localhost:46663/kubernetes/links/</link>
+      <link>http://localhost:1313/kubernetes/links/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/links/</guid>
+      <guid>http://localhost:1313/kubernetes/links/</guid>
       <description>Usefull links: cloud native landscape: https://landscape.cncf.io/</description>
     </item>
     <item>
       <title>Classification</title>
-      <link>http://localhost:46663/kubernetes/classification/</link>
+      <link>http://localhost:1313/kubernetes/classification/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/classification/</guid>
+      <guid>http://localhost:1313/kubernetes/classification/</guid>
       <description>Defining time series classification Time series classification is a field of supervised machine learning where one or more features are measured across time and used to assign a category. Therefore, the goal in classifying time series is to assign a label rather than predict the future value of the series.&#xA;Time Series Distances https://dtaidistance.readthedocs.io/en/latest/</description>
     </item>
     <item>
       <title>Docker Registry Workaround</title>
-      <link>http://localhost:46663/kubernetes/docker-registry-workaround/</link>
+      <link>http://localhost:1313/kubernetes/docker-registry-workaround/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/docker-registry-workaround/</guid>
+      <guid>http://localhost:1313/kubernetes/docker-registry-workaround/</guid>
       <description>Docker registry kubernetes workaround # Create a file named insecure-registry.yaml with the following content # this does contain the registry IP address, since problem on Talos with internal DNS machine: registries: mirrors: &amp;#34;10.110.130.109:5000&amp;#34;: endpoints: - &amp;#34;http://10.110.130.109:5000&amp;#34; # Apply the configuration to the nodes talosctl patch mc -n 10.10.10.173 --patch @insecure-registry.yaml talosctl patch mc -n 10.10.10.166 --patch @insecure-registry.yaml talosctl patch mc -n 10.10.10.178 --patch @insecure-registry.yaml apiVersion: apps/v1 kind: Deployment metadata: name: nosql-ana-report namespace: docker-registry spec: replicas: 1 selector: matchLabels: app: nosql-ana-report template: metadata: labels: app: nosql-ana-report spec: imagePullSecrets: - name: docker-registry-secret containers: - name: nosql-ana-report image: 10.</description>
     </item>
     <item>
       <title>Explain Project</title>
-      <link>http://localhost:46663/kubernetes/explain-project/</link>
+      <link>http://localhost:1313/kubernetes/explain-project/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/explain-project/</guid>
+      <guid>http://localhost:1313/kubernetes/explain-project/</guid>
       <description>Explain project A</description>
     </item>
     <item>
       <title>Index</title>
-      <link>http://localhost:46663/kubernetes/index-doc/</link>
+      <link>http://localhost:1313/kubernetes/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/index-doc/</guid>
+      <guid>http://localhost:1313/kubernetes/index-doc/</guid>
       <description>Documentation on workings and project Contents: About Timeseries Container (cloud) Visual Patterns AI model Cloud K8s Todo / ideas / github actions Deutz Market Cap Randomizer labelling Training data Filter Overview Results Approach 1 Approach 2 Approach 3 Approach 4 Approach 5 Conclusion things learned Docker practice changes to python code within a container error &amp;amp; solution requirements.txt moving a database to another machine Using dockerhub installing custom database on Talos (kubernetes) Cloud Setup Documentation Docker Setup Kubernetes Setup General Notes Kubernetes activate my own docker image Create a Kubernetes Deployment deploy the image Expose the Application Check the Deployment Gitignore tricks trick: Sphinx: Sphinx Markdown using sphinx for markdown Hugo Portainer install managing docker managing kubernetes Manage Kubernetes Clusters with portainer Add Environment in portainer: create a helm chart repository Steps to Serve the Local Image on the Kubernetes Registry 1.</description>
     </item>
     <item>
       <title>Postgres Cloud Native</title>
-      <link>http://localhost:46663/kubernetes/postgres-cloud-native/</link>
+      <link>http://localhost:1313/kubernetes/postgres-cloud-native/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/postgres-cloud-native/</guid>
+      <guid>http://localhost:1313/kubernetes/postgres-cloud-native/</guid>
       <description>postgres cloud Native helm install cnpg cnpg/cloudnative-pg -n cnpg-system –create-namespace</description>
     </item>
     <item>
       <title>Prometheus</title>
-      <link>http://localhost:46663/kubernetes/prometheus/</link>
+      <link>http://localhost:1313/kubernetes/prometheus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/kubernetes/prometheus/</guid>
+      <guid>http://localhost:1313/kubernetes/prometheus/</guid>
       <description>prometheus 2061 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 2062 helm repo update 2063 kubectl create namespace monitoring 2064 vi prometeus-values.yaml 2065 helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring –values prometheus-values.yaml 2066 ls 2067 mv prometeus-values.yaml prometheus-values.yaml 2068 helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring –values prometheus-values.yaml apiVersion: networking.k8s.io/v1 kind: Ingress metadata:&#xA;name: grafana-ingress namespace: monitoring&#xA;spec: rules: host: grafana.your-domain.com http: paths: path: / pathType: Prefix backend: service: name: prometheus-grafana port: number: 80&#xA;NOTES: kube-prometheus-stack has been installed.</description>
     </item>
     <item>
       <title>app armour on ragflow</title>
-      <link>http://localhost:46663/securesource/app-armor/</link>
+      <link>http://localhost:1313/securesource/app-armor/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/app-armor/</guid>
+      <guid>http://localhost:1313/securesource/app-armor/</guid>
       <description>you can use AppArmor to add an extra layer of confinement when running RAGFlow (especially useful if you&amp;rsquo;re suspicious about potential vulnerabilities, code execution risks in agents, parser bugs, or supply-chain issues).&#xA;RAGFlow is normally run via docker-compose with multiple containers (ragflow-server, Elasticsearch/Infinity, MinIO, Redis, MySQL, etc.). AppArmor confinement applies per container.&#xA;Quick options ranked by effort vs. security gain 1. Easiest — just use the built-in docker-default profile (almost zero effort) On Ubuntu / Debian / derivatives where AppArmor is enabled by default, Docker already applies the docker-default profile to every container unless you override it.</description>
     </item>
     <item>
       <title>Index</title>
-      <link>http://localhost:46663/securesource/index-doc/</link>
+      <link>http://localhost:1313/securesource/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/index-doc/</guid>
-      <description>Welcome to Secure Open Source! Contents: /securesource/xz/&#xA;/securesource/xz-nix/&#xA;/securesource/yubikey/&#xA;/securesource/screening/&#xA;/securesource/unix/ /securesource/nixos/ /securesource/proxnix/ /securesource/source-checkin/ /securesource/trivy/ /securesource/trivy-sbom/ /securesource/owasp/ /securesource/talos/ /securesource/app-armor/ /securesource/opendesk/ /securesource/e2ee/ /securesource/paranoid/ /securesource/reproducable/ /securesource/docker/ /securesource/ragflow/ /securesource/ragflow-image/ /securesource/ragflow-nix/ /securesource/podman/ /securesource/scratch/ /securesource/container/ /securesource/native-container/ /securesource/virtual-machine/ /securesource/bandit/</description>
+      <guid>http://localhost:1313/securesource/index-doc/</guid>
+      <description>Welcome to Secure Open Source! Contents: /securesource/xz/&#xA;/securesource/xz-nix/&#xA;/securesource/yubikey/&#xA;/securesource/screening/&#xA;/securesource/unix/ /securesource/nixos/ /securesource/proxnix/ /securesource/source-checkin/ /securesource/trivy/ /securesource/trivy-sbom/ /securesource/owasp/ /securesource/talos/ /securesource/app-armor/ /securesource/opendesk/ /securesource/e2ee/ /securesource/paranoid/ /securesource/reproducable/ /securesource/docker/ /securesource/ragflow/ /securesource/ragflow-image/ /securesource/ragflow-nix/ /securesource/podman-vs-docker/ /securesource/podman/ /securesource/scratch/ /securesource/container/ /securesource/native-container/ /securesource/virtual-machine/ /securesource/bandit/</description>
     </item>
     <item>
       <title>Open Source Software Security Screening</title>
-      <link>http://localhost:46663/securesource/screening/</link>
+      <link>http://localhost:1313/securesource/screening/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/screening/</guid>
+      <guid>http://localhost:1313/securesource/screening/</guid>
       <description>There are well-established, practical ways to screen open source software (OSS) for security risks. OSS actually has a big advantage here compared to closed-source (proprietary) software: the source code is publicly available, so you (or your security team) can inspect it, build it yourself, and verify exactly what&amp;rsquo;s inside. However, it&amp;rsquo;s not trivial—even popular OSS projects have had serious vulnerabilities slip through (e.g., Log4Shell, Heartbleed, or the XZ Utils backdoor attempt).</description>
     </item>
     <item>
       <title>OWASP :  open-source SBOM management platform</title>
-      <link>http://localhost:46663/securesource/owasp/</link>
+      <link>http://localhost:1313/securesource/owasp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/owasp/</guid>
+      <guid>http://localhost:1313/securesource/owasp/</guid>
       <description>OWASP Dependency-Track is one of the most popular and widely adopted open-source SBOM management platforms available today (as of March 2026). It&amp;rsquo;s a flagship project under the OWASP Foundation, designed specifically for continuous analysis of software supply chains using Software Bills of Materials (SBOMs).&#xA;What It Is Dependency-Track is an intelligent Component Analysis platform that helps organizations identify, track, and reduce risks from third-party and open-source components. Unlike traditional SCA tools that scan code at build time, it takes an SBOM-first approach: ingest SBOMs (primarily in CycloneDX format, with SPDX support via conversion), maintain a central portfolio view, and continuously monitor for new vulnerabilities, license issues, or policy violations — even long after deployment.</description>
     </item>
     <item>
       <title>proxmoxx on nix os </title>
-      <link>http://localhost:46663/securesource/proxnix/</link>
+      <link>http://localhost:1313/securesource/proxnix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/proxnix/</guid>
+      <guid>http://localhost:1313/securesource/proxnix/</guid>
       <description>NixOS isn&amp;rsquo;t designed primarily as a hypervisor like Proxmox — it&amp;rsquo;s a general-purpose declarative Linux distro — but you can turn it into a powerful virtualization host for home labs or servers. Many people migrate from Proxmox to NixOS precisely for the declarative config, reproducibility, atomic updates/rollbacks, and integration with Nix flakes/modules.&#xA;Closest Equivalents / Setups on NixOS Here are the main realistic paths, ordered from &amp;ldquo;most Proxmox-like&amp;rdquo; to more lightweight/declarative:</description>
     </item>
     <item>
       <title>source checking</title>
-      <link>http://localhost:46663/securesource/source-checkin/</link>
+      <link>http://localhost:1313/securesource/source-checkin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/source-checkin/</guid>
+      <guid>http://localhost:1313/securesource/source-checkin/</guid>
       <description>Security Scanning Setup Overview Summary This document outlines the security scanning infrastructure created for the RAGFlow project using four security tools: Semgrep, OSV Scanner, TruffleHog, and ClamAV.&#xA;Actions Taken 1. Created Security Scanning Script Created /usr/src/ragflow/security_scan.sh - a comprehensive bash script that:&#xA;Automatically installs missing security tools Runs four different types of security scans Generates a summary report with findings 2. Tool Installation Semgrep (SAST - Static Application Security Testing) Status: Pre-installed via pip Purpose: Static code analysis for finding security vulnerabilities Scan type: Pattern-based analysis across all source files OSV Scanner (SCA - Software Composition Analysis) Status: Manually installed (binary download) Version: 2.</description>
     </item>
     <item>
       <title>talos vs nix os </title>
-      <link>http://localhost:46663/securesource/talos/</link>
+      <link>http://localhost:1313/securesource/talos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/talos/</guid>
+      <guid>http://localhost:1313/securesource/talos/</guid>
       <description>NixOS can serve as a solid basis for running a Kubernetes (k8s) cluster — many people successfully do it, especially in homelabs, small-to-medium production setups, or when they already love the Nix ecosystem. However, Talos Linux is generally the better, more purpose-built option if your primary goal is a clean, low-maintenance, Kubernetes-optimized node OS.&#xA;Quick Comparison: NixOS vs Talos for Kubernetes Nodes Both are declarative and immutable/reproducible in spirit, but they target different philosophies.</description>
     </item>
     <item>
       <title>trivy security scanning</title>
-      <link>http://localhost:46663/securesource/trivy/</link>
+      <link>http://localhost:1313/securesource/trivy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/trivy/</guid>
+      <guid>http://localhost:1313/securesource/trivy/</guid>
       <description>Trivy Security Scanning Procedure Overview Trivy is a comprehensive security scanner from Aqua Security that detects:&#xA;Vulnerabilities in application dependencies Secrets (exposed credentials, API keys, passwords) Misconfigurations (infrastructure as code issues) Installation Procedure Step 1: Download Trivy # Get latest version curl -sL &amp;#34;https://api.github.com/repos/aquasecurity/trivy/releases/latest&amp;#34; | grep -o &amp;#39;&amp;#34;tag_name&amp;#34;: &amp;#34;[^&amp;#34;]*&amp;#39; | cut -d&amp;#39;&amp;#34;&amp;#39; -f4 # Download using install script curl -sLs https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp/trivy # Move to user bin mv /tmp/trivy/trivy ~/.</description>
     </item>
     <item>
       <title>yubikey</title>
-      <link>http://localhost:46663/securesource/yubikey/</link>
+      <link>http://localhost:1313/securesource/yubikey/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:46663/securesource/yubikey/</guid>
+      <guid>http://localhost:1313/securesource/yubikey/</guid>
       <description>YubiKey can work very effectively on a NixOS installation in the cloud (e.g., a VPS on Hetzner, AWS EC2, DigitalOcean, Linode, GCP, Azure, or any provider running NixOS), but the way it works depends on what you&amp;rsquo;re trying to achieve and the physical reality of the cloud environment.&#xA;Since cloud instances are remote headless servers with no physical USB access from your local machine, you cannot plug the YubiKey directly into the cloud VM.</description>
     </item>
   </channel>
