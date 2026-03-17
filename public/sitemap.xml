@@ -146,6 +146,8 @@
   </url><url>
     <loc>http://localhost:1313/planb/haven/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/implement/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/ragflow/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/llama-cpp/</loc>
@@ -247,6 +249,8 @@
     <loc>http://localhost:1313/ragflow/langchain/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/bandit/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/coco/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/azure-cli/</loc>
   </url><url>

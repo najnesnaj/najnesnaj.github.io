@@ -36,3 +36,4 @@ draft: false
 {{< relref "native-container.md" >}}
 {{< relref "virtual-machine.md" >}}
 {{< relref "bandit.md" >}}
+{{< relref "coco.md" >}}
