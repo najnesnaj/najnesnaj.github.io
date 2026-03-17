@@ -56,11 +56,15 @@
   </url><url>
     <loc>http://localhost:1313/securesource/e2ee/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/lasuite-vs-opendesk/</loc>
+  </url><url>
     <loc>http://localhost:1313/planb/opendesk/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/rerank/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/share/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/url/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/moving/</loc>
   </url><url>
@@ -80,6 +84,8 @@
   </url><url>
     <loc>http://localhost:1313/planb/clusterip/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/os/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/paranoid/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/dockerhub/</loc>
@@ -96,6 +102,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/docker/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/euos/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/reproducable/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/kubernetes/</loc>
@@ -106,17 +114,25 @@
   </url><url>
     <loc>http://localhost:1313/kubernetes/gitignore/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/edic/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/sphinx/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/mounting/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/backuppve/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/gaia/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/markdown/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/raid/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/docker/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/mijnbureau/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/sovereignty/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/api/</loc>
   </url><url>
@@ -127,6 +143,8 @@
     <loc>http://localhost:1313/kubernetes/portainer-kubernetes/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/graph/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/haven/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/ragflow/</loc>
   </url><url>
