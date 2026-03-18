@@ -14,6 +14,7 @@ draft: false
 {{< relref "screening.md" >}}  
 {{< relref "unix.md" >}}
 {{< relref "nixos.md" >}}
+{{< relref "nixos-kubernetes.md" >}}
 {{< relref "proxnix.md" >}}
 {{< relref "source-checkin.md" >}}
 {{< relref "trivy.md" >}}
@@ -37,3 +38,5 @@ draft: false
 {{< relref "virtual-machine.md" >}}
 {{< relref "bandit.md" >}}
 {{< relref "coco.md" >}}
+{{< relref "opencve.md" >}}
+{{< relref "cve-comparison.md" >}}

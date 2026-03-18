@@ -20,6 +20,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/unix/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/nixos-kubernetes/</loc>
+  </url><url>
     <loc>http://localhost:1313/homelab/hpdl380p/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/about/</loc>
@@ -258,9 +260,13 @@
   </url><url>
     <loc>http://localhost:1313/kubernetes/modules/</loc>
   </url><url>
+    <loc>http://localhost:1313/securesource/opencve/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/graph/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/sda/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/cve-comparison/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/proxmox/</loc>
   </url><url>
