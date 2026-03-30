@@ -22,4 +22,7 @@ draft: false
 {{< relref "sovereignty.md" >}}
 {{< relref "haven.md" >}}
 {{< relref "implement.md" >}}
+{{< relref "openoffice.md" >}}
+{{< relref "libreoffice.md" >}}
+{{< relref "hybrid.md" >}}
 

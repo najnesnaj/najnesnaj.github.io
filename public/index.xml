@@ -12,7 +12,7 @@
       <link>http://localhost:1313/planb/index-doc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/planb/index-doc/</guid>
-      <description>Contents: /planb/planb/ /planb/lasuite/ /planb/lasuite-messagerie/ /planb/opendesk/ /planb/lasuite-vs-opendesk/ /planb/mijnbureau/ /planb/url/ /planb/clusterip/ /planb/os/ /planb/euos/ /planb/edic/ /planb/gaia/ /planb/sovereignty/ /planb/haven/ /planb/implement/</description>
+      <description>Contents: /planb/planb/ /planb/lasuite/ /planb/lasuite-messagerie/ /planb/opendesk/ /planb/lasuite-vs-opendesk/ /planb/mijnbureau/ /planb/url/ /planb/clusterip/ /planb/os/ /planb/euos/ /planb/edic/ /planb/gaia/ /planb/sovereignty/ /planb/haven/ /planb/implement/ /planb/openoffice/ /planb/libreoffice/ /planb/hybrid/</description>
     </item>
     <item>
       <title>the xz hack attempt </title>
@@ -526,6 +526,20 @@
       <description>To implement MijnBureau (the Dutch government&amp;rsquo;s open-source collaboration suite, also known as part of the OpenDesk ecosystem in the EDIC/DC-EDIC framework) on a Kubernetes cluster in Belgium, you have several strong, locally focused options.&#xA;MijnBureau/OpenDesk deploys via Infrastructure-as-Code (Helm charts or helmfile) on any standard CNCF-certified Kubernetes cluster (v1.24+). It works best on production-grade or &amp;ldquo;Haven-compliant&amp;rdquo; setups (a Dutch/EU security profile for public sector), but even lightweight options like K3s are supported with official guides.</description>
     </item>
     <item>
+      <title>libreoffice</title>
+      <link>http://localhost:1313/planb/libreoffice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/planb/libreoffice/</guid>
+      <description>Here&amp;rsquo;s a comparison between LibreOffice and Apache OpenOffice. Both are free, open-source office suites descended from the original OpenOffice.org, but they diverged significantly after the 2010 fork.&#xA;1. Development Activity &amp;amp; Future-Proofing LibreOffice: Actively developed with a large community (hundreds of contributors) and corporate backing (e.g., Collabora, Red Hat, allotropia). It receives major feature releases roughly every 6 months and frequent minor/security updates. As of early 2026, the latest major version is around 26.</description>
+    </item>
+    <item>
+      <title>openoffice</title>
+      <link>http://localhost:1313/planb/openoffice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/planb/openoffice/</guid>
+      <description>Apache OpenOffice* (latest version 4.1.16 as of November 2025) can serve as a practical, zero-cost intermediate step to wean users off Microsoft 365 on Windows. It gives you a fully offline, locally installed office suite (Writer, Calc, Impress, Draw, Base, Math) with no subscription, no telemetry, and no cloud lock-in.&#xA;Many teams use it exactly for this “bridge” phase: keep doing real work while you plan the longer-term move (often to LibreOffice, which is the actively developed fork and far better for full independence).</description>
+    </item>
+    <item>
       <title>ragflow</title>
       <link>http://localhost:1313/securesource/ragflow/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -566,6 +580,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/homelab/fan/</guid>
       <description>modify fan speed in proliant After inserting a Tesla P100 GPU, which has no fan, I monitored the temperature using “nvtop”. I noticed I went above 78 degrees celcius, causing it to throttle.&#xA;There is a method to change the ventilator speed in the BIOS. Switching it to performance is not a pleasent experience, as all fans turn at 100%.&#xA;usefull URL https://www.reddit.com/r/homelab/comments/hix44v/silence_of_the_fans_pt_2_hp_ilo_4_273_now_with/&#xA;https://www.reddit.com/r/homelab/comments/sx3ldo/hp_ilo4_v277_unlocked_access_to_fan_controls/&#xA;Patch ILO turn out there is a patched ILO rom.</description>
+    </item>
+    <item>
+      <title>hybrid</title>
+      <link>http://localhost:1313/planb/hybrid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/planb/hybrid/</guid>
+      <description>A hybrid approach — where roughly half your users run a free/open-source alternative (LibreOffice or OpenOffice) while the other half continue using Microsoft 365 — is entirely feasible and quite common during gradual transitions. Many organizations (including large ones like government departments) run mixed environments successfully for months or years.&#xA;How to Structure the Hybrid Setup Group Users by Role/Department (Recommended)&#xA;Assign the O365-alternative group to departments with simpler document needs (e.</description>
     </item>
     <item>
       <title>Laptop</title>
@@ -615,6 +636,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/ragflow/gvisor/</guid>
       <description>How InfiniFlow RAGFlow Uses gVisor InfiniFlow RAGFlow is an open-source RAG (Retrieval-Augmented Generation) engine that supports document understanding and LLM orchestration. To enhance security when executing untrusted or user-provided code (e.g., Python agents, dynamic data processing scripts, or custom tool functions), RAGFlow runs certain components inside isolated sandboxes.&#xA;gVisor Integration RAGFlow leverages gVisor as its primary sandboxing technology in containerized (Docker/Kubernetes) deployments.&#xA;What is gVisor? gVisor is an open-source project by Google that provides a user-space kernel (the Sentry component) and a lightweight virtual machine (runsc runtime).</description>
+    </item>
+    <item>
+      <title>nixos</title>
+      <link>http://localhost:1313/homelab/nixos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/nixos/</guid>
+      <description>this approach is one of the easiest and most declarative ways to get a fully configured NixOS VM (with K3s baked in) running on Proxmox. The nixos-generate -f proxmox command does exactly what you described: it turns a configuration.nix into a ready-to-import Proxmox .vma.zst backup file that you can restore as a VM. This is a supported format in nixos-generators and works great for repeatable, infrastructure-as-code style deployments.&#xA;You don’t even need to run the generator inside Proxmox — booting the NixOS live ISO (on any machine or as a temporary Proxmox VM) is perfect because it gives you a clean Nix environment with everything you need.</description>
     </item>
     <item>
       <title>ragflow-nix</title>

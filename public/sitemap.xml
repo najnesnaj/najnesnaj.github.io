@@ -150,6 +150,10 @@
   </url><url>
     <loc>http://localhost:1313/planb/implement/</loc>
   </url><url>
+    <loc>http://localhost:1313/planb/libreoffice/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/openoffice/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/ragflow/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/llama-cpp/</loc>
@@ -161,6 +165,8 @@
     <loc>http://localhost:1313/ragflow/multiple-models-llamacpp/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/fan/</loc>
+  </url><url>
+    <loc>http://localhost:1313/planb/hybrid/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/laptop/</loc>
   </url><url>
@@ -175,6 +181,8 @@
     <loc>http://localhost:1313/kubernetes/helmify/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/gvisor/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/nixos/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/ragflow-nix/</loc>
   </url><url>

@@ -102,6 +102,7 @@ contain the root `toctree` directive. -->
   * [Networking Architecture](SDA.md#networking-architecture)
   * [Control & Automation](SDA.md#control-automation)
   * [Benefits of This Architecture](SDA.md#benefits-of-this-architecture)
+* [install nixos on proxmox](nixos.md)
 
 # Indices and tables
 
