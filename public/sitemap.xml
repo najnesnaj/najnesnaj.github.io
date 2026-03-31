@@ -204,6 +204,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/index-doc/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/mijnbureau/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/podman/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/upload-document/</loc>

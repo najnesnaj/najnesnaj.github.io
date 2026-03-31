@@ -103,6 +103,8 @@ contain the root `toctree` directive. -->
   * [Control & Automation](SDA.md#control-automation)
   * [Benefits of This Architecture](SDA.md#benefits-of-this-architecture)
 * [install nixos on proxmox](nixos.md)
+* [install mijnbureau](mijnbureau.md)
+* [install mijnbureau](mijnbureau-laptop.md)
 
 # Indices and tables
 

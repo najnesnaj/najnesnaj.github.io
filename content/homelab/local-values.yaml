@@ -1,0 +1,37 @@
+global:
+  domain: "mijnbureau.local"
+  ingress:
+    enabled: true
+    className: "nginx"   # Kind usually uses this or traefik
+
+# Disable heavy/unneeded components
+ollama:
+  enabled: false
+livekit:
+  enabled: false
+grist:
+  enabled: false
+meet:
+  enabled: false
+element:
+  enabled: false
+openproject:
+  enabled: false
+conversations:
+  enabled: false
+docs:
+  enabled: false   # keep only if you want the extra docs component
+clamav:
+  enabled: false
+
+# Keep only the essentials
+keycloak:
+  enabled: true
+nextcloud:
+  enabled: true
+collabora:
+  enabled: true
+drive:
+  enabled: true
+bureaublad:
+  enabled: true
