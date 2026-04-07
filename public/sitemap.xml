@@ -216,6 +216,8 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/graphrag/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/mijnbureau-laptop/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/rebuild/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/scratch/</loc>

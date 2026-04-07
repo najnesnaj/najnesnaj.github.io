@@ -142,3 +142,13 @@ scp nixos-*.vma.zst root@192.168.0.143:/var/lib/vz/dump/
 
 on proxmox host
 qmrestore /var/lib/vz/dump/nixos-*.vma.zst 9000 --unique true
+
+
+
+====================================
+in the new virtual image is no configuration.nix
+you can create it using : 
+
+sudo nixos-generate-config
+
+this can be used as a basis for further installation

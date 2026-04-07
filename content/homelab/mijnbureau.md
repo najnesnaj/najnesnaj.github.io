@@ -157,3 +157,14 @@ You will then need to:
 4. Run `helmfile template` to see what will be deployed before applying.
 
 
+age-keygen -o keys.txt
+sops --encrypt --age age1vua29j6vf445hsw26jfvzz8vw3tn3yp0tlcdexkkwzduvje4h52qur5wus secrets.enc.yaml > secrets.yaml
+helmfile --file helmfile.yaml.gotmpl template --debug   (first debug to check for errors)
+export MIJNBUREAU_MASTER_PASSWORD=xxxxx
+
+
+QT_QPA_PLATFORM=offscreen helmfile --file helmfile.yaml.gotmpl template
+
+
+
+
