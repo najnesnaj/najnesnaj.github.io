@@ -1,4 +1,9 @@
-------------------------------
+---
+title: 'k3s'
+weight: 1100
+draft: false
+---
+
 ## NixOS K3s Setup op Proxmox: Troubleshooting & Configuratie
 Wanneer je een NixOS image bouwt met nixos-generate, bevat deze de gecompileerde software, maar vaak niet het /etc/nixos/configuration.nix bronbestand of de juiste bootloader-instellingen voor live wijzigingen.
 ## 1. De Basis Configuratie (/etc/nixos/configuration.nix)

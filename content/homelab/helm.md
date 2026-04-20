@@ -1,3 +1,14 @@
+---
+title: 'helm'
+weight: 1000
+draft: false
+---
+
+
+
+
+
+
 export MIJNBUREAU_MASTER_PASSWORD=passwoord
 helmfile sync -f helmfile.yaml.gotmpl --values $(pwd)/local-values.yaml
 

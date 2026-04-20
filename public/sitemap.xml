@@ -216,6 +216,8 @@
   </url><url>
     <loc>http://localhost:1313/ragflow/graphrag/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/helm/</loc>
+  </url><url>
     <loc>http://localhost:1313/homelab/mijnbureau-laptop/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/rebuild/</loc>
@@ -232,6 +234,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/container/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/k3s/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/certificates/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/mineru/</loc>
@@ -242,17 +246,25 @@
   </url><url>
     <loc>http://localhost:1313/securesource/native-container/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/pods/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/longhorn/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/web-design/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/ana-report/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/installed/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/services/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/virtual-machine/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/searxng/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/postgresql/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/services2/</loc>
   </url><url>
     <loc>http://localhost:1313/ragflow/homelab/</loc>
   </url><url>
@@ -265,6 +277,8 @@
     <loc>http://localhost:1313/securesource/bandit/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/coco/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/errors/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/azure-cli/</loc>
   </url><url>

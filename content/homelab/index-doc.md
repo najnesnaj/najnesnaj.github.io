@@ -105,6 +105,11 @@ contain the root `toctree` directive. -->
 * [install nixos on proxmox](nixos.md)
 * [install mijnbureau](mijnbureau.md)
 * [install mijnbureau](mijnbureau-laptop.md)
+* [pods](pods.md)
+* [installed](installed.md)
+* [services](services.md)
+* [services2](services2.md)
+* [errors](errors.md)
 
 # Indices and tables
 

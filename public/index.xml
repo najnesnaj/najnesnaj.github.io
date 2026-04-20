@@ -757,6 +757,13 @@
       <description>Graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ -&amp;gt; get dataset ID&#xA;curl -H “Authorization: Bearer ragflow-_FdZQN68Q1NgLLeLmKe-3qbGHv15fqXg2AfJRENBIIw” http://192.168.0.213/api/v1/datasets&#xA;reponse (json) {“code”:0,”data”:[{“avatar”:null,”chunk_count”:698,”chunk_method”:”paper”,”create_date”:”Tue, 28 Oct 2025 22:47:44 GMT”,”create_time”:1761662864024,”created_by”:”b61ff88eb40611f08d0f0242ac170006”,”description”:” “,”document_count”:6,”embedding_model”:”mxbai-embed-large:latest@Ollama”,”graphrag_task_finish_at”:null,”graphrag_task_id”:null,”id”:”0fbeb780b40d11f0bf690242ac170006”,”language”:”English”,”mindmap_task_finish_at”:null,”mindmap_task_id”:null,”name”:”testaankoop”,”pagerank”:15,”parser_config”:{“auto_keywords”:5,”auto_questions”:2,”chunk_token_num”:512,”delimiter”:”n”,”graphrag”:{“community”:true,”entity_types”:[“organization”,”person”,”geo”,”event”,”category”],”method”:”general”,”resolution”:true,”use_graphrag”:true},”html4excel”:false,”layout_recognize”:”DeepDOC”,”raptor”:{“max_cluster”:64,”max_token”:256,”prompt”:”Please summarize the following paragraphs. Be careful with the numbers, do not make things up. Paragraphs as following:n {cluster_content}nThe above is the content you need to summarize.”,”random_seed”:0,”scope”:”file”,”threshold”:0.1,”use_raptor”:true},”tag_kb_ids”:[],”toc_extraction”:false,”topn_tags”:3},”permission”:”me”,”pipeline_id”:””,”raptor_task_finish_at”:null,”raptor_task_id”:null,”similarity_threshold”:0.2,”status”:”1”,”tenant_id”:”b61ff88eb40611f08d0f0242ac170006”,”token_num”:90496,”update_date”:”Mon, 24 Nov 2025 23:09:25 GMT”,”update_time”:1763996965365,”vector_similarity_weight”:0.3}],”total_datasets”:1}&#xA;–&amp;gt; we need: testaankoop “id”:”0fbeb780b40d11f0bf690242ac170006”&#xA;graphrag curl –request POST –url http://{address}/api/v1/datasets/{dataset_id}/run_graphrag –header ‘Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;’ curl –request POST –url http://192.</description>
     </item>
     <item>
+      <title>helm</title>
+      <link>http://localhost:1313/homelab/helm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/helm/</guid>
+      <description>export MIJNBUREAU_MASTER_PASSWORD=passwoord helmfile sync -f helmfile.yaml.gotmpl &amp;ndash;values $(pwd)/local-values.yaml&#xA;helmfile -e demo sync -f helmfile.yaml.gotmpl &amp;ndash;values $(pwd)/local-values.yaml&#xA;(-e demo specifieren anders wordt postgresql niet geinstalleerd voor keycloak)&#xA;local-values.yaml aangepast wegens crashes (memory)&#xA;Essentiële componenten met geheugen-optimalisatie voor Keycloak keycloak: enabled: true&#xA;Voorkomt OOMKilled: Forceer JVM heap limieten extraEnvVars: - name: JAVA_OPTS value: &amp;ldquo;-Xms512m -Xmx1024m&amp;rdquo;&#xA;Kubernetes resource limieten resources: limits: memory: &amp;ldquo;1536Mi&amp;rdquo; requests: memory: &amp;ldquo;768Mi&amp;rdquo;&#xA;helmfile -e demo sync -f helmfile.yaml.gotmpl &amp;ndash;values $(pwd)/local-values.</description>
+    </item>
+    <item>
       <title>mijnbureau-laptop</title>
       <link>http://localhost:1313/homelab/mijnbureau-laptop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -813,6 +820,13 @@
       <description>Here are the two main ways to run an NGINX container on your NixOS system with Podman already enabled (via virtualisation.podman.enable = true; and friends).&#xA;1. The standard way (imperative / Podman CLI — same as on any Linux distro) This is the classic Podman command-line approach. It&amp;rsquo;s quick for testing and works identically to Docker.&#xA;# Pull the official NGINX image (alpine variant is small &amp;amp; common) podman pull docker.</description>
     </item>
     <item>
+      <title>k3s</title>
+      <link>http://localhost:1313/homelab/k3s/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/k3s/</guid>
+      <description>NixOS K3s Setup op Proxmox: Troubleshooting &amp;amp; Configuratie Wanneer je een NixOS image bouwt met nixos-generate, bevat deze de gecompileerde software, maar vaak niet het /etc/nixos/configuration.nix bronbestand of de juiste bootloader-instellingen voor live wijzigingen.&#xA;1. De Basis Configuratie (/etc/nixos/configuration.nix) Om nixos-rebuild werkend te krijgen in de VM, moet de configuratie de juiste bootloader en hardware-imports bevatten.&#xA;{ config, pkgs, &amp;hellip; }:&#xA;{ imports = [ ./hardware-configuration.nix ];&#xA;Bootloader voor Proxmox (VirtIO) boot.</description>
+    </item>
+    <item>
       <title>Certificates</title>
       <link>http://localhost:1313/kubernetes/certificates/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -848,6 +862,13 @@
       <description>There is a fully Nix-native way to run NGINX in isolation on NixOS without relying on any Alpine Linux (or any other foreign distro/image like the official nginx:alpine OCI image).&#xA;NixOS provides two main isolation mechanisms that stay entirely within the Nix ecosystem:&#xA;NixOS declarative containers (using boot.enableContainers = true; + containers.&amp;lt;name&amp;gt;)&#xA;→ These are lightweight systemd-nspawn containers running a full (but minimal) NixOS instance inside.&#xA;→ You configure NGINX exactly like on the host — using the native services.</description>
     </item>
     <item>
+      <title>pods</title>
+      <link>http://localhost:1313/homelab/pods/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/pods/</guid>
+      <description>Here&amp;rsquo;s the current situation after your reboot with more CPUs:&#xA;Progress Keycloak is now 1/1 Ready — great, the main app is healthy. Most databases (PostgreSQL, Redis) and core services like Meet, Grist, Element-web, Nextcloud (minio/redis/postgres) are Running. Several provisioning jobs have completed. Remaining Blockers ImagePullBackOff (biggest current issue)&#xA;docs-frontend, docs-y-provider livekit-server pods nextcloud (Init:ImagePullBackOff) collabora-online (one terminating, new one Pending) This is common on k3s + containerd (especially NixOS) after a reboot or when many images are pulled at once.</description>
+    </item>
+    <item>
       <title>Longhorn</title>
       <link>http://localhost:1313/kubernetes/longhorn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -869,6 +890,20 @@
       <description>ana-report (custom pod/svc) deploy-ana-report.yaml apiVersion: apps/v1 kind: Deployment metadata: name: nosql-ana-report namespace: default spec: replicas: 1 selector: matchLabels: app: nosql-ana-report template: metadata: labels: app: nosql-ana-report spec: containers: - name: nosql-ana-report image: 10.110.130.109:5000/nosql-ana-report:latest imagePullPolicy: Always env: - name: POSTGRES_HOST value: &amp;#34;postgres-postgresql.postgres.svc.cluster.local&amp;#34; - name: POSTGRES_PORT value: &amp;#34;5432&amp;#34; - name: POSTGRES_USER value: &amp;#34;myuser&amp;#34; - name: POSTGRES_PASSWORD value: &amp;#34;mypassword&amp;#34; - name: POSTGRES_DB value: &amp;#34;mydatabase&amp;#34; ports: - containerPort: 8001 # Adjust to the port your app uses securityContext: allowPrivilegeEscalation: false capabilities: drop: [&amp;#34;ALL&amp;#34;] runAsNonRoot: false seccompProfile: type: RuntimeDefault service.</description>
     </item>
     <item>
+      <title>installed</title>
+      <link>http://localhost:1313/homelab/installed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/installed/</guid>
+      <description>Your kubectl get pods -A output shows a mostly healthy cluster with many self-hosted services (Nextcloud, Synapse/Matrix, &amp;ldquo;docs&amp;rdquo; which looks like OnlyOffice/Collabora-related, Meet, Element, Grist, etc.). However, there are a few problematic pods in CrashLoopBackOff:&#xA;docs-nginx-658b8bc8d-9pwzl (namespace: default) — 0/1, CrashLoopBackOff, 7 restarts nextcloud-864d6c9854-9ts7h — 0/1, CrashLoopBackOff, 6 restarts nextcloud-cronjob-29611390-j45x5 — 0/1, CrashLoopBackOff, 4 restarts synapse-6b4b44fb94-ptk9m — 0/1, CrashLoopBackOff, 6 restarts All other pods (including most databases like PostgreSQL/Redis/MinIO, frontends, and system pods) are Running fine.</description>
+    </item>
+    <item>
+      <title>services</title>
+      <link>http://localhost:1313/homelab/services/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/services/</guid>
+      <description>kubectl get svc -n default NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE bureaublad-backend ClusterIP 10.43.186.230 80/TCP 3h3m bureaublad-frontend ClusterIP 10.43.108.163 80/TCP 3h3m bureaublad-redis-headless ClusterIP None 6379/TCP 3h3m bureaublad-redis-master ClusterIP 10.43.81.217 6379/TCP 3h3m collabora-online ClusterIP 10.43.242.247 9980/TCP 3h30m docs-minio ClusterIP 10.43.23.14 9000/TCP 3h5m docs-nginx ClusterIP 10.43.49.244 80/TCP,443/TCP 3h4m docs-postgresql ClusterIP 10.43.218.63 5432/TCP 3h5m docs-postgresql-hl ClusterIP None 5432/TCP 3h5m docs-redis-headless ClusterIP None 6379/TCP 3h5m docs-redis-master ClusterIP 10.43.67.8 6379/TCP 3h5m docs-static-nginx ClusterIP 10.43.25.75 80/TCP,443/TCP 3h5m element-postgresql ClusterIP 10.</description>
+    </item>
+    <item>
       <title>virtual machine</title>
       <link>http://localhost:1313/securesource/virtual-machine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -888,6 +923,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/kubernetes/postgresql/</guid>
       <description>PostgreSQL pre-requisites : Longhorn&#xA;Why We Need a Stateful Solution for PostgreSQL in Kubernetes (Using Longhorn) A stateful solution for PostgreSQL in Kubernetes, using Longhorn, is critical due to the unique requirements of stateful applications like databases. This document explains why such a solution is necessary and how Longhorn addresses these needs. Stateful Nature of PostgreSQL Data Persistence: PostgreSQL stores critical data (e.g., tables, schemas, transaction logs). Unlike stateless applications, it requires persistent storage to prevent data loss during pod restarts or rescheduling.</description>
+    </item>
+    <item>
+      <title>services2</title>
+      <link>http://localhost:1313/homelab/services2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/services2/</guid>
+      <description>kubectl get svc -n default NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE bureaublad-backend ClusterIP 10.43.186.230 80/TCP 3h56m bureaublad-frontend ClusterIP 10.43.108.163 80/TCP 3h56m bureaublad-redis-headless ClusterIP None 6379/TCP 3h56m bureaublad-redis-master ClusterIP 10.43.81.217 6379/TCP 3h56m collabora-online ClusterIP 10.43.242.247 9980/TCP 4h23m docs-minio ClusterIP 10.43.23.14 9000/TCP 3h58m docs-nginx ClusterIP 10.43.49.244 80/TCP,443/TCP 3h57m docs-postgresql ClusterIP 10.43.218.63 5432/TCP 3h58m docs-postgresql-hl ClusterIP None 5432/TCP 3h58m docs-redis-headless ClusterIP None 6379/TCP 3h58m docs-redis-master ClusterIP 10.43.67.8 6379/TCP 3h58m docs-static-nginx ClusterIP 10.43.25.75 80/TCP,443/TCP 3h58m element-cluster-rw ClusterIP 10.</description>
     </item>
     <item>
       <title>Homelab</title>
@@ -930,6 +972,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/securesource/coco/</guid>
       <description>Smals (through Smals Research) actively explores and promotes Confidential Containers (CoCo) as a practical solution for confidential computing in on-premise and sovereign IT environments — particularly for Belgian public-sector use cases.&#xA;From the March 17, 2026, Smals Research blog post you linked (&amp;ldquo;Je data beschermen tegen beheerders: ‘on-premise’ vertrouwelijke IT&amp;rdquo;), they explicitly discuss Confidential Containers (CoCo) as a key open-source technology to achieve this. Here&amp;rsquo;s a breakdown:&#xA;Smals&amp;rsquo; Position on CoCo They highlight CoCo as the recommended path for implementing confidential computing on-prem without relying on hyperscaler-specific services (e.</description>
+    </item>
+    <item>
+      <title>errors</title>
+      <link>http://localhost:1313/homelab/errors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/errors/</guid>
+      <description>kubectl get pods -A NAMESPACE NAME READY STATUS RESTARTS AGE default bureaublad-backend-5d8fd87894-gpxqx 1/1 Running 5 (37m ago) 3h52m default bureaublad-frontend-f47f68648-9wqgn 1/1 Running 3 (37m ago) 3h52m default bureaublad-redis-master-0 1/1 Running 3 (37m ago) 3h52m default collabora-online-f7b565658-pl6tv 1/1 Running 5 (35m ago) 3h32m default docs-minio-78d7fd6cb7-4g987 1/1 Running 7 (36m ago) 3h53m default docs-minio-provisioning-xgdt5 0/1 Completed 0 3h53m default docs-nginx-658b8bc8d-p27m7 0/1 CrashLoopBackOff 30 (8s ago) 117m default docs-postgresql-0 1/1 Running 4 (37m ago) 3h53m default docs-redis-master-0 1/1 Running 4 (37m ago) 3h53m default docs-static-nginx-f65c6fdf-j6225 1/1 Running 4 (37m ago) 3h53m default element-cluster-rw-0 1/1 Running 0 3m25s default element-redis-master-0 1/1 Running 4 (37m ago) 4h19m default element-web-cbc6fb6c7-58dq7 1/1 Running 4 (37m ago) 4h19m default grist-minio-6c95f9d67b-t56rs 1/1 Running 6 (36m ago) 13d default grist-minio-console-7fcdd87654-flvp4 1/1 Running 8 (37m ago) 13d default grist-minio-provisioning-jv6mh 0/1 Completed 0 4h21m default grist-postgresql-0 1/1 Running 8 (37m ago) 13d default grist-redis-master-0 1/1 Running 8 (37m ago) 13d default keycloak-cluster-rw-0 1/1 Running 0 23m default keycloak-keycloak-0 1/1 Running 1 (6m55s ago) 9m default livekit-redis-master-0 1/1 Running 4 (37m ago) 3h54m default livekit-server-29611500-kd7fh 0/1 Completed 0 51m default livekit-server-94cfdbb84-q4f66 1/1 Running 4 (36m ago) 171m default livekit-server-job-2nlkn 0/1 Completed 0 89s default meet-backend-56f8565f89-vrvmk 1/1 Running 0 3m51s default meet-cluster-rw-0 1/1 Running 0 3m54s default meet-frontend-55ff9cd986-pzl5n 1/1 Running 4 (37m ago) 4h19m default meet-migrate-j4dqz 0/1 Completed 0 3m51s default meet-redis-master-0 1/1 Running 4 (37m ago) 4h19m default meet-static-nginx-759bfbdf95-6d7bc 1/1 Running 4 (37m ago) 4h19m default meet-superuser-xjj5j 0/1 Completed 2 3m51s default nextcloud-864d6c9854-9ts7h 0/1 Error 41 (5m15s ago) 169m default nextcloud-cluster-rw-0 1/1 Running 0 2m35s default nextcloud-cronjob-29611550-qcp5x 0/1 CrashLoopBackOff 3 (29s ago) 83s default nextcloud-minio-657f9b9999-px6fx 1/1 Running 5 (36m ago) 4h18m default nextcloud-minio-console-b99c75845-dzkrw 1/1 Running 4 (37m ago) 4h18m default nextcloud-minio-provisioning-sfv4g 0/1 Completed 0 2m35s default nextcloud-redis-master-0 1/1 Running 4 (37m ago) 4h18m default synapse-6b4b44fb94-ptk9m 0/1 CrashLoopBackOff 39 (3m14s ago) 170m default synapse-keygen-gv4vb 0/1 Completed 0 3m21s kube-system coredns-67d69c9b5b-bh2pg 1/1 Running 10 (37m ago) 13d kube-system local-path-provisioner-546dfc6456-j44p2 1/1 Running 10 (37m ago) 13d kube-system metrics-server-7b9c9c4b9c-jnq8r 1/1 Running 10 (37m ago) 13d kube-system svclb-livekit-livekit-server-12f8090a-qcjxv 10/10 Running 30 (37m ago) 3h54m</description>
     </item>
     <item>
       <title>Azure Cli</title>
