@@ -40,3 +40,4 @@ draft: false
 {{< relref "coco.md" >}}
 {{< relref "opencve.md" >}}
 {{< relref "cve-comparison.md" >}}
+{{< relref "lix.md" >}}

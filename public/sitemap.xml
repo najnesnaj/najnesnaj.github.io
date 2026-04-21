@@ -294,11 +294,15 @@
   </url><url>
     <loc>http://localhost:1313/securesource/cve-comparison/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/local-install/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/proxmox/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/laptop/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/routing-table/</loc>
+  </url><url>
+    <loc>http://localhost:1313/securesource/lix/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</loc>
   </url><url>

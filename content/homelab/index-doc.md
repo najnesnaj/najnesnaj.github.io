@@ -110,6 +110,7 @@ contain the root `toctree` directive. -->
 * [services](services.md)
 * [services2](services2.md)
 * [errors](errors.md)
+* [install](local-install.md)
 
 # Indices and tables
 
