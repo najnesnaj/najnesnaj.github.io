@@ -304,6 +304,8 @@
   </url><url>
     <loc>http://localhost:1313/securesource/lix/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/solutions/</loc>
+  </url><url>
     <loc>http://localhost:1313/kubernetes/troubleshoot-kubernetes/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/links/</loc>

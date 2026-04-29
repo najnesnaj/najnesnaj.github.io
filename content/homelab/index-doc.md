@@ -112,6 +112,9 @@ contain the root `toctree` directive. -->
 * [errors](errors.md)
 * [install](local-install.md)
 * [solutions](solutions.md)
+* [redis](redis.md)
+* [demo-template](demo-template.md)
+* [demo-install](demo-install.md)
 
 # Indices and tables
 
