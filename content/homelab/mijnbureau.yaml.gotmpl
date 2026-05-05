@@ -1,0 +1,395 @@
+global:
+  domain: "icbr.prd1.gn2.quattro.rijksapps.nl"
+  resourcesPreset: "small"
+
+cluster:
+  networking:
+    podSubnet:
+      - "10.128.0.0/14"
+    serviceSubnet:
+      - "172.30.0.0/16"
+
+  ingress:
+    type: haproxy-openshift
+    annotations:
+      haproxy.router.openshift.io/ip_whitelist: 0.0.0.0/0
+
+authentication:
+  oidc:
+    issuer: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau
+    authorization_endpoint: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/auth
+    token_endpoint: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/token
+    introspection_endpoint: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/token/introspect
+    userinfo_endpoint: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/userinfo
+    end_session_endpoint: https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/logout
+    jwks_uri:	https://id.icbr.prd1.gn2.quattro.rijksapps.nl/realms/mijnbureau/protocol/openid-connect/certs
+
+security:
+  default:
+    containerSecurityContext:
+      enabled: false
+
+    podSecurityContext:
+      enabled: false
+
+container:
+  default:
+    registry: rcr.rijksapps.nl
+    imagePullSecret: dockerhub-icbr-robot-pull-secret
+
+  ollama:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/ollama/ollama
+
+  keycloak:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/bitnamilegacy/keycloak
+
+  keycloak_cli:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/bitnamilegacy/keycloak-config-cli
+
+  grist:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/gristlabs/grist"
+
+  minio:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/bitnamilegacy/minio
+
+  minio_shell:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/bitnamilegacy/os-shell"
+
+  minio_console:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/bitnamilegacy/minio-object-browser"
+
+  postgres:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/bitnamilegacy/postgresql"
+
+  redis:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/bitnamilegacy/redis
+
+  redis_exporter:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/bitnamilegacy/redis-exporter"
+
+  elementweb:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/vectorim/element-web
+
+  synapse:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/matrixdotorg/synapse
+
+  livekit_server:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/livekit/livekit-server"
+
+  nextcloud:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/library/nextcloud"
+
+  collabora:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/collabora/code"
+
+  osShell:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/bitnamilegacy/os-shell"
+
+  kubectl:
+    registry: rcr.rijksapps.nl
+    repository: dockerhub-icbr/bitnamilegacy/kubectl
+
+  meet_backend:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/lasuite/meet-backend"
+
+  meet_frontend:
+    registry: rcr.rijksapps.nl
+    repository: "dockerhub-icbr/lasuite/meet-frontend"
+
+  conversations_backend:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/lasuite/conversations-backend"
+  conversations_frontend:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/lasuite/conversations-frontend"
+
+  drive_backend:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/lasuite/drive-backend"
+  drive_frontend:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/lasuite/drive-frontend"
+
+  nginx:
+    registry: "rcr.rijksapps.nl"
+    repository: dockerhub-icbr/bitnamilegacy/nginx
+
+  docs:
+    imagePullSecret: ~
+    registry: "rcr.rijksapps.nl"
+    backend:
+      repository: "dockerhub-icbr/lasuite/impress-backend"
+    frontend:
+      repository: "dockerhub-icbr/lasuite/impress-frontend"
+    yProvider:
+      repository: "dockerhub-icbr/lasuite/impress-y-provider"
+
+  bureaublad:
+    imagePullSecret: ghcr-icbr-robot-pull-secret
+    registry: "rcr.rijksapps.nl"
+    backend:
+      repository: "ghcr-icbr/minbzk/bureaublad-api"
+    frontend:
+      repository: "ghcr-icbr/minbzk/bureaublad-frontend"
+
+  clamav:
+    registry: "rcr.rijksapps.nl"
+    repository: "dockerhub-icbr/clamav/clamav"
+
+application:
+  grist:
+    enabled: false
+    namespace: icbr-poc-grist
+
+  ollama:
+    enabled: false
+    namespace: icbr-poc-ollama
+
+  keycloak:
+    enabled: false
+    namespace: icbr-poc-id
+
+  openproject:
+    enabled: false
+    namespace: icbr-poc-openproject
+
+  element:
+    enabled: false
+    namespace: icbr-poc-element
+
+  nextcloud:
+    enabled: false
+    namespace: icbr-poc-nextcloud
+
+  collabora:
+    enabled: false
+    namespace: icbr-poc-collabora
+    enableInsecureCoolWSD: true
+
+  livekit:
+    enabled: false
+    namespace: icbr-poc-livekit
+    loadBalancerIP: 147.181.48.73
+
+  meet:
+    enabled: false
+    namespace: icbr-poc-meet
+
+  conversations:
+    enabled: false
+    namespace: icbr-poc-conversations
+
+  docs:
+    enabled: true
+    namespace: icbr-poc-docs
+
+  bureaublad:
+    enabled: false
+    namespace: icbr-poc-dashboard
+
+  drive:
+    enabled: false
+    namespace: icbr-poc-drive
+
+  clamav:
+    enabled: false
+    namespace: icbr-poc-berry
+
+  docspec:
+    imagePullSecret: ghcr-icbr-robot-pull-secret
+    registry: "rcr.rijksapps.nl"
+    repository: "ghcr-icbr/docspecio/api"
+    tag: "2.6.3"
+
+tls:
+  keycloak:
+    - {}
+  grist:
+    - {}
+  synapse:
+    - {}
+  element:
+    - {}
+  collabora:
+    - {}
+  nextcloud:
+    - {}
+  openproject:
+    - {}
+  livekit:
+    - {}
+  meet:
+    - {}
+  conversations:
+    - {}
+  docs:
+    - {}
+  bureaublad:
+    - {}
+  drive:
+    - {}
+
+autoscaling:
+  horizontal:
+    docs:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    nextcloud:
+      minReplicas: 1
+    meet:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    conversations:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    bureaublad:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    drive:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    livekit:
+      minReplicas: 1
+      maxReplicas: 1
+  vertical:
+    synapse:
+      master:
+        enabled: true
+
+ai:
+  llm:
+    model: ubiops-deployment/bzk-openbsw-mistralmedium-flexibel//chat-model
+    endpoint:
+      host: api.demo.vlam.ai/v2.1/projects/poc/openai-compatible/v1
+      port: 443
+      openApiVersion: "v1"
+      isSsl: true
+      isInternal: false
+
+resource:
+  keycloak:
+    keycloak:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+  collabora:
+    requests:
+      cpu: 1
+      memory: "2Gi"
+    limits:
+      cpu: 2
+      memory: "4Gi"
+  synapse:
+    master:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+  nextcloud:
+    nextcloud:
+      requests:
+        memory: 1Gi
+        cpu: 1
+      limits:
+        memory: 2Gi
+        cpu: 2
+  livekit:
+    livekit:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+  conversations:
+    conversationsBackend:
+      limits:
+        cpu: 600m
+        ephemeral-storage: 2Gi
+        memory: 1Gi
+      requests:
+        cpu: 400m
+        ephemeral-storage: 50Mi
+        memory: 512Mi
+  docs:
+    backend:
+      requests:
+        cpu: 1
+        memory: 1Gi
+      limits:
+        cpu: 2
+        memory: 2Gi
+
+pvc:
+  nextcloud:
+    nextcloud:
+      storageClass: ocs-storagecluster-cephfs
+      size: 1Gi
+      accessModes:
+       - ReadWriteMany
+    minio:
+      size: 128Gi
+  docs:
+    minio:
+      size: 64Gi
+  drive:
+    minio:
+      size: 128Gi
+  grist:
+    minio:
+      size: 32Gi
+
+livekit:
+  meet:
+    apiKey: apikey
+    apiURL: https://livekit.icbr.prd1.gn2.quattro.rijksapps.nl
+
+metric:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+  prometheusRule:
+    enabled: false
+
+smtp:
+  from:
+    email: openbsw-noreply@rijkscloud.nl
+  host: "mail.rijkscloud.nl"
+  port: 587
+  tls:
+    enabled: true
+    force: false
+    requireTransportSecurity: false
+  username: "openbsw-noreply@rijkscloud.nl"
