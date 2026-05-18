@@ -1,0 +1,93 @@
+https://bureaublad.kubernetes.local/api/v1/auth/callback?state=Ep6QkxKBoZ2nvEUq2UVZIOoig4P8vi&session_state=c5fbb9e0-34b6-4a6d-9cf2-b1ba05a6f0c4&iss=https%3A%2F%2Fid.kubernetes.local%2Frealms%2Fmijnbureau&code=060dfd96-945c-4b25-92b0-a2ef7937fe32.c5fbb9e0-34b6-4a6d-9cf2-b1ba05a6f0c4.c38bac14-6603-4b91-9126-69da76e13696
+
+Login failed
+Authentication failed. Please try again.
+
+https://id.kubernetes.local/realms/mijnbureau/broker/oidc/endpoint
+
+
+kubectl get ingresses -A
+NAMESPACE   NAME                  CLASS     HOSTS                          ADDRESS         PORTS   AGE
+default     bureaublad            traefik   bureaublad.kubernetes.local    192.168.0.216   80      28d
+default     collabora-online      <none>    collabora.kubernetes.local     192.168.0.216   80      28d
+default     docs                  traefik   docs.kubernetes.local          192.168.0.216   80      14d
+default     docs-backend-admin    traefik   docs.kubernetes.local          192.168.0.216   80      14d
+default     docs-media            traefik   docs.kubernetes.local          192.168.0.216   80      14d
+default     docs-static-nginx     traefik   static-docs.kubernetes.local   192.168.0.216   80      28d
+default     docs-y-provider-api   traefik   docs.kubernetes.local          192.168.0.216   80      14d
+default     docs-y-provider-ws    traefik   docs.kubernetes.local          192.168.0.216   80      14d
+default     element-web           traefik   element.kubernetes.local       192.168.0.216   80      28d
+default     keycloak-keycloak     traefik   id.kubernetes.local            192.168.0.216   80      41d
+default     livekit-server        <none>    livekit.kubernetes.local       192.168.0.216   80      28d
+default     meet                  traefik   meet.kubernetes.local          192.168.0.216   80      28d
+default     meet-static-nginx     traefik   static-meet.kubernetes.local   192.168.0.216   80      28d
+default     nextcloud             traefik   nextcloud.kubernetes.local     192.168.0.216   80      28d
+default     synapse               traefik   matrix.kubernetes.local        192.168.0.216   80      28d
+
+http://element.kubernetes.local/#/login
+
+Can't connect to homeserver - please check your connectivity, ensure your homeserver's SSL certificate is trusted, and that a browser extension is not blocking requests.
+Cannot reach homeserver
+Ensure you have a stable internet connection, or get in touch with the server admin
+Homeserver
+matrix.kubernetes.local
+
+===> matrix server is synapse pod -- 
+https://matrix.kubernetes.local/
+404 page not found
+
+
+
+Server Error (500)
+https://docs.kubernetes.local/api/v1.0/callback/?state=CkbKPCOnBGljcYfOgfIi9u0FhCwgfkEZ&session_state=a337ec5e-084f-4a89-904d-0c3d68fada61&iss=https%3A%2F%2Fid.kubernetes.local%2Frealms%2Fmijnbureau&code=0d2a5823-9399-4be3-a834-67818db79390.a337ec5e-084f-4a89-904d-0c3d68fada61.437d37c0-8bae-4abc-933c-3666f02a6de8
+
+2026-05-18 14:19:53,565 request.summary INFO 
+INFO:     10.42.0.1:57938 - "GET /__lbheartbeat__ HTTP/1.1" 200 OK
+2026-05-18 14:20:00,005 dockerflow.checks.registry INFO dockerflow.health.I001: Can't connect to database to check migrations
+2026-05-18 14:20:00,006 request.summary INFO 
+INFO:     10.42.0.1:57948 - "GET /__heartbeat__ HTTP/1.1" 200 OK
+
+kubectl get secret -n default -l app.kubernetes.io/name=postgresql --show-labels
+NAME                   TYPE     DATA   AGE     LABELS
+docs-cluster-rw        Opaque   2      14d     app.kubernetes.io/instance=docs-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+element-cluster-rw     Opaque   2      28d     app.kubernetes.io/instance=element-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/part-of=synapse,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+grist-cluster-rw       Opaque   2      3h57m   app.kubernetes.io/instance=grist-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+keycloak-cluster-rw    Opaque   2      19d     app.kubernetes.io/instance=keycloak-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+meet-cluster-rw        Opaque   2      28d     app.kubernetes.io/instance=meet-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+nextcloud-cluster-rw   Opaque   2      28d     app.kubernetes.io/instance=nextcloud-postgresql,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=postgresql,app.kubernetes.io/version=17.5.0,helm.sh/chart=postgresql-16.7.18
+
+Recommended fix (as I suggested earlier)Grant proper rights to the application user. Replace placeholders with your actual values:sql
+
+GRANT ALL PRIVILEGES ON DATABASE <dbname> TO <app_db_user>;
+
+GRANT USAGE, CREATE ON SCHEMA public TO <app_db_user>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO <app_db_user>;
+
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO <app_db_user>;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO <app_db_user>;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+  GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO <app_db_user>;
+
+
+
+
+
+=====================
+https://nextcloud.kubernetes.local/
+Error
+
+    Configuration was not read or initialized correctly, not overwriting /var/www/html/config/config.php
+------------------------------------------------------------------------------------------------------------------
+
+ helmfile -e demo -l name=openproject sync -f helmfile.yaml.gotmpl
+Adding repo openproject https://charts.openproject.org
+"openproject" has been added to your repositories
+
+err: no releases found that matches specified selector(name=openproject) and environment(demo), in any helmfile
+
+
+
