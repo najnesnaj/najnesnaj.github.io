@@ -89,5 +89,33 @@ Adding repo openproject https://charts.openproject.org
 
 err: no releases found that matches specified selector(name=openproject) and environment(demo), in any helmfile
 
+-------------------------------------------
+postgres in demo installed : 
+kubectl get secret docs-cluster-rw -n default -o jsonpath='{.data}'
+{"password":"Nzk5OGI2ODc3NWUxMTM1N2Y2MDQwZWY4NTEwNzliMTU2YzZlNmNkYw==","postgres-password":"ZTUzODAwYmI4ZmRjMzQwYzcyNDAyNGE0YzA1ODczOGJkYjAyOWRkMg=="}
+[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl get pods -n default -l app.kubernetes.io/name=postgresql,app.kubernetes.io/instance=docs-postgresql
+NAME                READY   STATUS    RESTARTS         AGE
+docs-cluster-rw-0   1/1     Running   18 (3h33m ago)   14d
+
+[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl exec -it docs-cluster-rw-0 -n default -- psql -U postgres
+Password for user postgres: 
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  password authentication failed for user "postgres"
+command terminated with exit code 2
+
+[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl exec -it docs-cluster-rw-0 -n default -- psql -U postgres
+Password for user postgres: 
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  password authentication failed for user "postgres"
+command terminated with exit code 2
+
+[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl exec -it docs-cluster-rw-0 -n default -- psql -U postgres
+Password for user postgres: 
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  password authentication failed for user "postgres"
+command terminated with exit code 2
+
+[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl exec -it docs-cluster-rw-0 -n default -- psql -U postgres
+Password for user postgres: 
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  password authentication failed for user "postgres"
+command terminated with exit code 2
+
 
 

@@ -2,11 +2,20 @@
 <h1>Welcome to {{ .Site.Title }}</h1>
 
 <div class="tabs">
-  <button class="tab-btn active" data-target="securesource">SecureSource</button>
+  <button class="tab-btn active" data-target="mijnbureau">MijnBureau</button>
+  <button class="tab-btn" data-target="securesource">SecureSource</button>
   <button class="tab-btn" data-target="planb">planb</button>
   <button class="tab-btn" data-target="ragflow">Ragflow</button>
   <button class="tab-btn" data-target="kubernetes">Kubernetes</button>
   <button class="tab-btn" data-target="homelab">Homelab</button>
+</div>
+
+<div id="mijnbureau" class="tab-content active">
+  <ul>
+  {{ range where .Site.RegularPages "Section" "mijnbureau" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
 </div>
 
 <div id="securesource" class="tab-content active">

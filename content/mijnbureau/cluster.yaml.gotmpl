@@ -1,0 +1,36 @@
+---
+### This file contains all the kubernetes cluster-wide settings, please edit it to match your environment.
+cluster:
+  networking:
+    domain: cluster.local
+    podSubnet:
+      - "10.42.0.0/16"
+    serviceSubnet:
+      - "10.43.0.1/12"
+
+  # routingMode selects the routing technology.
+  # Allowed values: ingress, gateway-api, none.
+  # For ingress mode, set cluster.ingress.type to nginx or haproxy-openshift, traefik
+  routingMode: ingress
+
+  ingress:                # ingress config (used when routingMode = ingress)
+    type: traefik         # nginx or haproxy-openshift, traefik
+    className: traefik 
+    # Annotations applied to every Ingress resource.
+    #annotations: ~ 
+    annotations:  
+      traefik.ingress.kubernetes.io/router.middlewares: "kube-system-hsts-header@kubernetescrd"  
+
+  gateway:                # Gateway API config (used when routingMode = gateway-api)
+    name: mijnbureau-gateway
+    namespace: ~   # defaults to same namespace as the route
+    className: ~   # gatewayClassName for the Gateway resource
+    certManagerClusterIssuer: ~
+    # allowedRoutesNamespacesFrom controls which namespaces may attach HTTPRoutes to the Gateway.
+    # Defaults to "All" because MijnBureau supports per-app namespaces.
+    # For shared/production clusters consider "Selector" with an appropriate namespace label.
+    allowedRoutesNamespacesFrom: ~
+    # Annotations applied to every HTTPRoute resource.
+    annotations: ~
+  # Runtime class name for sandbox technology such as gvisor or kata
+  runtimeClassName: ""

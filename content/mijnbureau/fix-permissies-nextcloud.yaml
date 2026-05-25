@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fix-nextcloud-permissions
+  namespace: default
+spec:
+  containers:
+  - name: fixer
+    image: busybox
+    # We zetten de rechten op 750 of 755 (minder open dan 777) en de juiste eigenaar
+    command: ["sh", "-c", "chown -R 1001:1001 /data && chmod -R 755 /data && ls -ld /data"]
+    volumeMounts:
+    - name: nextcloud-vol
+      mountPath: /data
+  volumes:
+  - name: nextcloud-vol
+    persistentVolumeClaim:
+      claimName: nextcloud-data # Controleer of dit klopt met 'kubectl get pvc'
+  restartPolicy: Never
+

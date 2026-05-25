@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fix-nextcloud-permissions
+  namespace: default
+spec:
+  containers:
+  - name: fixer
+    image: busybox
+    command: ["sh", "-c", "chmod 755 /data/config && chown -R 1001:1001 /data/config && ls -ld /data/config"]
+    volumeMounts:
+    - name: nextcloud-data
+      mountPath: /data
+      subPath: root # We mounten de root van het volume
+  volumes:
+  - name: nextcloud-data
+    persistentVolumeClaim:
+      claimName: nextcloud-data # Controleer met 'kubectl get pvc' of dit de juiste naam is
+  restartPolicy: Never
+

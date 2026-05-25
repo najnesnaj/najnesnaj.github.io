@@ -184,6 +184,8 @@
   </url><url>
     <loc>http://localhost:1313/homelab/nixos/</loc>
   </url><url>
+    <loc>http://localhost:1313/mijnbureau/nixos/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/ragflow-nix/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/talos/</loc>
@@ -203,6 +205,8 @@
     <loc>http://localhost:1313/ragflow/upgrade/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/index-doc/</loc>
+  </url><url>
+    <loc>http://localhost:1313/mijnbureau/index-doc/</loc>
   </url><url>
     <loc>http://localhost:1313/homelab/mijnbureau/</loc>
   </url><url>
@@ -322,6 +326,26 @@
   </url><url>
     <loc>http://localhost:1313/kubernetes/prometheus/</loc>
   </url><url>
+    <loc>http://localhost:1313/homelab/redis/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/demo-install/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/demo-template/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/bureaublad/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/changes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/docs/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/hsts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/ingress/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/keycloak/</loc>
+  </url><url>
+    <loc>http://localhost:1313/homelab/token/</loc>
+  </url><url>
     <loc>http://localhost:1313/securesource/app-armor/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
@@ -333,6 +357,8 @@
     <loc>http://localhost:1313/securesource/index-doc/</loc>
   </url><url>
     <loc>http://localhost:1313/kubernetes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/mijnbureau/</loc>
   </url><url>
     <loc>http://localhost:1313/securesource/screening/</loc>
   </url><url>

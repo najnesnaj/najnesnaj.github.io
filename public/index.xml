@@ -645,6 +645,13 @@
       <description>this approach is one of the easiest and most declarative ways to get a fully configured NixOS VM (with K3s baked in) running on Proxmox. The nixos-generate -f proxmox command does exactly what you described: it turns a configuration.nix into a ready-to-import Proxmox .vma.zst backup file that you can restore as a VM. This is a supported format in nixos-generators and works great for repeatable, infrastructure-as-code style deployments.&#xA;You don’t even need to run the generator inside Proxmox — booting the NixOS live ISO (on any machine or as a temporary Proxmox VM) is perfect because it gives you a clean Nix environment with everything you need.</description>
     </item>
     <item>
+      <title>nixos</title>
+      <link>http://localhost:1313/mijnbureau/nixos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/mijnbureau/nixos/</guid>
+      <description>this approach is one of the easiest and most declarative ways to get a fully configured NixOS VM (with K3s baked in) running on Proxmox. The nixos-generate -f proxmox command does exactly what you described: it turns a configuration.nix into a ready-to-import Proxmox .vma.zst backup file that you can restore as a VM. This is a supported format in nixos-generators and works great for repeatable, infrastructure-as-code style deployments.&#xA;You don’t even need to run the generator inside Proxmox — booting the NixOS live ISO (on any machine or as a temporary Proxmox VM) is perfect because it gives you a clean Nix environment with everything you need.</description>
+    </item>
+    <item>
       <title>ragflow-nix</title>
       <link>http://localhost:1313/securesource/ragflow-nix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -713,6 +720,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/homelab/index-doc/</guid>
       <description>Welcome to proxmox-dox’s documentation! Contents: intro homelab software Upgrading homelab HP DL 380p latest BIOS M2 disk drive Sata Bootconfig AVX nvme Where can I find more Templates? reading data from USB stick create a mp on CT (container02) transfer to CT (name = container02) ramdisk Can I use RAM as a disk? speedtest sharing a directory for LXC modify the lxc on PVE modify the lxc config moving a LXC container nfs network between linux containers set up a bridge define an extra network interface in range 10.</description>
+    </item>
+    <item>
+      <title>Index</title>
+      <link>http://localhost:1313/mijnbureau/index-doc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/mijnbureau/index-doc/</guid>
+      <description> Welcome to mijnbureau setup! Contents: install nixos on proxmox install mijnbureau install mijnbureau pods installed services services2 errors install solutions redis demo-template demo-install Indices and tables </description>
     </item>
     <item>
       <title>mijnbureau</title>
@@ -1126,6 +1140,76 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/kubernetes/prometheus/</guid>
       <description>prometheus 2061 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 2062 helm repo update 2063 kubectl create namespace monitoring 2064 vi prometeus-values.yaml 2065 helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring –values prometheus-values.yaml 2066 ls 2067 mv prometeus-values.yaml prometheus-values.yaml 2068 helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring –values prometheus-values.yaml apiVersion: networking.k8s.io/v1 kind: Ingress metadata:&#xA;name: grafana-ingress namespace: monitoring&#xA;spec: rules: host: grafana.your-domain.com http: paths: path: / pathType: Prefix backend: service: name: prometheus-grafana port: number: 80&#xA;NOTES: kube-prometheus-stack has been installed.</description>
+    </item>
+    <item>
+      <title>redis</title>
+      <link>http://localhost:1313/homelab/redis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/redis/</guid>
+      <description>Hier is een duidelijke uitleg van wat je ziet in de output:&#xA;Samenvatting Je hebt zojuist een Helm upgrade uitgevoerd van je applicatie &amp;ldquo;bureaublad&amp;rdquo;.&#xA;Als onderdeel van die upgrade is ook de Redis dependency geüpdatet (of opnieuw geïnstalleerd).&#xA;Stap-voor-stap uitleg 1. Hoe je het Redis-wachtwoord ophaalt export REDIS_PASSWORD=$(kubectl get secret --namespace default bureaublad-redis -o jsonpath=&amp;#34;{.data.redis-password}&amp;#34; | base64 -d) Uitleg:&#xA;Dit commando haalt het gegenereerde wachtwoord van Redis op uit een Kubernetes Secret en zet het in de environment variable REDIS_PASSWORD.</description>
+    </item>
+    <item>
+      <title>demo-install</title>
+      <link>http://localhost:1313/homelab/demo-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/demo-install/</guid>
+      <description>helmfile -e demo sync -f helmfile.yaml.gotmpl Listing releases matching ^gateway$ Building dependency release=keycloak-keycloak, chart=charts/keycloak Hang tight while we grab the latest from your chart repositories&amp;hellip; &amp;hellip;Successfully got an update from the &amp;ldquo;openproject&amp;rdquo; chart repository Update Complete. ⎈Happy Helming!⎈ Saving 2 charts Deleting outdated charts&#xA;Building dependency release=keycloak-postgresql, chart=../common/charts/postgresql Hang tight while we grab the latest from your chart repositories&amp;hellip; &amp;hellip;Successfully got an update from the &amp;ldquo;openproject&amp;rdquo; chart repository Update Complete. ⎈Happy Helming!</description>
+    </item>
+    <item>
+      <title>demo-template</title>
+      <link>http://localhost:1313/homelab/demo-template/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/demo-template/</guid>
+      <description>helmfile -e demo template&#xA;Source: postgresql/templates/primary/networkpolicy.yaml kind: NetworkPolicy apiVersion: networking.k8s.io/v1 metadata: name: keycloak-cluster-rw namespace: &amp;ldquo;default&amp;rdquo; labels: app.kubernetes.io/instance: keycloak-postgresql app.kubernetes.io/managed-by: Helm app.kubernetes.io/name: postgresql app.kubernetes.io/version: 17.5.0 helm.sh/chart: postgresql-16.7.18 app.kubernetes.io/component: primary spec: podSelector: matchLabels: app.kubernetes.io/instance: keycloak-postgresql app.kubernetes.io/name: postgresql app.kubernetes.io/component: primary policyTypes: - Ingress - Egress egress: # Allow dns resolution - ports: - port: 53 protocol: UDP - port: 53 protocol: TCP # Allow outbound connections to read-replicas - ports: - port: 5432 to: - podSelector: matchLabels: app.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/bureaublad/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/bureaublad/</guid>
+      <description>This is an OpenID Connect (OIDC) Authorization Request (specifically the Authorization Code Flow with PKCE).&#xA;Breakdown of the URL Base Endpoint:&#xA;https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth This is the standard Keycloak authorization endpoint format:&#xA;id.kubernetes.local → Internal Kubernetes DNS name for the identity provider (likely Keycloak). realms/mijnbureau → The specific Keycloak Realm (tenant/isolated environment) named mijnbureau. Query Parameters Analysis Parameter Value Meaning response_type=code code Authorization Code Flow. The client will receive an authorization code that it later exchanges for tokens.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/changes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/changes/</guid>
+      <description>in values.yaml oicd=true helmfile -e demo -l name=nextcloud sync -f helmfile.yaml.gotmpl</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/docs/</guid>
+      <description>This is a separate database permissions issue in the createsuperuser Job.&#xA;Problem The PostgreSQL user your Django app uses does not have sufficient privileges on the impress_user table (and probably other tables).&#xA;The custom createsuperuser command is trying to query UserModel.objects.get(...) but gets blocked by PostgreSQL permissions.&#xA;Quick Fix Run these commands (replace your-db-user with the actual username your app uses, e.g. docs or impress):&#xA;-- Connect as a superuser (postgres) to the database psql -U postgres -d &amp;lt;your-database-name&amp;gt; -- Grant proper permissions GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO your-db-user; GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO your-db-user; GRANT ALL PRIVILEGES ON SCHEMA public TO your-db-user; -- For future tables ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO your-db-user; ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO your-db-user; Better Long-term Solution (Recommended) The proper way in Kubernetes / production setups is to ensure the database user has the right role at creation time, or run migrations as a more privileged user.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/hsts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/hsts/</guid>
+      <description>COMBINED OUTPUT: Error: UPGRADE FAILED: Unable to continue with update: Middleware &amp;ldquo;hsts-header&amp;rdquo; in namespace &amp;ldquo;default&amp;rdquo; exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key &amp;ldquo;meta.helm.sh/release-name&amp;rdquo; must equal &amp;ldquo;bureaublad&amp;rdquo;: current value is &amp;ldquo;nextcloud&amp;rdquo;&#xA;[root@nixos:/home/nixie/mijn-bureau-infra]# history | grep hsts 502 find ./ | xargs grep hsts &amp;gt; jj 526 history | grep hsts&#xA;[root@nixos:/home/nixie/mijn-bureau-infra]# kubectl delete middleware hsts-header -n default middleware.traefik.io &amp;ldquo;hsts-header&amp;rdquo; deleted from default namespace</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/ingress/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/ingress/</guid>
+      <description>https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth?response_type=code&amp;amp;client_id=bureaublad&amp;amp;redirect_uri=https%3A%2F%2Fbureaublad.kubernetes.local%2Fapi%2Fv1%2Fauth%2Fcallback&amp;amp;scope=openid+email+profile&amp;amp;state=3lTkRchiyeRYvnMijZCOQ1UIqrniUG&amp;amp;nonce=Tk86IO6EQina05TGIFXd&amp;amp;code_challenge=2vXgtneT11ILKRzZFicYpQCA-ydxv0BxHB621AF2Itc&amp;amp;code_challenge_method=S256&#xA;=&amp;gt; login failed (Authentication failed)&#xA;https://docs.kubernetes.local/api/v1.0/authenticate/ {&amp;ldquo;error&amp;rdquo;:&amp;ldquo;Network is unavailable.&amp;rdquo;}&#xA;https://nextcloud.kubernetes.local/ Configuration was not read or initialized correctly, not overwriting /var/www/html/config/config.php&#xA;https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth?response_type=code&amp;amp;client_id=bureaublad&amp;amp;redirect_uri=https%3A%2F%2Fbureaublad.kubernetes.local%2Fapi%2Fv1%2Fauth%2Fcallback&amp;amp;scope=openid+email+profile&amp;amp;state=Natdy0LDmQo0PF5ojJBIVy6SIPjwks&amp;amp;nonce=QeAWbJV2rCCiUWUjiWVp&amp;amp;code_challenge=evZUf9E4BnulhKVViSt_tR5_F6a8jf_UrZ4s4j-zDP0&amp;amp;code_challenge_method=S256&#xA;https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth?response_type=code&amp;amp;client_id=bureaublad&amp;amp;redirect_uri=https%3A%2F%2Fbureaublad.kubernetes.local%2Fapi%2Fv1%2Fauth%2Fcallback&amp;amp;scope=openid+email+profile&amp;amp;state=Natdy0LDmQo0PF5ojJBIVy6SIPjwks&amp;amp;nonce=QeAWbJV2rCCiUWUjiWVp&amp;amp;code_challenge=evZUf9E4BnulhKVViSt_tR5_F6a8jf_UrZ4s4j-zDP0&amp;amp;code_challenge_method=S256 https://bureaublad.kubernetes.local/login?error=authentication_failed OIDC_AUTHORIZATION_ENDPOINT=https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth&#xA;kubectl annotate middleware hsts-header -n default meta.helm.sh/release-name=nextcloud &amp;ndash;overwrite&#xA;kubectl edit ingress nextcloud -n default ingress.networking.k8s.io/nextcloud edited Verwijder de middleware-annotatie: traefik.ingress.kubernetes.io/router.middlewares: default-hsts-header@kubernetescrd&#xA;kubectl get ingress -A NAMESPACE NAME CLASS HOSTS ADDRESS PORTS AGE default bureaublad bureaublad.kubernetes.local 192.168.0.216 80 15d default collabora-online collabora.kubernetes.local 192.168.0.216 80 15d default docs traefik docs.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/keycloak/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/keycloak/</guid>
+      <description>keycloak-login admin kubectl get secret keycloak-keycloak -n default -o jsonpath=&amp;quot;{.data.admin-password}&amp;quot; | base64 -d 4324842ed6cc25b556e6a074001e1888bf99393d</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/homelab/token/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/homelab/token/</guid>
+      <description>✅ Now I see the exact problem.&#xA;Your app is correctly fetching (or being configured with) the OIDC discovery document, but every single endpoint uses the hostname id.kubernetes.local, which is not resolvable from inside your application pod.&#xA;Root Cause The Keycloak/IdP is exposing its internal Kubernetes hostname. Your app (running in another pod) cannot resolve id.kubernetes.local. When Authlib tries to call the token_endpoint during the callback → Name or service not known.</description>
     </item>
     <item>
       <title>app armour on ragflow</title>
