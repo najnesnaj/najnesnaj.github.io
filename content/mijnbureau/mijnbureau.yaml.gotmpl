@@ -1,0 +1,257 @@
+global:
+  domain: "kubernetes.local"
+  resourcesPreset: "small"
+
+cluster:
+  networking:
+    podSubnet:
+      - "10.42.0.0/16"
+    serviceSubnet:
+      - "10.43.0.0/12"
+
+  ingress:
+    type: traefik 
+    className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: "default-hsts-header@kub
+ernetescrd"
+authentication:
+  oidc:
+    # Interne URL — gebruik http omdat de Keycloak service op poort 80 draait
+    issuer: "https://id.kubernetes.local/realms/mijnbureau"
+  
+    #authorization_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth"
+    authorization_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/auth"
+    token_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token"
+    #token_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token"
+    userinfo_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/userinfo"
+    introspection_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token/introspect"
+    end_session_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/logout"
+    jwks_uri: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/certs"
+  
+
+security:
+  default:
+    containerSecurityContext:
+      enabled: false
+
+    podSecurityContext:
+      enabled: false
+
+application:
+  grist:
+    enabled: false
+    namespace: icbr-poc-grist
+
+  ollama:
+    enabled: false
+    namespace: icbr-poc-ollama
+
+  keycloak:
+    enabled: false
+    namespace: icbr-poc-id
+
+  openproject:
+    enabled: false
+    namespace: icbr-poc-openproject
+
+  element:
+    enabled: false
+    namespace: icbr-poc-element
+
+  nextcloud:
+    enabled: false
+    namespace: icbr-poc-nextcloud
+
+  collabora:
+    enabled: false
+    namespace: icbr-poc-collabora
+    enableInsecureCoolWSD: true
+
+  livekit:
+    enabled: false
+    namespace: icbr-poc-livekit
+    loadBalancerIP: 147.181.48.73
+
+  meet:
+    enabled: false
+    namespace: icbr-poc-meet
+
+  conversations:
+    enabled: false
+    namespace: icbr-poc-conversations
+
+  docs:
+    enabled: true
+    namespace: default 
+
+  bureaublad:
+    enabled: false
+    namespace: icbr-poc-dashboard
+
+  drive:
+    enabled: false
+    namespace: icbr-poc-drive
+
+  clamav:
+    enabled: false
+    namespace: icbr-poc-berry
+
+  docspec:
+    imagePullSecret: ghcr-icbr-robot-pull-secret
+    registry: "rcr.rijksapps.nl"
+    repository: "ghcr-icbr/docspecio/api"
+    tag: "2.6.3"
+
+tls:
+  keycloak:
+    - {}
+  grist:
+    - {}
+  synapse:
+    - {}
+  element:
+    - {}
+  collabora:
+    - {}
+  nextcloud:
+    - {}
+  openproject:
+    - {}
+  livekit:
+    - {}
+  meet:
+    - {}
+  conversations:
+    - {}
+  docs:
+    - {}
+  bureaublad:
+    - {}
+  drive:
+    - {}
+
+autoscaling:
+  horizontal:
+    docs:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    nextcloud:
+      minReplicas: 1
+    meet:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    conversations:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    bureaublad:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    drive:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    livekit:
+      minReplicas: 1
+      maxReplicas: 1
+  vertical:
+    synapse:
+      master:
+        enabled: true
+
+
+resource:
+  keycloak:
+    keycloak:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+  collabora:
+    requests:
+      cpu: 1
+      memory: "2Gi"
+    limits:
+      cpu: 2
+      memory: "4Gi"
+  synapse:
+    master:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+  nextcloud:
+    nextcloud:
+      requests:
+        memory: 1Gi
+        cpu: 1
+      limits:
+        memory: 2Gi
+        cpu: 2
+  livekit:
+    livekit:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+  conversations:
+    conversationsBackend:
+      limits:
+        cpu: 600m
+        ephemeral-storage: 2Gi
+        memory: 1Gi
+      requests:
+        cpu: 400m
+        ephemeral-storage: 50Mi
+        memory: 512Mi
+  docs:
+    backend:
+      requests:
+        cpu: 1
+        memory: 1Gi
+      limits:
+        cpu: 2
+        memory: 2Gi
+
+pvc:
+  nextcloud:
+    nextcloud:
+      storageClass: ocs-storagecluster-cephfs
+      size: 1Gi
+      accessModes:
+       - ReadWriteMany
+    minio:
+      size: 128Gi
+  docs:
+    minio:
+      size: 64Gi
+  drive:
+    minio:
+      size: 128Gi
+  grist:
+    minio:
+      size: 32Gi
+
+
+metric:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+  prometheusRule:
+    enabled: false
+

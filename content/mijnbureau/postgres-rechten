@@ -1,0 +1,20 @@
+Perfect, de omgevingsvariabelen laten zien dat dit een Bitnami-container is. Het wachtwoord staat niet direct in de tekst, maar is veilig opgeslagen in een bestand binnenin de container (/opt/bitnami/postgresql/secrets/postgres-password).
+Omdat het bestand daar staat, hoef je het wachtwoord niet eens handmatig te kopiëren. Je kunt de container de opdracht geven om dat bestand direct te lezen bij het inloggen.
+## 🛠️ Direct inloggen en rechten herstellen
+Voer het volgende commando uit om direct als de postgres-beheerder in te loggen op de database docs [1]:
+
+kubectl exec -it docs-cluster-rw-0 -n default -- env PGPASSWORD=$(cat /opt/bitnami/postgresql/secrets/postgres-password) psql -U postgres -d docs
+
+Zodra je in de PostgreSQL-prompt (docs=#) zit, plak je deze SQL-regels erin om de rechten voor de applicatie-gebruiker docs te herstellen:
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO docs;GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO docs;ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO docs;ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO docs;
+
+Typ daarna \q en druk op Enter om af te sluiten.
+## 🚀 De superuser-job herstarten
+Als de SQL-commando's zijn uitgevoerd, geef je de falende pod een zetje zodat de admin-gebruiker definitief wordt aangemaakt:
+
+kubectl delete pod docs-backend-createsuperuser-1779885646-w8dlt -n default
+
+Laat je me weten of de createsuperuser pod na deze actie succesvol op Completed springt?
+
+
