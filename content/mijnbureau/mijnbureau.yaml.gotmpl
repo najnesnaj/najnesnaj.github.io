@@ -184,11 +184,11 @@ resource:
   keycloak:
     keycloak:
       requests:
-        cpu: "500m"
-        memory: "1Gi"
+        cpu: 800m
+        memory: "2Gi"
       limits:
-        cpu: "1"
-        memory: "1Gi"
+        cpu: 1500m
+        memory: "2Gi"
   collabora:
     requests:
       cpu: 1
@@ -233,12 +233,25 @@ resource:
   docs:
     backend:
       requests:
-        cpu: 1
-        memory: 1Gi
-      limits:
-        cpu: 2
+        cpu: 500m
         memory: 2Gi
-
+      limits:
+        cpu: 900m
+        memory: 2Gi
+    celery:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPU: 80
+      targetMemory: ""
+      # VOEG DIT BLOK TOE:
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "512Mi"
+        limits:
+          cpu: "500m"
+          memory: "1536Mi"
 pvc:
   nextcloud:
     nextcloud:
@@ -268,4 +281,11 @@ metric:
     enabled: false
   prometheusRule:
     enabled: false
+
+nextcloud:
+  cronjob:
+    podSecurityContext:
+      runAsUser: 33
+      runAsGroup: 33
+      fsGroup: 33
 
