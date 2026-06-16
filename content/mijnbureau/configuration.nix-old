@@ -33,7 +33,6 @@
   # time.timeZone = "Europe/Amsterdam";
 
   # Configure network proxy if necessary
-
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
@@ -68,6 +67,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.alice = {
   #   isNormalUser = true;
@@ -103,7 +103,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  # networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -134,9 +134,9 @@
     localUsers = true;      # Sta lokale systeemgebruikers toe om in te loggen
     writeEnable = true;     # Sta het uploaden van bestanden toe
     # optioneel: root-gebruikers opsluiten in hun eigen home directory
-    allowWriteableChroot = true;
     chrootlocalUser = true; 
   };
+
 
   services.vsftpd.extraConfig = ''
     pasv_enable=Yes
@@ -146,15 +146,12 @@
 
 
 
-  # networking.firewall.allowedTCPPorts = [ 21 80 443 6443 8080];  # kube-apiserver
-  # networking.firewall.allowedTCPPortRanges = [ 
-  #    { from = 51000; to = 51999; }
-  #   { from = 10250; to = 10255; }  
-  # ];
-  # networking.firewall.allowedUDPPorts = [ 8472 ]; # flannel
+  networking.firewall.allowedTCPPorts = [ 21 80 443 6443 ];  # kube-apiserver
+  networking.firewall.allowedTCPPortRanges = [ { from = 51000; to = 51999; }];
+  networking.firewall.allowedUDPPorts = [ 8472 ]; # flannel
  
   # 2. Forceer het gebruik van iptables (K3s heeft dit nodig)
-  # networking.nftables.enable = false;
+  networking.nftables.enable = false;
 
 
 
@@ -172,8 +169,6 @@
   };
 
 
- 
-
   # K3s (single-node server)
   services.k3s = {
     enable = true;
@@ -185,7 +180,6 @@
     extraFlags = toString [
     #  "--disable=traefik"      # use your own ingress if you want
       "--write-kubeconfig-mode=644"
-      "--kubelet-arg=eviction-hard=memory.available<500Mi,nodefs.available<10%"
     ];
   }; 
 

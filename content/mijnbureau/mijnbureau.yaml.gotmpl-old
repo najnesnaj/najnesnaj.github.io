@@ -13,7 +13,7 @@ cluster:
     type: traefik 
     className: traefik
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: "default-kube-system-hsts-header@kubernetescrd"
+      traefik.ingress.kubernetes.io/router.middlewares: "default-hsts-header@kubernetescrd"
 
 authentication:
   oidc:
@@ -26,20 +26,18 @@ authentication:
     #end_session_endpoint: "http://keycloak-keycloak.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/logout"
 
 
-    token_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token"
-    userinfo_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/userinfo"
-    introspection_endpoint: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token/introspect"
-    #introspection_endpoint: "http://kubernetes.local"
-    #jwks_uri: "http://kubernetes.local"
-    #token_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token"
-    #userinfo_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/userinfo"
-    #introspection_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token/introspect"
-    #jwks_uri: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/certs"
-    jwks_uri: "https://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/certs"
+    #token_endpoint: "http://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token"
+    #userinfo_endpoint: "http://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/userinfo"
+    #introspection_endpoint: "http://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/token/introspect"
+    #jwks_uri: "http://id.kubernetes.local/realms/mijnbureau/protocol/openid-connect/certs"
+    token_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token"
+    userinfo_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/userinfo"
+    introspection_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token/introspect"
+    jwks_uri: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/certs"
  
     # Interne backchannel communicatie via de headless service op poort 8080
-    #token_endpoint: "http://kubernetes.local"
-    #userinfo_endpoint: "http://kubernetes.local"
+    #token_endpoint: "http://cluster.local"
+    #userinfo_endpoint: "http://cluster.local"
     #introspection_endpoint: "http://cluster.local/introspect"
     #jwks_uri: "http://cluster.local"
 
@@ -57,11 +55,7 @@ authentication:
     bureaublad:
       client_id: "bureaublad"
       client_secret: "dthIetmJNaqKcR2X8JTM6V71wXCR1M6s"
-
-    meet:
-      client_id: "meet"
-      client_secret: "7e746529a93e74cda76854b174289b0f7d1b77fd" 
-
+ 
 security:
   default:
     containerSecurityContext:
@@ -83,16 +77,10 @@ application:
     enabled: true 
     namespace: default 
     extraEnvVars:
-      - name: KC_PROXY_HEADERS
-        value: "x-forwarded"
+      - name: KC_PROXY
+        value: "edge"
       - name: KC_HOSTNAME
-        value: "https://kubernetes.local"
-      - name: KC_HOSTNAME_STRICT
-        value: "false"
-      - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
-        value: "true"
-      - name: KC_HTTP_ENABLED
-        value: "true"
+        value: "id.kubernetes.local"
 
   openproject:
     enabled: false
@@ -103,7 +91,7 @@ application:
     namespace: icbr-poc-element
 
   nextcloud:
-    enabled: false 
+    enabled: true 
     namespace: default 
 
   collabora:
@@ -118,7 +106,7 @@ application:
 
   meet:
     enabled: false
-    namespace: default 
+    namespace: icbr-poc-meet
 
   conversations:
     enabled: false
@@ -127,18 +115,16 @@ application:
   docs:
     enabled: true
     namespace: default 
-    authorizationServicesEnabled: false 
 
   bureaublad:
-    enabled: false
+    enabled: true 
     namespace: default 
-    authorizationServicesEnabled: false
 
   drive:
-    enabled: false
+    enabled: true
     namespace: default 
-    authorizationServicesEnabled: true 
-    serviceAccountsEnabled: true 
+    authorizationServicesEnabled: true
+    serviceAccountsEnabled: true
     readinessProbe:
       timeoutSeconds: 20
 
