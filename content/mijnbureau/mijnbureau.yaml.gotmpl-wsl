@@ -1,0 +1,285 @@
+global:
+  domain: "127.0.0.1.sslip.io"
+  resourcesPreset: "small"
+
+cluster:
+  networking:
+    podSubnet:
+      - "10.244.0.0/16"
+    serviceSubnet:
+      - "10.96.0.0/12"
+
+  ingress:
+    type: nginx
+    className: nginx
+    annotations: {}
+
+authentication:
+  oidc:
+    # Interne URL — gebruik http omdat de Keycloak service op poort 80 draait
+    issuer: "https://id.127.0.0.1.sslip.io/realms/mijnbureau"
+  
+    authorization_endpoint: "https://id.127.0.0.1.sslip.io/realms/mijnbureau/protocol/openid-connect/auth"
+    end_session_endpoint: "https://id.127.0.0.1.sslip.io/realms/mijnbureau/protocol/openid-connect/logout"
+    #end_session_endpoint: "http://keycloak-keycloak.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/logout"
+
+
+    token_endpoint: "http://keycloak-keycloak/realms/mijnbureau/protocol/openid-connect/token"
+    userinfo_endpoint: "http://keycloak-keycloak/realms/mijnbureau/protocol/openid-connect/userinfo"
+    introspection_endpoint: "http://keycloak-keycloak/realms/mijnbureau/protocol/openid-connect/token/introspect"
+    #introspection_endpoint: "http://kubernetes.local"
+    #jwks_uri: "http://kubernetes.local"
+    #token_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token"
+    #userinfo_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/userinfo"
+    #introspection_endpoint: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/token/introspect"
+    #jwks_uri: "http://keycloak-keycloak-headless.default.svc.cluster.local:8080/realms/mijnbureau/protocol/openid-connect/certs"
+    jwks_uri: "http://keycloak-keycloak/realms/mijnbureau/protocol/openid-connect/certs"
+ 
+    # Interne backchannel communicatie via de headless service op poort 8080
+    #token_endpoint: "http://kubernetes.local"
+    #userinfo_endpoint: "http://kubernetes.local"
+    #introspection_endpoint: "http://cluster.local/introspect"
+    #jwks_uri: "http://cluster.local"
+
+
+
+  client:
+    drive:
+      client_id: "drive"
+      client_secret: "OSUBMdd6Bg61xPg2efP1lR2AbX0l09aQ"
+
+    docs:
+      client_id: "docs"
+      client_secret: "s43eo7qnLFKGCbjd3CQ9UKs1z9Q9dZgf"
+
+    bureaublad:
+      client_id: "bureaublad"
+      client_secret: "dthIetmJNaqKcR2X8JTM6V71wXCR1M6s"
+
+    meet:
+      client_id: "meet"
+      client_secret: "7e746529a93e74cda76854b174289b0f7d1b77fd" 
+
+security:
+  default:
+    containerSecurityContext:
+      enabled: false
+
+    podSecurityContext:
+      enabled: false
+
+application:
+  grist:
+    enabled: false
+    namespace: icbr-poc-grist
+
+  ollama:
+    enabled: false
+    namespace: icbr-poc-ollama
+
+  keycloak:
+    enabled: true 
+    namespace: default 
+    extraEnvVars:
+      - name: KC_PROXY_HEADERS
+        value: "x-forwarded"
+      - name: KC_HOSTNAME_STRICT
+        value: "false"
+      - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
+        value: "true"
+      - name: KC_HTTP_ENABLED
+        value: "true"
+
+  openproject:
+    enabled: false
+    namespace: icbr-poc-openproject
+
+  element:
+    enabled: false
+    namespace: icbr-poc-element
+
+  nextcloud:
+    enabled: true 
+    namespace: default 
+
+  collabora:
+    enabled: false
+    namespace: icbr-poc-collabora
+    enableInsecureCoolWSD: true
+
+  livekit:
+    enabled: false
+    namespace: icbr-poc-livekit
+    loadBalancerIP: 147.181.48.73
+
+  meet:
+    enabled: false
+    namespace: default 
+
+  conversations:
+    enabled: false
+    namespace: icbr-poc-conversations
+
+  docs:
+    enabled: true
+    namespace: default 
+    authorizationServicesEnabled: false 
+
+  bureaublad:
+    enabled: true 
+    namespace: default 
+    authorizationServicesEnabled: false
+
+  drive:
+    enabled: false
+    namespace: default 
+    authorizationServicesEnabled: true 
+    serviceAccountsEnabled: true 
+    readinessProbe:
+      timeoutSeconds: 20
+
+  clamav:
+    enabled: false
+    namespace: icbr-poc-berry
+
+  docspec:
+    imagePullSecret: ghcr-icbr-robot-pull-secret
+    registry: "rcr.rijksapps.nl"
+    repository: "ghcr-icbr/docspecio/api"
+    tag: "2.6.3"
+
+tls:
+  keycloak:
+    - {}
+  grist:
+    - {}
+  synapse:
+    - {}
+  element:
+    - {}
+  collabora:
+    - {}
+  nextcloud:
+    - {}
+  openproject:
+    - {}
+  livekit:
+    - {}
+  meet:
+    - {}
+  conversations:
+    - {}
+  docs:
+    - {}
+  bureaublad:
+    - {}
+  drive:
+    - {}
+
+autoscaling:
+  horizontal:
+    docs:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    nextcloud:
+      minReplicas: 1
+    meet:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    conversations:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    bureaublad:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    drive:
+      backend:
+        minReplicas: 1
+      frontend:
+        minReplicas: 1
+    livekit:
+      minReplicas: 1
+      maxReplicas: 1
+  vertical:
+    synapse:
+      master:
+        enabled: true
+
+
+resource:
+  keycloak:
+    keycloak:
+      requests:
+        cpu: 200m
+        memory: "768Mi"
+      limits:
+        cpu: 500m
+        memory: "1Gi"
+  nextcloud:
+    nextcloud:
+      requests:
+        memory: 256Mi
+        cpu: 200m
+      limits:
+        memory: 512Mi
+        cpu: 500m
+  docs:
+    backend:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    celery:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 375m
+        memory: 720Mi
+pvc:
+  nextcloud:
+    nextcloud:
+      storageClass: standard
+      size: 8Gi
+      accessModes:
+        - ReadWriteOnce
+    minio:
+      storageClass: standard
+      size: 10Gi
+      accessModes:
+        - ReadWriteOnce
+  docs:
+    minio:
+      size: 10Gi
+  drive:
+    minio:
+      size: 10Gi
+  grist:
+    minio:
+      size: 10Gi
+
+
+metric:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+  prometheusRule:
+    enabled: false
+
+nextcloud:
+  cronjob:
+    podSecurityContext:
+      runAsUser: 33
+      runAsGroup: 33
+      fsGroup: 33
+
