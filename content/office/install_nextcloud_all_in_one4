@@ -1,0 +1,17 @@
+chmod 666 /run/user/$UID/podman/podman.sock
+
+podman run \
+  --init \
+  --sig-proxy=false \
+  --name nextcloud-aio-mastercontainer \
+  --replace \
+  --restart always \
+  --publish 80:80 \
+  --publish 8080:8080 \
+  --publish 8443:8443 \
+  --env DOCKER_API_VERSION=1.44 \
+  --security-opt label=disable \
+  --userns=keep-id \
+  --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
+  --volume /run/user/$UID/podman/podman.sock:/var/run/docker.sock:ro \
+  ghcr.io/nextcloud-releases/all-in-one:latest
