@@ -1,0 +1,4 @@
+export PVE_HOST="192.168.0.141"                
+export PVE_TOKEN_ID="root@pam!opencode"     
+export PVE_TOKEN_SECRET="b0bfebb4-4d9b-4147-9414-8688a43b4cff"
+
