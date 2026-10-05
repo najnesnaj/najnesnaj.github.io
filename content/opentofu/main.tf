@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.6.0"
+  required_version = ">= 1.5.0"
 
   required_providers {
     proxmox = {
@@ -10,69 +10,74 @@ terraform {
       source  = "siderolabs/talos"
       version = ">= 0.5.0"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = ">= 2.12.0"
-    }
   }
 }
 
 provider "proxmox" {
   endpoint = var.proxmox_endpoint
   api_token = var.proxmox_api_token
-  insecure  = true
+  insecure  = var.proxmox_insecure
 }
 
-variable "proxmox_endpoint" { type = string }
-variable "proxmox_api_token" { type = string }
-variable "target_node" { type = string, default = "pve" }
-variable "node_ips" {
-  type    = list(string)
-  default = ["192.168.1.51", "192.168.1.52", "192.168.1.53"]
-}
-
-# 3 Proxmox Control Plane Nodes (toegestaan voor workloads)
+# Talos Control Plane / Worker Nodes
 resource "proxmox_virtual_environment_vm" "talos_nodes" {
-  count     = 3
+  count     = var.node_count
   name      = "talos-node-${count.index + 1}"
-  node_name = var.target_node
-  vm_id     = 500 + count.index
+  node_name = var.proxmox_node
+
+  # Disable wait for QEMU guest agent during initial boot
+  agent {
+    enabled = false
+  }
 
   cpu {
-    cores = 2
+    cores = var.node_cpus
     type  = "host"
   }
 
   memory {
-    dedicated = 3072 # 3 GB RAM
+    dedicated = var.node_memory
   }
 
-  # ISO Boot Media: nocloud-amd64-utils-scsi-talos.iso
   cdrom {
-    enabled   = true
-    file_id   = "local:iso/nocloud-amd64-utils-scsi-talos.iso"
+    file_id   = var.talos_iso_file_id
     interface = "ide2"
   }
 
-  # Primary OS Disk: 40 GB
   disk {
-    datastore_id = "local-lvm"
+    datastore_id = var.storage_pool_system
     interface    = "scsi0"
-    size         = 40
+    size         = var.disk_size_system
     file_format  = "raw"
+    ssd          = true
+    discard      = "on"
   }
 
-  # Extra Disk: 20 GB op nvme1-mint-storage voor Longhorn
   disk {
-    datastore_id = "nvme1-mint-storage"
+    datastore_id = var.storage_pool_data
     interface    = "scsi1"
-    size         = 20
+    size         = var.disk_size_data
     file_format  = "raw"
-    file_name    = "extra-disk-${count.index + 1}.raw"
+    ssd          = true
+    discard      = "on"
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge = var.network_bridge
+  }
+
+  # Configures IP directly for predictable provisioning
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "${var.node_ips[count.index]}/24"
+        gateway = "192.168.0.1" # Change to your local gateway IP
+      }
+    }
+  }
+
+  operating_system {
+    type = "l26"
   }
 
   boot_order = ["scsi0", "ide2"]
