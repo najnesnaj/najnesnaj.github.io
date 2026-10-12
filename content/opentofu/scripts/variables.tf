@@ -149,3 +149,10 @@ variable "router_disk_size" {
   description = "Root disk size (in GB) for the router LXC"
   default     = 4
 }
+
+
+variable "management_lan_ip" {
+  type        = string
+  default     = "10.10.50.10"
+  description = "IP address for the management container inside the Talos subnet (vmbr1)"
+}
