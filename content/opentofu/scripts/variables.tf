@@ -156,3 +156,48 @@ variable "management_lan_ip" {
   default     = "10.10.50.10"
   description = "IP address for the management container inside the Talos subnet (vmbr1)"
 }
+
+# Argo CD (GitOps controller)
+variable "argocd_namespace" {
+  type        = string
+  default     = "argocd"
+  description = "Kubernetes namespace in which Argo CD is installed"
+}
+
+variable "argocd_chart_version" {
+  type        = string
+  default     = null
+  description = "argo-cd Helm chart version; null picks the latest release"
+}
+
+variable "argocd_service_type" {
+  type        = string
+  default     = "ClusterIP"
+  description = "Service type for the Argo CD server (ClusterIP, NodePort or LoadBalancer)"
+}
+
+# Optional GitOps bootstrap: when set, an Argo CD Application pointing at this
+# repository is created right after Argo CD is installed (app-of-apps pattern).
+variable "argocd_git_repo_url" {
+  type        = string
+  default     = ""
+  description = "Git repository URL for the root Argo CD Application (empty disables the bootstrap app)"
+}
+
+variable "argocd_git_target_revision" {
+  type        = string
+  default     = "main"
+  description = "Git revision (branch/tag/commit) the root Argo CD Application tracks"
+}
+
+variable "argocd_git_path" {
+  type        = string
+  default     = "."
+  description = "Path within the Git repository containing the manifests"
+}
+
+variable "argocd_destination_namespace" {
+  type        = string
+  default     = "default"
+  description = "Cluster namespace the root Argo CD Application deploys into"
+}
