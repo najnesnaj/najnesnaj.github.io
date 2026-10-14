@@ -1,0 +1,16 @@
+---
+# Fallbacks; the authoritative values live in group_vars/all.yml so they can be
+# overridden per environment without touching the role.
+admin_user: jan
+admin_groups:
+  - sudo
+admin_shell: /bin/bash
+ssh_public_key_path: "~/.ssh/id_ed25519.pub"
+# Content of the control-node public key installed for root and the admin login.
+admin_public_key: "{{ lookup('file', ssh_public_key_path) }}"
+ssh_extra_authorized_keys: []
+ssh_authorized_keys_exclusive: false
+sshd_dropin: /etc/ssh/sshd_config.d/99-k8s-management.conf
+sshd_password_authentication: false
+sshd_permit_root_login: "prohibit-password"
+sshd_allow_users: "root {{ admin_user }}"

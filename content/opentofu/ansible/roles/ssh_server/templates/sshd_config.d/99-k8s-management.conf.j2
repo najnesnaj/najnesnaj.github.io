@@ -1,0 +1,13 @@
+# Managed by Ansible - role `ssh_server` (opentofu/ansible).
+# Do not edit by hand; change ansible/group_vars/all.yml instead.
+#
+# Drop-in for /etc/ssh/sshd_config (ssh_config includes sshd_config.d/*.conf on
+# Ubuntu). Keeps key-based access for root (key only) plus the admin login, and
+# turns off interactive password authentication.
+PubkeyAuthentication yes
+PasswordAuthentication {{ 'yes' if sshd_password_authentication else 'no' }}
+KbdInteractiveAuthentication {{ 'yes' if sshd_password_authentication else 'no' }}
+PermitRootLogin {{ sshd_permit_root_login }}
+PermitEmptyPasswords no
+X11Forwarding no
+AllowUsers {{ sshd_allow_users }}

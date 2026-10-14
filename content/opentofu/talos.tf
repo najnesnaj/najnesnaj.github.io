@@ -17,18 +17,13 @@ data "talos_machine_configuration" "controlplane" {
   cluster_endpoint = "https://${var.node_ips[0]}:6443"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 
-  # Optional config patches (e.g., node network config or additional disk mounts)
+  # Config patches. NOTE: no network/DHCP patch here on purpose - eth0 is
+  # configured statically by Proxmox cloud-init (initialization.ip_config in
+  # main.tf) and a `dhcp: true` override would fight that configuration on
+  # the isolated 10.10.50.0/24 subnet.
   config_patches = [
     yamlencode({
       machine = {
-        network = {
-          interfaces = [
-            {
-              interface = "eth0"
-              dhcp      = true
-            }
-          ]
-        }
         # Mount scsi1 data disk if specified in your setup
         disks = [
           {

@@ -8,13 +8,17 @@ terraform {
     }
     talos = {
       source  = "siderolabs/talos"
-      version = ">= 0.5.0"
+      version = "~> 0.6.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.0.0"
     }
   }
 }
 
 provider "proxmox" {
-  endpoint = var.proxmox_endpoint
+  endpoint  = var.proxmox_endpoint
   api_token = var.proxmox_api_token
   insecure  = var.proxmox_insecure
 }
@@ -62,16 +66,23 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
     discard      = "on"
   }
 
+  # Isolated Kubernetes network (vmbr1) - egress goes through k8s-router.
   network_device {
-    bridge = var.network_bridge
+    bridge = var.lan_bridge
   }
 
-  # Configures IP directly for predictable provisioning
+  # Static IPs are provisioned through the Proxmox cloud-init drive
+  # (Talos reads them from the nocloud datasource) on the isolated
+  # 10.10.50.0/24 subnet; the default gateway is the router LXC.
   initialization {
+    interface = "ide0" # ide2 is taken by the Talos nocloud ISO below
+    dns {
+      servers = var.cluster_dns_servers
+    }
     ip_config {
       ipv4 {
         address = "${var.node_ips[count.index]}/24"
-        gateway = "192.168.0.1" # Change to your local gateway IP
+        gateway = var.cluster_gateway
       }
     }
   }
@@ -81,4 +92,7 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
   }
 
   boot_order = ["scsi0", "ide2"]
+
+  # Nodes must not boot before the NAT router is up and running.
+  depends_on = [proxmox_virtual_environment_container.router]
 }

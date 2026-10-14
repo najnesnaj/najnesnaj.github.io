@@ -1,0 +1,46 @@
+---
+# Configure the k8s-management container (Proxmox LXC 105): the SSH server,
+# the admin login, and the Talos/Kubernetes tooling.
+#
+#   ansible-playbook site.yml
+#
+# Credentials and target address come from the inventory; see README.md.
+- name: Configure SSH server and tooling on k8s-management
+  hosts: k8s_management
+  become: true
+  gather_facts: true
+
+  roles:
+    - ssh_server
+    - tools
+
+  post_tasks:
+    - name: Verify talosctl is installed
+      ansible.builtin.command: talosctl version --client --short
+      register: verify_talosctl
+      changed_when: false
+
+    - name: Verify kubectl is installed
+      ansible.builtin.command: kubectl version --client -o json
+      register: verify_kubectl
+      changed_when: false
+
+    - name: Verify the effective sshd configuration
+      ansible.builtin.command: /usr/sbin/sshd -T
+      register: verify_sshd
+      changed_when: false
+
+    - name: Assert interactive password authentication is disabled
+      ansible.builtin.assert:
+        that:
+          - "'passwordauthentication no' in verify_sshd.stdout | lower"
+          - "'permitrootlogin prohibit-password' in verify_sshd.stdout | lower"
+        success_msg: "sshd: key-only logins, root restricted to keys"
+        fail_msg: "sshd hardening is not in effect"
+
+    - name: Report the configured versions
+      ansible.builtin.debug:
+        msg:
+          - "talosctl: {{ verify_talosctl.stdout_lines | join(' ') }}"
+          - "kubectl:  {{ (verify_kubectl.stdout | from_json).clientVersion.gitVersion }}"
+          - "login:    {{ admin_user }} (sudo, key-based)"

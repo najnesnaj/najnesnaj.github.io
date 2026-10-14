@@ -1,0 +1,84 @@
+---
+# Administrative tooling for the Talos/Kubernetes management container:
+# base CLI packages plus talosctl and kubectl.
+
+- name: Install base CLI packages
+  ansible.builtin.apt:
+    name: "{{ tools_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+# --- talosctl ---------------------------------------------------------------
+- name: Check for an existing talosctl
+  ansible.builtin.stat:
+    path: "{{ tools_bin_dir }}/talosctl"
+  register: talosctl_bin
+
+- name: Query installed talosctl version
+  ansible.builtin.command: "{{ tools_bin_dir }}/talosctl version --client --short"
+  register: talosctl_installed
+  changed_when: false
+  failed_when: false
+  when: talosctl_bin.stat.exists
+
+- name: Install talosctl
+  ansible.builtin.get_url:
+    url: "{{ talosctl_url }}"
+    dest: "{{ tools_bin_dir }}/talosctl"
+    owner: root
+    group: root
+    mode: "0755"
+  when: >-
+    not talosctl_bin.stat.exists or
+    (talosctl_version | length > 0 and
+     talosctl_version not in (talosctl_installed.stdout | default('')))
+
+# --- kubectl ----------------------------------------------------------------
+- name: Discover the current stable kubectl version
+  ansible.builtin.uri:
+    url: https://dl.k8s.io/release/stable.txt
+    return_content: true
+    status_code: 200
+  register: kubectl_stable
+  changed_when: false
+  when: kubectl_version | length == 0
+
+- name: Resolve the kubectl target version
+  ansible.builtin.set_fact:
+    kubectl_target: >-
+      {{ kubectl_version if kubectl_version | length > 0 else (kubectl_stable.content | trim) }}
+
+- name: Check for an existing kubectl
+  ansible.builtin.stat:
+    path: "{{ tools_bin_dir }}/kubectl"
+  register: kubectl_bin
+
+- name: Query installed kubectl version
+  ansible.builtin.command: "{{ tools_bin_dir }}/kubectl version --client -o json"
+  register: kubectl_installed
+  changed_when: false
+  failed_when: false
+  when: kubectl_bin.stat.exists
+
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ kubectl_target }}/bin/linux/{{ tools_arch }}/kubectl"
+    dest: "{{ tools_bin_dir }}/kubectl"
+    owner: root
+    group: root
+    mode: "0755"
+    checksum: "sha256:https://dl.k8s.io/release/{{ kubectl_target }}/bin/linux/{{ tools_arch }}/kubectl.sha256"
+  when: >-
+    not kubectl_bin.stat.exists or
+    kubectl_target not in (kubectl_installed.stdout | default(''))
+
+- name: Enable kubectl shell completion
+  ansible.builtin.copy:
+    dest: /etc/bash_completion.d/kubectl
+    content: |
+      # Managed by Ansible - role `tools`.
+      command -v kubectl >/dev/null && source <(kubectl completion bash)
+    owner: root
+    group: root
+    mode: "0644"
