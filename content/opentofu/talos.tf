@@ -14,7 +14,7 @@ data "talos_client_configuration" "this" {
 data "talos_machine_configuration" "controlplane" {
   cluster_name     = var.cluster_name
   machine_type     = "controlplane"
-  cluster_endpoint = "https://${var.node_ips[0]}:6443"
+  cluster_endpoint = "https://${var.cluster_endpoint_ip}:6443"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 
   # Config patches. NOTE: no network/DHCP patch here on purpose - eth0 is

@@ -7,6 +7,8 @@ Ansible project that configures the **`k8s-management`** Proxmox LXC container
 | --- | --- |
 | `ssh_server` | Installs/enables `openssh-server`, creates the **`jan`** login (member of `sudo`, passwordless sudo), installs the control-node public key for `jan` **and** `root`, and hardens sshd (key-only logins, root restricted to keys) through `/etc/ssh/sshd_config.d/99-k8s-management.conf`. |
 | `tools` | Installs the base CLI packages plus **`talosctl`** and **`kubectl`** (latest stable by default) and enables kubectl bash completion. |
+| `talos_client` | Writes the managed **talosconfig** (`/root/.talos/config`) for the control plane: the client certs come from the OpenTofu `talosconfig` output, and the **Talos control-plane endpoint/node** are pinned with `talosctl config endpoint` / `config node`. |
+| `kubeconfig` | Generates the **admin kubeconfig** (`/root/.kube/config`) with `talosctl kubeconfig` and points its server at the reachable control plane, so `kubectl` works without arguments. |
 
 ## Layout
 
@@ -15,7 +17,7 @@ ansible/
 ├── ansible.cfg              # control-node config (inventory, key, become)
 ├── hosts.yml                # inventory: the container's home-network address
 ├── requirements.yml         # ansible.posix collection
-├── site.yml                 # playbook: ssh_server + tools + verification
+├── site.yml                 # playbook: ssh_server + tools + talos_client + kubeconfig
 ├── group_vars/all.yml       # users, keys, sshd + tool settings
 └── roles/
     ├── ssh_server/
@@ -23,7 +25,13 @@ ansible/
     │   ├── handlers/main.yml
     │   ├── tasks/main.yml
     │   └── templates/sshd_config.d/99-k8s-management.conf.j2
-    └── tools/
+    ├── tools/
+    │   ├── defaults/main.yml
+    │   └── tasks/main.yml
+    ├── talos_client/
+    │   ├── defaults/main.yml
+    │   └── tasks/main.yml
+    └── kubeconfig/
         ├── defaults/main.yml
         └── tasks/main.yml
 ```
@@ -111,16 +119,45 @@ All defaults live in `group_vars/all.yml`:
 | `talosctl_version` | `""` (latest) | Pin a talosctl release. |
 | `kubectl_version` | `""` (stable) | Pin a kubectl release. |
 | `tools_packages` | see file | Base CLI packages. |
+| `talos_endpoint_ip` | `10.10.50.22` | Talos control-plane endpoint written to the talosconfig (also used as the default node). |
+| `talos_node_ip` | `{{ talos_endpoint_ip }}` | Node(s) bare `talosctl` commands target. |
+| `talos_config_file` | `/root/.talos/config` | Path of the managed talosconfig. |
+| `talos_tofu_dir` | `{{ playbook_dir }}/..` | OpenTofu project providing the `talosconfig` output (client certs). |
+| `kube_config_dir` | `/root/.kube` | Directory of the managed admin kubeconfig. |
+| `kubeconfig_file` | `{{ kube_config_dir }}/config` | Path of the managed kubeconfig. |
+| `kube_api_endpoint` | `{{ talos_endpoint_ip }}` | Control plane host written into the kubeconfig (`:6443`). |
 
 ## Verification
 
 The playbook finishes by asserting the effective sshd configuration is
-key-only and reporting the installed versions. You can also check by hand:
+key-only, asserting the talosconfig targets the Talos control plane, asserting
+the kubeconfig points at the control plane, probing both APIs (non-fatal) and
+reporting the installed versions. You can also check by hand:
 
 ```sh
 ssh jan@<container> 'whoami; id; sudo -n whoami'
 ssh jan@<container> 'talosctl version --client --short; kubectl version --client'
+ssh root@<container> 'talosctl config info'        # endpoint/node of the control plane
+ssh root@<container> 'kubectl config view --minify -o jsonpath="{.clusters[0].cluster.server}"'
 ```
+
+Set the control-plane endpoint with the same command the role uses:
+
+```sh
+ssh root@<container> '/usr/local/bin/talosctl config endpoint 10.10.50.22'
+```
+
+> **Note:** the client certificate/key in the managed talosconfig come from the
+> OpenTofu `talosconfig` output. If you generate a talosconfig by hand
+> (`talosctl gen config`) it belongs to a *different* PKI and cannot talk to the
+> cluster — re-run this playbook to restore the matching one.
+>
+> **Note:** the OpenTofu `node_ips[0]` / cluster endpoint is `10.10.50.10`, but
+> that address is also the management container's own `eth1`
+> (`management_lan_ip`), so it is *not* reachable as a Talos API from the
+> container. The default `talos_endpoint_ip` therefore points at the reachable
+> control plane `10.10.50.22` (`talos-node-3`); override it with
+> `-e talos_endpoint_ip=...` once the IP conflict is resolved.
 
 ## Relationship to the OpenTofu bootstrap
 

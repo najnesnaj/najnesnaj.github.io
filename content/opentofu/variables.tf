@@ -109,8 +109,19 @@ variable "cluster_dns_servers" {
 
 variable "node_ips" {
   type        = list(string)
-  description = "Talos node IPs on 10.10.50.0/24 - index 0 is control plane 1 and the cluster endpoint"
+  description = "Talos node IPs on 10.10.50.0/24 - index 0 is control plane 1"
   default     = ["10.10.50.10", "10.10.50.21", "10.10.50.22"]
+}
+
+variable "cluster_endpoint_ip" {
+  type        = string
+  description = <<-EOT
+    IP of the control plane that serves the Kubernetes API endpoint
+    (https://<ip>:6443). This is intentionally NOT node_ips[0]: 10.10.50.10
+    collides with management_lan_ip (the management container's own eth1), so
+    the API is served by the reachable control plane 10.10.50.22 (talos-node-3).
+  EOT
+  default     = "10.10.50.22"
 }
 
 # Router LXC
@@ -153,7 +164,7 @@ variable "router_disk_size" {
 
 variable "management_lan_ip" {
   type        = string
-  default     = "10.10.50.10"
+  default     = "10.10.50.5"
   description = "IP address for the management container inside the Talos subnet (vmbr1)"
 }
 
