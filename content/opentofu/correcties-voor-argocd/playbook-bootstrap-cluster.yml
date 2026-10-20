@@ -1,0 +1,23 @@
+---
+# Bootstrap de Talos Kubernetes control plane vanuit de management-container.
+# Dit commando initialiseert de etcd-database en start de Kubernetes control plane.
+- name: Bootstrap Talos Kubernetes Cluster
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Voer talosctl bootstrap uit op de control plane node
+      ansible.builtin.command: >
+        /usr/local/bin/talosctl bootstrap
+        -e {{ talos_endpoint_ip }}
+        -n {{ talos_node_ip }}
+      register: talos_bootstrap_result
+      changed_when: "'etcd is already bootstrapped' not in talos_bootstrap_result.stdout"
+      failed_when:
+        - talos_bootstrap_result.rc != 0
+        - "'etcd is already bootstrapped' not in talos_bootstrap_result.stdout"
+
+    - name: Toon resultaat van de bootstrap
+      ansible.builtin.debug:
+        msg: "{{ talos_bootstrap_result.stdout_lines | default(talos_bootstrap_result.stderr_lines) }}"

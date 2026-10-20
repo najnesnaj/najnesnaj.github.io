@@ -1,0 +1,12 @@
+- name: Voeg Forgejo Helm repo toe
+  ansible.builtin.command: helm repo add code-repo https://code.forgejo.org/charts
+  changed_when: false
+- name: Installeer Forgejo in Kubernetes
+  ansible.builtin.command: >
+    helm upgrade --install forgejo code-repo/forgejo
+    --namespace forgejo
+    --create-namespace
+    --set persistence.enabled=true
+    --set persistence.size=10Gi
+  environment:
+    KUBECONFIG: /root/.kube/config

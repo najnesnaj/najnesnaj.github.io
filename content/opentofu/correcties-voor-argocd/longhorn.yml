@@ -1,0 +1,20 @@
+- name: Installeer Longhorn Storage
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Voeg Longhorn Helm repo toe
+      ansible.builtin.command: helm repo add longhorn https://charts.longhorn.io
+      changed_when: false
+
+    - name: Update Helm repos
+      ansible.builtin.command: helm repo update
+      changed_when: false
+
+    - name: Installeer Longhorn in namespace longhorn-system
+      ansible.builtin.command: >
+        helm upgrade --install longhorn longhorn/longhorn
+        --namespace longhorn-system
+        --create-namespace
+      environment:
+        KUBECONFIG: /root/.kube/config

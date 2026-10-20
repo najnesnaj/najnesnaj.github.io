@@ -1,0 +1,14 @@
+- name: Installeer ArgoCD
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Maak de argocd namespace aan
+      ansible.builtin.command: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+      environment:
+        KUBECONFIG: /root/.kube/config
+
+    - name: Installeer ArgoCD via officiële manifesten
+      ansible.builtin.command: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+      environment:
+        KUBECONFIG: /root/.kube/config
