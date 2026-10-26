@@ -1,0 +1,5 @@
+---
+# Fallbacks; the authoritative values live in group_vars/all.yml.
+kube_config_dir: /root/.kube
+kubeconfig_file: "{{ kube_config_dir }}/config"
+kube_api_endpoint: "{{ talos_endpoint_ip }}"

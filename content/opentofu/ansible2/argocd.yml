@@ -1,0 +1,461 @@
+---
+# Installeert ArgoCD en configureert het met Forgejo als Git-bron.
+#
+#   ansible-playbook argocd.yml
+#
+# Wat het playbook doet:
+#   1. installeert/upgradet ArgoCD (OCI-chart, namespace `argocd`);
+#   2. leest de door de Forgejo-chart beheerde admin-referenties;
+#   3. maakt de private repo `gitea_admin/gitops` aan en zet de manifests uit
+#      `files/gitops/` erin (demo-ConfigMap en nginx-demo);
+#   4. maakt (of hergebruikt) een read-only Forgejo-token voor ArgoCD;
+#   5. registreert de repo als ArgoCD repository-secret;
+#   6. maakt de root-Application en de nginx-demo Application.
+#
+# Schrijfacties op Forgejo (repo/bestanden) gebruiken de admin-basic-auth; het
+# token voor ArgoCD heeft alleen `read:repository`.
+- name: Installeer ArgoCD met Forgejo als Git-bron
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+
+  vars:
+    argocd_namespace: argocd
+    argocd_chart: oci://ghcr.io/argoproj/argo-helm/argo-cd
+    # Leeg = nieuwste chartversie; pin bijvoorbeeld op "10.11.6".
+    argocd_chart_version: ""
+    argocd_tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+
+    forgejo_namespace: forgejo
+    forgejo_admin_secret: forgejo-admin
+    forgejo_username: gitea_admin
+    # Binnen de cluster (ArgoCD repo-server lost deze naam op).
+    forgejo_git_url: http://forgejo-http.forgejo.svc.cluster.local:3000
+    # Vanuit de Forgejo-pod zelf, voor de API-calls.
+    forgejo_api: http://127.0.0.1:3000/api/v1
+
+    forgejo_gitops_repo: gitops
+    forgejo_gitops_branch: main
+    argocd_app_name: root
+    argocd_demo_namespace: argocd-demo
+    argocd_input_path: apps
+    argocd_nginx_app_name: nginx-demo
+    argocd_nginx_namespace: nginx-demo
+    argocd_nginx_path: apps/nginx-demo
+
+    forgejo_kubeconfig: /root/.kube/config
+
+    # Bestanden die uit `files/gitops/` in de Forgejo-repo worden gezet.
+    argocd_gitops_files:
+      - path: apps/demo.yaml
+      - path: apps/nginx-demo/app.yaml
+
+  environment:
+    KUBECONFIG: "{{ forgejo_kubeconfig }}"
+
+  roles:
+    # Zorgt voor helm (en de overige Kubernetes-tooling) op de beheercontainer.
+    - tools
+
+  tasks:
+    # --- controles -----------------------------------------------------------
+    - name: Controleer of de beheerderskubeconfig bestaat
+      ansible.builtin.stat:
+        path: "{{ forgejo_kubeconfig }}"
+      register: argocd_kubeconfig_stat
+
+    - name: Stop als de kubeconfig ontbreekt
+      ansible.builtin.assert:
+        that:
+          - argocd_kubeconfig_stat.stat.exists
+        fail_msg: >-
+          {{ forgejo_kubeconfig }} ontbreekt; draai eerst
+          `ansible-playbook site.yml` om de kubeconfig aan te maken.
+        success_msg: "kubeconfig gevonden: {{ forgejo_kubeconfig }}"
+
+    - name: Controleer of Forgejo geïnstalleerd is
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} get deployment forgejo
+      register: argocd_forgejo_deploy
+      changed_when: false
+      failed_when: false
+
+    - name: Stop als Forgejo ontbreekt
+      ansible.builtin.assert:
+        that:
+          - argocd_forgejo_deploy.rc == 0
+        fail_msg: >-
+          Forgejo is niet gevonden in namespace {{ forgejo_namespace }};
+          draai eerst `ansible-playbook forgejo.yml`.
+        success_msg: "Forgejo gevonden; ArgoCD kan er gebruik van maken"
+
+    # --- ArgoCD installeren --------------------------------------------------
+    - name: Installeer ArgoCD
+      ansible.builtin.command: >-
+        helm upgrade --install argocd {{ argocd_chart }}
+        {{ ('--version ' ~ argocd_chart_version) if argocd_chart_version | length > 0 else '' }}
+        --namespace {{ argocd_namespace }}
+        --create-namespace
+        --set-json 'global.tolerations={{ argocd_tolerations | to_json }}'
+        --wait --timeout 15m
+
+    # --- Forgejo-adminreferenties -------------------------------------------
+    - name: Lees de door de Forgejo-chart beheerde adminreferenties
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} get secret {{ forgejo_admin_secret }} -o json
+      register: argocd_forgejo_admin
+      changed_when: false
+      failed_when: false
+      no_log: true
+
+    - name: Stop als de adminreferenties ontbreken
+      ansible.builtin.assert:
+        that:
+          - argocd_forgejo_admin.rc == 0
+        fail_msg: >-
+          Secret {{ forgejo_namespace }}/{{ forgejo_admin_secret }} ontbreekt;
+          draai `ansible-playbook forgejo.yml` opnieuw.
+        success_msg: "Forgejo-adminreferenties gevonden"
+
+    - name: Bepaal de Forgejo-adminreferenties
+      ansible.builtin.set_fact:
+        forgejo_admin_user: >-
+          {{ (argocd_forgejo_admin.stdout | from_json).data.username | b64decode }}
+        forgejo_admin_password: >-
+          {{ (argocd_forgejo_admin.stdout | from_json).data.password | b64decode }}
+      no_log: true
+
+    - name: Controleer of de adminreferenties werken
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -o /dev/null -w '%{http_code}'
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        {{ forgejo_api }}/user
+      register: argocd_forgejo_auth
+      changed_when: false
+      no_log: true
+
+    # Vangnet: alleen als de Secret niet (meer) overeenkomt met de database.
+    - name: Zet het admin-wachtwoord gelijk aan de Secret
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        forgejo admin user change-password
+        --username {{ forgejo_admin_user }}
+        --password {{ forgejo_admin_password }}
+        --must-change-password=false
+      when: argocd_forgejo_auth.stdout != '200'
+      changed_when: true
+      no_log: true
+
+    - name: Controleer de adminreferenties opnieuw
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -o /dev/null -w '%{http_code}'
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        {{ forgejo_api }}/user
+      register: argocd_forgejo_auth_retry
+      changed_when: false
+      no_log: true
+
+    - name: Stop als de adminreferenties niet werken
+      ansible.builtin.assert:
+        that:
+          - argocd_forgejo_auth_retry.stdout == '200'
+        fail_msg: >-
+          Inloggen op Forgejo als {{ forgejo_admin_user }} mislukt
+          (HTTP {{ argocd_forgejo_auth_retry.stdout }}).
+        success_msg: "Forgejo-adminreferenties werken"
+
+    # --- GitOps-repo in Forgejo (schrijfacties met admin-basic-auth) --------
+    - name: Controleer of de GitOps-repo bestaat
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -o /dev/null -w '%{http_code}'
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}
+      register: argocd_repo_check
+      changed_when: false
+      failed_when: false
+      no_log: true
+
+    - name: Maak de private GitOps-repo aan
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -o /dev/null -w '%{http_code}'
+        -X POST
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        -H 'Content-Type: application/json'
+        -d '{{ forgejo_repo_body | to_json }}'
+        {{ forgejo_api }}/user/repos
+      vars:
+        forgejo_repo_body:
+          name: "{{ forgejo_gitops_repo }}"
+          private: true
+          auto_init: true
+          default_branch: "{{ forgejo_gitops_branch }}"
+      register: argocd_repo_create
+      when: argocd_repo_check.stdout != '200'
+      changed_when: argocd_repo_create.stdout in ['200', '201']
+      no_log: true
+
+    - name: Stop als de repo niet is aangemaakt
+      ansible.builtin.assert:
+        that:
+          - argocd_repo_create is skipped or argocd_repo_create.stdout in ['200', '201']
+        fail_msg: >-
+          Kon de repo {{ forgejo_admin_user }}/{{ forgejo_gitops_repo }} niet
+          aanmaken (HTTP {{ argocd_repo_create.stdout | default('n/a') }}).
+        success_msg: "GitOps-repo {{ forgejo_admin_user }}/{{ forgejo_gitops_repo }} is beschikbaar"
+
+    - name: Zet de GitOps-manifests in Forgejo
+      ansible.builtin.include_tasks:
+        file: "{{ playbook_dir }}/tasks/forgejo_file.yml"
+      loop: "{{ argocd_gitops_files }}"
+      loop_control:
+        loop_var: gitops_file
+        label: "{{ gitops_file.path }}"
+      vars:
+        forgejo_file_path: "{{ gitops_file.path }}"
+        forgejo_file_content: >-
+          {{ lookup('ansible.builtin.file',
+                    playbook_dir ~ '/files/gitops/' ~ gitops_file.path) }}
+
+    - name: Bepaal de laatste commit in de GitOps-repo
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}/commits?limit=1
+      register: argocd_gitops_commits
+      changed_when: false
+      no_log: true
+
+    - name: Onthoud de laatste commit
+      ansible.builtin.set_fact:
+        argocd_gitops_revision: "{{ (argocd_gitops_commits.stdout | from_json)[0].sha }}"
+      no_log: true
+
+    # --- read-only ArgoCD-token ---------------------------------------------
+    - name: Lees het bestaande ArgoCD-repo-secret
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_namespace }} get secret repo-forgejo -o json
+      register: argocd_repo_secret
+      changed_when: false
+      failed_when: false
+      no_log: true
+
+    - name: Bepaal het bestaande token
+      ansible.builtin.set_fact:
+        argocd_forgejo_token: >-
+          {{ ((argocd_repo_secret.stdout | from_json).data.password | b64decode)
+             if argocd_repo_secret.rc == 0 else '' }}
+      no_log: true
+
+    - name: Test het bestaande token tegen de GitOps-repo
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -o /dev/null -w '%{http_code}'
+        -H 'Authorization: token {{ argocd_forgejo_token }}'
+        {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}
+      register: argocd_token_check
+      when: argocd_forgejo_token | length > 0
+      changed_when: false
+      failed_when: false
+      no_log: true
+
+    - name: Maak een read-only Forgejo-token voor ArgoCD
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+        curl -s -w '\n%{http_code}'
+        -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+        -H 'Content-Type: application/json'
+        -d '{"name":"argocd-{{ now(fmt="%Y%m%d%H%M%S") }}","scopes":["read:repository"]}'
+        {{ forgejo_api }}/users/{{ forgejo_admin_user }}/tokens
+      register: argocd_token_create
+      when: >-
+        argocd_forgejo_token | length == 0 or
+        (argocd_token_check.stdout | default('')) != '200'
+      changed_when: true
+      no_log: true
+
+    - name: Stop als het token niet is aangemaakt
+      ansible.builtin.assert:
+        that:
+          - argocd_token_create is skipped or argocd_token_create.stdout_lines | last in ['200', '201']
+        fail_msg: >-
+          Kon geen Forgejo-token aanmaken
+          (HTTP {{ argocd_token_create.stdout_lines | last | default('n/a') }}).
+        success_msg: "Forgejo-token voor ArgoCD is beschikbaar"
+        quiet: true
+
+    - name: Onthoud het nieuwe token
+      ansible.builtin.set_fact:
+        argocd_forgejo_token: >-
+          {{ (argocd_token_create.stdout_lines[0] | from_json).sha1 }}
+      when: (argocd_token_create.stdout_lines | last | default('')) in ['200', '201']
+      no_log: true
+
+    # --- ArgoCD koppelen aan Forgejo ----------------------------------------
+    - name: Registreer de Forgejo-repo in ArgoCD
+      ansible.builtin.command:
+        cmd: kubectl apply -f -
+        stdin: |
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: repo-forgejo
+            namespace: {{ argocd_namespace }}
+            labels:
+              argocd.argoproj.io/secret-type: repository
+          type: Opaque
+          data:
+            type: {{ 'git' | b64encode }}
+            name: {{ 'forgejo' | b64encode }}
+            url: {{ (forgejo_git_url ~ '/' ~ forgejo_admin_user ~ '/' ~ forgejo_gitops_repo ~ '.git') | b64encode }}
+            username: {{ forgejo_admin_user | b64encode }}
+            password: {{ argocd_forgejo_token | b64encode }}
+      register: argocd_repo_apply
+      changed_when: >-
+        'created' in argocd_repo_apply.stdout or
+        'configured' in argocd_repo_apply.stdout
+      no_log: true
+
+    - name: Maak de root-Application die Forgejo synct
+      ansible.builtin.command:
+        cmd: kubectl apply -f -
+        stdin: |
+          apiVersion: argoproj.io/v1alpha1
+          kind: Application
+          metadata:
+            name: {{ argocd_app_name }}
+            namespace: {{ argocd_namespace }}
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
+          spec:
+            project: default
+            source:
+              repoURL: {{ forgejo_git_url }}/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}.git
+              targetRevision: {{ forgejo_gitops_branch }}
+              path: {{ argocd_input_path }}
+            destination:
+              server: https://kubernetes.default.svc
+              namespace: {{ argocd_demo_namespace }}
+            syncPolicy:
+              automated:
+                prune: true
+                selfHeal: true
+              syncOptions:
+                - CreateNamespace=true
+      register: argocd_app_apply
+      changed_when: >-
+        'created' in argocd_app_apply.stdout or
+        'configured' in argocd_app_apply.stdout
+
+    # --- nginx-demo via ArgoCD ----------------------------------------------
+    - name: Maak de nginx-demo Application
+      ansible.builtin.command:
+        cmd: kubectl apply -f -
+        stdin: |
+          apiVersion: argoproj.io/v1alpha1
+          kind: Application
+          metadata:
+            name: {{ argocd_nginx_app_name }}
+            namespace: {{ argocd_namespace }}
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
+          spec:
+            project: default
+            source:
+              repoURL: {{ forgejo_git_url }}/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}.git
+              targetRevision: {{ forgejo_gitops_branch }}
+              path: {{ argocd_nginx_path }}
+            destination:
+              server: https://kubernetes.default.svc
+              namespace: {{ argocd_nginx_namespace }}
+            syncPolicy:
+              automated:
+                prune: true
+                selfHeal: true
+              syncOptions:
+                - CreateNamespace=true
+      register: argocd_nginx_apply
+      changed_when: >-
+        'created' in argocd_nginx_apply.stdout or
+        'configured' in argocd_nginx_apply.stdout
+
+    - name: Vraag ArgoCD de nieuwste commit op te halen
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_namespace }} annotate application {{ item }}
+        argocd.argoproj.io/refresh=hard --overwrite
+      loop:
+        - "{{ argocd_app_name }}"
+        - "{{ argocd_nginx_app_name }}"
+      changed_when: false
+
+    - name: Wacht tot de root-Application de laatste commit heeft gesynchroniseerd
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_namespace }} get application {{ argocd_app_name }}
+        -o jsonpath={.status.sync.status}/{.status.health.status}/{.status.sync.revision}
+      register: argocd_app_status
+      until: argocd_app_status.stdout == 'Synced/Healthy/' ~ argocd_gitops_revision
+      retries: 40
+      delay: 10
+      changed_when: false
+
+    - name: Controleer dat het demo-manifest is uitgerold
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_demo_namespace }} get configmap argocd-demo
+      register: argocd_demo_result
+      changed_when: false
+
+    - name: Wacht tot de nginx-demo de laatste commit heeft gesynchroniseerd
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_namespace }} get application {{ argocd_nginx_app_name }}
+        -o jsonpath={.status.sync.status}/{.status.health.status}/{.status.sync.revision}
+      register: argocd_nginx_status
+      # Zonder ingress controller blijft de Ingress op Progressing staan; de
+      # Deployment- en HTTP-checks hieronder bewaken de demo zelf. Na
+      # `ansible-playbook traefik.yml` wordt de health alsnog Healthy.
+      until: >-
+        argocd_nginx_status.stdout in [
+          'Synced/Healthy/' ~ argocd_gitops_revision,
+          'Synced/Progressing/' ~ argocd_gitops_revision
+        ]
+      retries: 40
+      delay: 10
+      changed_when: false
+
+    - name: Wacht tot de nginx-deployment beschikbaar is
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_nginx_namespace }} rollout status deployment/nginx
+        --timeout=180s
+      changed_when: false
+
+    - name: Controleer de welcome-pagina via HTTP
+      ansible.builtin.command: >-
+        kubectl -n {{ argocd_nginx_namespace }} exec deploy/nginx --
+        wget -qO- http://127.0.0.1/
+      register: argocd_nginx_page
+      changed_when: false
+      retries: 10
+      delay: 5
+      until: "'Welkom bij de nginx-demo' in argocd_nginx_page.stdout"
+
+    # --- resultaat -----------------------------------------------------------
+    - name: Toon de toegangsinformatie
+      ansible.builtin.debug:
+        msg:
+          - "ArgoCD: ssh root@192.168.0.137 'kubectl -n {{ argocd_namespace }} port-forward --address 0.0.0.0 svc/argocd-server 8080:443'"
+          - "ArgoCD UI: https://192.168.0.137:8080 (admin / wachtwoord uit argocd-initial-admin-secret)"
+          - "admin-wachtwoord: kubectl -n {{ argocd_namespace }} get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
+          - "Forgejo-repo: {{ forgejo_git_url }}/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}.git"
+          - "Application {{ argocd_app_name }}: {{ argocd_app_status.stdout.split('/')[0] }}/{{ argocd_app_status.stdout.split('/')[1] }} (revisie {{ argocd_gitops_revision[:8] }})"
+          - "Application {{ argocd_nginx_app_name }}: {{ argocd_nginx_status.stdout.split('/')[0] }}/{{ argocd_nginx_status.stdout.split('/')[1] }} (revisie {{ argocd_gitops_revision[:8] }})"
+          - "Demo: {{ argocd_demo_result.stdout_lines | join('; ') }}"
+          - "nginx-demo: http://nginx-demo.kubernetes.local (na traefik.yml en de /etc/hosts-regel 192.168.0.137 nginx-demo.kubernetes.local)"

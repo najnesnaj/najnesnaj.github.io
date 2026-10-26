@@ -1,0 +1,76 @@
+---
+# Shared variables for all hosts managed by this playbook.
+
+# Admin login created on k8s-management. It is a member of `sudo` and gets
+# passwordless sudo so the container can be administered with the same key as
+# the control node.
+admin_user: jan
+admin_groups:
+  - sudo
+admin_shell: /bin/bash
+
+# Public key installed for both `admin_user` and `root`. This is the key
+# referenced by the Terraform bootstrap script (management.tf) and lives on the
+# Ansible control node.
+ssh_public_key_path: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519.pub"
+
+# Additional public keys authorized for `admin_user`, e.g. other servers or
+# operators that must be able to log in without a local `jan` account. Each
+# entry is a full public-key line ("ssh-ed25519 AAAA... comment"). Re-run the
+# playbook after adding one; an empty list means "no extra keys".
+ssh_extra_authorized_keys: []
+# When true, only ssh_public_key_path + ssh_extra_authorized_keys stay in
+# ~admin/.ssh/authorized_keys (any other keys are removed). Keep false if you
+# add keys out-of-band.
+ssh_authorized_keys_exclusive: false
+
+# --- sshd hardening ---------------------------------------------------------
+sshd_dropin: /etc/ssh/sshd_config.d/99-k8s-management.conf
+# Key-based logins only once the playbook has run.
+sshd_password_authentication: false
+# Keep root reachable with a key (the Terraform bootstrap also seeds it), but
+# never with a password.
+sshd_permit_root_login: "prohibit-password"
+sshd_allow_users: "root {{ admin_user }}"
+
+# --- tools ------------------------------------------------------------------
+# Empty strings install the latest stable release.
+talosctl_version: ""
+kubectl_version: ""
+helm_version: ""
+tools_arch: amd64
+tools_packages:
+  - bash-completion
+  - ca-certificates
+  - curl
+  - dnsutils
+  - git
+  - iptables
+  - jq
+  - unzip
+
+# --- talosctl client configuration ------------------------------------------
+# The Talos control plane that talosctl on k8s-management talks to by default.
+# NOTE: 10.10.50.10 (node_ips[0]) collides with the management container's own
+# eth1 address (management_lan_ip in ../variables.tf), so the endpoint points at
+# the reachable control plane 10.10.50.22 (talos-node-3). Override per run, e.g.
+# -e talos_endpoint_ip=10.10.50.10.
+talos_endpoint_ip: "10.10.50.22"
+# Node(s) talosctl targets when no -n/--nodes is given. Defaults to the control
+# plane above so that bare `talosctl health` / `talosctl version` work.
+talos_node_ip: "{{ talos_endpoint_ip }}"
+# Managed talosconfig (talosctl's default lookup path for the root login).
+talos_config_file: /root/.talos/config
+# OpenTofu project that owns the cluster PKI. The client certs are read from its
+# `talosconfig` output so the managed config always matches the running cluster.
+talos_tofu_dir: "{{ playbook_dir }}/.."
+
+# --- kubectl / kubeconfig ----------------------------------------------------
+# Directory and file of the managed admin kubeconfig (kubectl's default path for
+# the root login).
+kube_config_dir: /root/.kube
+kubeconfig_file: "{{ kube_config_dir }}/config"
+# Kubernetes API endpoint written into the kubeconfig. Defaults to the reachable
+# Talos control plane; the Talos cluster endpoint (10.10.50.10) is the
+# management container's own address and does not serve the API.
+kube_api_endpoint: "{{ talos_endpoint_ip }}"

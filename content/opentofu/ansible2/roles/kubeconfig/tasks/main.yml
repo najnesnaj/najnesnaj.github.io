@@ -1,0 +1,78 @@
+---
+# Install and maintain the Kubernetes admin kubeconfig on k8s-management so that
+# `kubectl` works without arguments.
+#
+# The admin credentials come from the cluster's Talos machine secrets, so the
+# kubeconfig can be generated (`talosctl kubeconfig`) even while the cluster API
+# server is down. The cluster endpoint stored in it is rewritten to
+# `kube_api_endpoint` because the Talos cluster endpoint (10.10.50.10) is the
+# management container's own address and does not serve the Kubernetes API.
+
+- name: Ensure the kubectl configuration directory exists
+  ansible.builtin.file:
+    path: "{{ kube_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Download the admin kubeconfig from the cluster
+  ansible.builtin.command: /usr/local/bin/talosctl kubeconfig -m=false -
+  environment:
+    TALOSCONFIG: "{{ talos_config_file }}"
+  register: kubeconfig_raw
+  changed_when: false
+  no_log: true
+
+- name: Resolve the kubeconfig for the control plane endpoint
+  # talosctl mints a fresh client certificate on every call, so the raw output
+  # is never byte-stable. We keep the (stable) cluster CA to decide whether a
+  # reinstall is needed.
+  ansible.builtin.set_fact:
+    kubeconfig_rendered: >-
+      {{ kubeconfig_raw.stdout
+         | regex_replace('(server:\s*)https?://[^\s]+',
+                         '\1https://' ~ kube_api_endpoint ~ ':6443') }}
+    kubeconfig_ca: >-
+      {{ (kubeconfig_raw.stdout | from_yaml).clusters[0].cluster['certificate-authority-data'] }}
+  no_log: true
+
+- name: Read the installed kubeconfig (if present)
+  ansible.builtin.slurp:
+    src: "{{ kubeconfig_file }}"
+  register: kubeconfig_installed
+  failed_when: false
+  no_log: true
+
+- name: Install the managed kubeconfig
+  ansible.builtin.copy:
+    content: "{{ kubeconfig_rendered }}"
+    dest: "{{ kubeconfig_file }}"
+    owner: root
+    group: root
+    mode: "0600"
+  when: >-
+    kubeconfig_installed.content is not defined or
+    kubeconfig_ca not in (kubeconfig_installed.content | b64decode) or
+    ('server: https://' ~ kube_api_endpoint ~ ':6443')
+      not in (kubeconfig_installed.content | b64decode)
+  no_log: true
+
+- name: Read the effective kubectl context
+  ansible.builtin.command: /usr/local/bin/kubectl config current-context
+  register: kubeconfig_context
+  changed_when: false
+
+- name: Read the kubeconfig API server
+  ansible.builtin.command: >-
+    /usr/local/bin/kubectl config view --minify -o
+    jsonpath={.clusters[0].cluster.server}
+  register: kubeconfig_server
+  changed_when: false
+
+- name: Report the managed kubeconfig
+  ansible.builtin.debug:
+    msg:
+      - "kubeconfig: {{ kubeconfig_file }}"
+      - "context:    {{ kubeconfig_context.stdout }}"
+      - "server:     {{ kubeconfig_server.stdout }}"

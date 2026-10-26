@@ -1,0 +1,6 @@
+---
+# Fallbacks; the authoritative values live in group_vars/all.yml.
+talos_endpoint_ip: "10.10.50.10"
+talos_node_ip: "{{ talos_endpoint_ip }}"
+talos_config_file: /root/.talos/config
+talos_tofu_dir: "{{ playbook_dir }}/.."

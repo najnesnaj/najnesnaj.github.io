@@ -1,0 +1,24 @@
+---
+# Fallbacks; the authoritative values live in group_vars/all.yml.
+tools_bin_dir: /usr/local/bin
+tools_arch: amd64
+talosctl_version: ""
+kubectl_version: ""
+helm_version: ""
+
+tools_packages:
+  - bash-completion
+  - ca-certificates
+  - curl
+  - dnsutils
+  - git
+  - iptables
+  - jq
+  - unzip
+
+# Resolved download URL: a pinned release when talosctl_version is set,
+# otherwise the latest release on GitHub.
+talosctl_url: >-
+  https://github.com/siderolabs/talos/releases/{{
+    'download/v' ~ talosctl_version if talosctl_version | length > 0 else 'latest/download'
+  }}/talosctl-linux-{{ tools_arch }}

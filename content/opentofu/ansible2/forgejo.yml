@@ -1,0 +1,91 @@
+---
+# Installeert (of upgradet) Forgejo op de Talos-cluster met Helm.
+#
+#   ansible-playbook forgejo.yml
+#
+# De chart wordt als OCI-artefact gepubliceerd; er is geen `helm repo add` nodig.
+- name: Installeer Forgejo in Kubernetes
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+
+  vars:
+    forgejo_namespace: forgejo
+    forgejo_chart: oci://code.forgejo.org/forgejo-helm/forgejo
+    # Leeg = nieuwste chartversie; pin bijvoorbeeld op "17.3.1".
+    forgejo_chart_version: ""
+    forgejo_storage_size: 10Gi
+    forgejo_storage_class: local-path
+    forgejo_pvc_name: gitea-shared-storage
+    forgejo_kubeconfig: /root/.kube/config
+    # De enige node is een control-plane met een NoSchedule-taint.
+    forgejo_tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+
+  environment:
+    KUBECONFIG: "{{ forgejo_kubeconfig }}"
+
+  roles:
+    # Zorgt voor helm (en de overige Kubernetes-tooling) op de beheercontainer.
+    - tools
+    # Zorgt voor de StorageClass die de Forgejo-PVC nodig heeft.
+    - local_path_storage
+
+  tasks:
+    - name: Controleer of de beheerderskubeconfig bestaat
+      ansible.builtin.stat:
+        path: "{{ forgejo_kubeconfig }}"
+      register: forgejo_kubeconfig_stat
+
+    - name: Stop als de kubeconfig ontbreekt
+      ansible.builtin.assert:
+        that:
+          - forgejo_kubeconfig_stat.stat.exists
+        fail_msg: >-
+          {{ forgejo_kubeconfig }} ontbreekt; draai eerst
+          `ansible-playbook site.yml` om de kubeconfig aan te maken.
+        success_msg: "kubeconfig gevonden: {{ forgejo_kubeconfig }}"
+
+    - name: Zorg dat de Forgejo-namespace bestaat
+      ansible.builtin.command: kubectl create namespace {{ forgejo_namespace }}
+      register: forgejo_namespace_create
+      changed_when: forgejo_namespace_create.rc == 0
+      failed_when:
+        - forgejo_namespace_create.rc != 0
+        - "'AlreadyExists' not in forgejo_namespace_create.stderr"
+
+    # `storageClassName` is immutabel. Een PVC die nog niet gebonden is (dus
+    # zonder data) mag weg als hij een andere class heeft, zodat Helm hem
+    # opnieuw kan aanmaken met de gewenste class.
+    - name: Lees de storageClass en status van een bestaande Forgejo-PVC
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} get pvc {{ forgejo_pvc_name }} -o json
+      register: forgejo_pvc
+      changed_when: false
+      failed_when: false
+
+    - name: Verwijder een ongebonden PVC met een afwijkende storageClass
+      ansible.builtin.command: >-
+        kubectl -n {{ forgejo_namespace }} delete pvc {{ forgejo_pvc_name }}
+      when:
+        - forgejo_pvc.rc == 0
+        - (forgejo_pvc.stdout | from_json).status.phase == 'Pending'
+        - >-
+          (forgejo_pvc.stdout | from_json).spec.storageClassName | default('')
+          != forgejo_storage_class
+
+    - name: Installeer Forgejo in Kubernetes
+      ansible.builtin.command: >-
+        helm upgrade --install forgejo {{ forgejo_chart }}
+        {{ ('--version ' ~ forgejo_chart_version) if forgejo_chart_version | length > 0 else '' }}
+        --namespace {{ forgejo_namespace }}
+        --create-namespace
+        --set persistence.enabled=true
+        --set persistence.size={{ forgejo_storage_size }}
+        --set persistence.storageClass={{ forgejo_storage_class }}
+        --set-json 'tolerations={{ forgejo_tolerations | to_json }}'

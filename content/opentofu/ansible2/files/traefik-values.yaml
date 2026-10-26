@@ -1,0 +1,47 @@
+# Traefik-waarden voor de single-node Talos-cluster.
+#
+# De node staat op 10.10.50.22 (geïsoleerd netwerk). De managementcontainer
+# forwardt 80/443 naar de NodePorts; zie traefik.yml.
+deployment:
+  replicas: 1
+
+service:
+  spec:
+    type: NodePort
+
+ports:
+  web:
+    nodePort: 30080
+  websecure:
+    nodePort: 30443
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: traefik
+
+providers:
+  kubernetesIngress:
+    enabled: true
+    # De NodePort-Service heeft geen loadBalancer-status. Laat Traefik daarom
+    # het externe adres publiceren dat clients gebruiken (de managementcontainer).
+    publishedService:
+      enabled: false
+    ingressEndpoint:
+      ip: 192.168.0.137
+
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi

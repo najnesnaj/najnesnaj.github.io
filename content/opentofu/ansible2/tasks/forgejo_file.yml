@@ -1,0 +1,86 @@
+---
+# Zet één bestand idempotent in de GitOps-repo in Forgejo.
+#
+# Verwachte variabelen (uit de play):
+#   forgejo_file_path      pad binnen de repo, bijvoorbeeld apps/demo.yaml
+#   forgejo_file_content   volledige inhoud van het bestand
+#   forgejo_namespace, forgejo_api, forgejo_admin_user,
+#   forgejo_admin_password, forgejo_gitops_repo, forgejo_gitops_branch
+#
+# Forgejo kent aparte endpoints voor aanmaken (POST) en bijwerken (PUT; vereist
+# de blob-sha). Een PUT op een nieuw pad geeft anders HTTP 422 "[SHA]: Required".
+- name: "Controleer {{ forgejo_file_path }} in de GitOps-repo"
+  ansible.builtin.command: >-
+    kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+    curl -s -w '\n%{http_code}'
+    -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+    {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}/contents/{{ forgejo_file_path }}?ref={{ forgejo_gitops_branch }}
+  register: forgejo_file_state
+  changed_when: false
+  failed_when: false
+  no_log: true
+
+- name: "Bepaal de huidige inhoud van {{ forgejo_file_path }}"
+  ansible.builtin.set_fact:
+    forgejo_file_status: "{{ forgejo_file_state.stdout_lines | last | default('') }}"
+    forgejo_file_current: >-
+      {{ ((forgejo_file_state.stdout_lines[0] | from_json).content
+          | regex_replace('\n', ''))
+         if (forgejo_file_state.stdout_lines | last | default('')) == '200'
+         else '' }}
+  no_log: true
+
+- name: "Zet {{ forgejo_file_path }} in de repo (nieuw bestand)"
+  ansible.builtin.command: >-
+    kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+    curl -s -o /dev/null -w '%{http_code}'
+    -X POST
+    -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+    -H 'Content-Type: application/json'
+    -d '{{ forgejo_file_create_body | to_json }}'
+    {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}/contents/{{ forgejo_file_path }}
+  vars:
+    forgejo_file_create_body:
+      content: "{{ forgejo_file_content | b64encode }}"
+      message: "ArgoCD: voeg {{ forgejo_file_path }} toe"
+      branch: "{{ forgejo_gitops_branch }}"
+  register: forgejo_file_create
+  when: forgejo_file_status != '200'
+  changed_when: forgejo_file_create.stdout in ['200', '201']
+  no_log: true
+
+- name: "Werk {{ forgejo_file_path }} bij (bestaand bestand)"
+  ansible.builtin.command: >-
+    kubectl -n {{ forgejo_namespace }} exec deploy/forgejo --
+    curl -s -o /dev/null -w '%{http_code}'
+    -X PUT
+    -u {{ forgejo_admin_user }}:{{ forgejo_admin_password }}
+    -H 'Content-Type: application/json'
+    -d '{{ forgejo_file_update_body | to_json }}'
+    {{ forgejo_api }}/repos/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}/contents/{{ forgejo_file_path }}
+  vars:
+    forgejo_file_update_body:
+      content: "{{ forgejo_file_content | b64encode }}"
+      message: "ArgoCD: werk {{ forgejo_file_path }} bij"
+      branch: "{{ forgejo_gitops_branch }}"
+      sha: "{{ (forgejo_file_state.stdout_lines[0] | from_json).sha }}"
+  register: forgejo_file_update
+  when:
+    - forgejo_file_status == '200'
+    - forgejo_file_current != (forgejo_file_content | b64encode)
+  changed_when: forgejo_file_update.stdout in ['200', '201']
+  no_log: true
+
+- name: "Stop als {{ forgejo_file_path }} niet in de repo staat"
+  ansible.builtin.assert:
+    that:
+      - >-
+        (forgejo_file_status == '200' and
+         (forgejo_file_current == (forgejo_file_content | b64encode) or
+          forgejo_file_update.stdout in ['200', '201'])) or
+        (forgejo_file_status != '200' and
+         forgejo_file_create.stdout in ['200', '201'])
+    fail_msg: >-
+      Kon {{ forgejo_file_path }} niet in de repo zetten
+      (create={{ forgejo_file_create.stdout | default('n/a') }},
+      update={{ forgejo_file_update.stdout | default('n/a') }}).

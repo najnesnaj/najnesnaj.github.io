@@ -1,0 +1,84 @@
+---
+# Configure the talosctl client on k8s-management so that bare `talosctl`
+# commands target the Talos control plane.
+#
+# The client certificate/key are copied from the OpenTofu project that owns the
+# cluster PKI (`tofu output -raw talosconfig`), so the managed talosconfig can
+# never drift from the running cluster. The endpoint and node are then pinned to
+# the control plane.
+
+- name: Ensure the talosctl configuration directory exists
+  ansible.builtin.file:
+    path: "{{ talos_config_file | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Read the cluster talosconfig from OpenTofu
+  ansible.builtin.command:
+    cmd: tofu output -raw talosconfig
+    chdir: "{{ talos_tofu_dir }}"
+  delegate_to: localhost
+  become: false
+  register: talos_tofu_output
+  changed_when: false
+
+- name: Resolve the cluster CA from the OpenTofu talosconfig
+  ansible.builtin.set_fact:
+    talos_tofu_ca: >-
+      {{ ((talos_tofu_output.stdout | from_yaml).contexts.values() | list | first).ca }}
+  no_log: true
+
+- name: Read the installed talosconfig (if present)
+  ansible.builtin.slurp:
+    src: "{{ talos_config_file }}"
+  register: talos_installed
+  failed_when: false
+  no_log: true
+
+- name: Install the managed talosconfig
+  # Only (re)install when the client PKI does not match the cluster yet, so the
+  # endpoint/node written below are preserved across runs (idempotent).
+  ansible.builtin.copy:
+    content: "{{ talos_tofu_output.stdout }}"
+    dest: "{{ talos_config_file }}"
+    owner: root
+    group: root
+    mode: "0600"
+  when: >-
+    talos_installed.content is not defined or
+    talos_tofu_ca not in (talos_installed.content | b64decode)
+  no_log: true
+
+- name: Read the current talosctl context
+  ansible.builtin.command: /usr/local/bin/talosctl config info -o json
+  environment:
+    TALOSCONFIG: "{{ talos_config_file }}"
+  register: talos_context
+  changed_when: false
+
+- name: Point talosctl at the Talos control plane endpoint
+  ansible.builtin.command: >-
+    /usr/local/bin/talosctl config endpoint {{ talos_endpoint_ip | default('10.10.50.10') }}
+  environment:
+    TALOSCONFIG: "{{ talos_config_file }}"
+  when: (talos_context.stdout | from_json).endpoints != [talos_endpoint_ip | default('10.10.50.10')]
+
+- name: Point talosctl at the Talos control plane node
+  ansible.builtin.command: >-
+    /usr/local/bin/talosctl config node {{ talos_node_ip | default('10.10.50.10') }}
+  environment:
+    TALOSCONFIG: "{{ talos_config_file }}"
+  when: (talos_context.stdout | from_json).nodes != [talos_node_ip | default('10.10.50.10')]
+
+- name: Show the resulting talosctl context
+  ansible.builtin.command: /usr/local/bin/talosctl config info
+  environment:
+    TALOSCONFIG: "{{ talos_config_file }}"
+  register: talos_context_final
+  changed_when: false
+
+- name: Report the talosctl client configuration
+  ansible.builtin.debug:
+    msg: "{{ talos_context_final.stdout_lines }}"

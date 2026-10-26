@@ -1,0 +1,85 @@
+---
+# Installeert local-path-provisioner (idempotent) en zorgt dat de
+# StorageClass `local-path` beschikbaar is voordat workloads erom vragen.
+
+- name: Controleer of de StorageClass al bestaat
+  ansible.builtin.command: kubectl get storageclass {{ local_path_storage_class }}
+  register: lps_storageclass
+  changed_when: false
+  failed_when: false
+
+- name: Installeer local-path-provisioner
+  ansible.builtin.command: kubectl apply -f {{ local_path_provisioner_manifest_url }}
+  register: lps_apply
+  changed_when: "'created' in lps_apply.stdout or 'configured' in lps_apply.stdout"
+  when: lps_storageclass.rc != 0
+
+# Talos handhaaft PodSecurity `baseline` in namespaces zonder label. De
+# helper-pods die volumes aanmaken draaien in deze namespace en gebruiken een
+# hostPath-volume, wat alleen onder `privileged` is toegestaan.
+- name: Lees de PodSecurity-enforce-label van de provisioner-namespace
+  ansible.builtin.command: >-
+    kubectl get namespace {{ local_path_provisioner_namespace }} -o json
+  register: lps_namespace
+  changed_when: false
+
+- name: Sta hostPath toe in de provisioner-namespace
+  ansible.builtin.command: >-
+    kubectl label namespace {{ local_path_provisioner_namespace }}
+    pod-security.kubernetes.io/enforce=privileged --overwrite
+  when: >-
+    (lps_namespace.stdout | from_json).metadata.labels['pod-security.kubernetes.io/enforce']
+    | default('') != 'privileged'
+
+- name: Lees de local-path-config
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} get configmap local-path-config -o json
+  register: lps_config
+  changed_when: false
+
+- name: Wijs de provisioner naar het gewenste data-pad
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} patch configmap local-path-config
+    --type merge
+    --patch '{{ lps_patch | to_json }}'
+  vars:
+    lps_patch:
+      data:
+        config.json: >-
+          {{ {'nodePathMap': [{'node': 'DEFAULT_PATH_FOR_NON_LISTED_NODES',
+                               'paths': [local_path_provisioner_data_dir]}]} | to_json }}
+  when: >-
+    local_path_provisioner_data_dir
+    not in (lps_config.stdout | from_json).data['config.json']
+
+- name: Herstart de provisioner zodat het nieuwe pad actief wordt
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} rollout restart
+    deployment/local-path-provisioner
+  when: >-
+    local_path_provisioner_data_dir
+    not in (lps_config.stdout | from_json).data['config.json']
+
+- name: Lees de tolerations van de provisioner
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} get deployment
+    local-path-provisioner -o jsonpath={.spec.template.spec.tolerations}
+  register: lps_tolerations
+  changed_when: false
+
+- name: Sta de provisioner toe op de control-plane-node
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} patch deployment
+    local-path-provisioner --type merge
+    --patch '{{ lps_toleration_patch }}'
+  vars:
+    lps_toleration_patch: >-
+      {{ {'spec': {'template': {'spec': {
+           'tolerations': local_path_provisioner_tolerations}}} } | to_json }}
+  when: "'control-plane' not in lps_tolerations.stdout"
+
+- name: Wacht tot de provisioner gereed is
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }} rollout status
+    deployment/local-path-provisioner --timeout=180s
+  changed_when: false

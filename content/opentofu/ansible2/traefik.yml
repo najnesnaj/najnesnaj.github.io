@@ -1,0 +1,252 @@
+---
+# Installeert Traefik als ingress controller en ontsluit de ingress-poorten via
+# de managementcontainer.
+#
+#   ansible-playbook traefik.yml
+#
+# De Talos-node staat op het geïsoleerde netwerk 10.10.50.0/24. De
+# managementcontainer is dual-homed (192.168.0.137 op het thuisnetwerk en
+# 10.10.50.5 op het clusternetwerk). Traefik luistert als NodePort op de node;
+# systemd-socket-proxyd op de managementcontainer forwardt TCP 80/443 naar die
+# NodePorts. Zo heeft het thuisnetwerk aan één /etc/hosts-regel genoeg:
+#
+#   192.168.0.137  nginx-demo.kubernetes.local
+#
+# De proxy is puur L4; Traefik doet de routing op Host-header.
+- name: Installeer Traefik als ingress controller
+  hosts: k8s_management
+  become: true
+  gather_facts: false
+
+  vars:
+    traefik_namespace: traefik
+    traefik_chart: oci://ghcr.io/traefik/helm/traefik
+    # Pin de chart; update bewust na het lezen van de release notes.
+    traefik_chart_version: "42.1.3"
+    traefik_node_ip: 10.10.50.22
+    traefik_bridge_ip: 192.168.0.137
+    traefik_http_nodeport: 30080
+    traefik_https_nodeport: 30443
+    traefik_hostname: nginx-demo.kubernetes.local
+    traefik_proxy_bin: /lib/systemd/systemd-socket-proxyd
+
+  roles:
+    # Zorgt voor helm, kubectl en de overige tooling op de beheercontainer.
+    - tools
+
+  tasks:
+    - name: Controleer de kubeconfig
+      ansible.builtin.command: kubectl get nodes
+      register: traefik_nodes
+      changed_when: false
+
+    - name: Controleer of de nginx-Ingress al bestaat
+      ansible.builtin.command: >-
+        kubectl -n nginx-demo get ingress nginx
+      register: traefik_ingress_precheck
+      changed_when: false
+      failed_when: false
+
+    - name: Stop als de Ingress nog niet is uitgerold
+      ansible.builtin.assert:
+        that:
+          - traefik_ingress_precheck.rc == 0
+        fail_msg: >-
+          De Ingress nginx-demo/nginx ontbreekt. Draai eerst
+          `ansible-playbook argocd.yml`; de Ingress staat in
+          files/gitops/apps/nginx-demo/app.yaml.
+
+    - name: Kopieer de Traefik-waarden naar de beheercontainer
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/files/traefik-values.yaml"
+        dest: /tmp/traefik-values.yaml
+        mode: "0600"
+
+    - name: Installeer of upgrade Traefik
+      ansible.builtin.command:
+        argv:
+          - helm
+          - upgrade
+          - --install
+          - traefik
+          - "{{ traefik_chart }}"
+          - --namespace
+          - "{{ traefik_namespace }}"
+          - --create-namespace
+          - --version
+          - "{{ traefik_chart_version }}"
+          - --values
+          - /tmp/traefik-values.yaml
+          - --wait
+          - --timeout
+          - 10m
+      register: traefik_helm
+      changed_when: >-
+        'has been upgraded' in traefik_helm.stdout or
+        'has been installed' in traefik_helm.stdout
+
+    - name: Wacht tot de Traefik-deployment beschikbaar is
+      ansible.builtin.command: >-
+        kubectl -n {{ traefik_namespace }} wait
+        --for=condition=Available deployment
+        -l app.kubernetes.io/name=traefik --timeout=300s
+      changed_when: false
+
+    - name: Controleer de IngressClass
+      ansible.builtin.command: kubectl get ingressclass traefik
+      register: traefik_ingressclass
+      changed_when: false
+
+    - name: Controleer de Traefik-Service
+      ansible.builtin.command: >-
+        kubectl -n {{ traefik_namespace }} get service traefik
+      register: traefik_service
+      changed_when: false
+
+    # --- L4-bridge op de managementcontainer ---------------------------------
+    - name: Zet de HTTP-socket voor de ingress-bridge
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/traefik-ingress-http.socket
+        mode: "0644"
+        content: |
+          # Beheerd door Ansible (traefik.yml); niet handmatig aanpassen.
+          [Unit]
+          Description=Traefik ingress HTTP socket (thuisnetwerk)
+          After=network-online.target
+          Wants=network-online.target
+
+          [Socket]
+          ListenStream={{ traefik_bridge_ip }}:80
+          NoDelay=true
+
+          [Install]
+          WantedBy=sockets.target
+      register: traefik_http_socket_unit
+
+    - name: Zet de HTTP-proxyservice
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/traefik-ingress-http.service
+        mode: "0644"
+        content: |
+          # Beheerd door Ansible (traefik.yml); niet handmatig aanpassen.
+          [Unit]
+          Description=Traefik ingress HTTP proxy naar de cluster-NodePort
+          Requires=traefik-ingress-http.socket
+          After=traefik-ingress-http.socket network-online.target
+          Wants=network-online.target
+
+          [Service]
+          ExecStart={{ traefik_proxy_bin }} --exit-idle-time=300 {{ traefik_node_ip }}:{{ traefik_http_nodeport }}
+          PrivateTmp=true
+          ProtectSystem=strict
+          ProtectHome=true
+          NoNewPrivileges=true
+      register: traefik_http_service_unit
+
+    - name: Zet de HTTPS-socket voor de ingress-bridge
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/traefik-ingress-https.socket
+        mode: "0644"
+        content: |
+          # Beheerd door Ansible (traefik.yml); niet handmatig aanpassen.
+          [Unit]
+          Description=Traefik ingress HTTPS socket (thuisnetwerk)
+          After=network-online.target
+          Wants=network-online.target
+
+          [Socket]
+          ListenStream={{ traefik_bridge_ip }}:443
+          NoDelay=true
+
+          [Install]
+          WantedBy=sockets.target
+      register: traefik_https_socket_unit
+
+    - name: Zet de HTTPS-proxyservice
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/traefik-ingress-https.service
+        mode: "0644"
+        content: |
+          # Beheerd door Ansible (traefik.yml); niet handmatig aanpassen.
+          [Unit]
+          Description=Traefik ingress HTTPS proxy naar de cluster-NodePort
+          Requires=traefik-ingress-https.socket
+          After=traefik-ingress-https.socket network-online.target
+          Wants=network-online.target
+
+          [Service]
+          ExecStart={{ traefik_proxy_bin }} --exit-idle-time=300 {{ traefik_node_ip }}:{{ traefik_https_nodeport }}
+          PrivateTmp=true
+          ProtectSystem=strict
+          ProtectHome=true
+          NoNewPrivileges=true
+      register: traefik_https_service_unit
+
+    - name: Herlaad systemd
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Activeer de ingress-sockets
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - traefik-ingress-http.socket
+        - traefik-ingress-https.socket
+
+    - name: Stop actieve ingress-proxies voordat de sockets worden herstart
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: stopped
+      loop:
+        - traefik-ingress-http.service
+        - traefik-ingress-https.service
+      when: >-
+        traefik_http_socket_unit.changed or
+        traefik_http_service_unit.changed or
+        traefik_https_socket_unit.changed or
+        traefik_https_service_unit.changed
+
+    - name: Herstart de ingress-sockets na een wijziging
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - traefik-ingress-http.socket
+        - traefik-ingress-https.socket
+      when: >-
+        traefik_http_socket_unit.changed or
+        traefik_http_service_unit.changed or
+        traefik_https_socket_unit.changed or
+        traefik_https_service_unit.changed
+
+    # --- Controle ------------------------------------------------------------
+    - name: Controleer Traefik rechtstreeks via de NodePort
+      ansible.builtin.command: >-
+        curl -fsS -H 'Host: {{ traefik_hostname }}'
+        http://{{ traefik_node_ip }}:{{ traefik_http_nodeport }}/
+      register: traefik_nodeport_check
+      until: "'Welkom bij de nginx-demo' in traefik_nodeport_check.stdout"
+      retries: 12
+      delay: 5
+      changed_when: false
+
+    - name: Controleer de ingress via de managementcontainer
+      ansible.builtin.command: >-
+        curl -fsS --resolve {{ traefik_hostname }}:80:{{ traefik_bridge_ip }}
+        http://{{ traefik_hostname }}/
+      register: traefik_bridge_check
+      until: "'Welkom bij de nginx-demo' in traefik_bridge_check.stdout"
+      retries: 12
+      delay: 5
+      changed_when: false
+
+    - name: Toon de toegangsinformatie
+      ansible.builtin.debug:
+        msg:
+          - "Ingress: http://{{ traefik_hostname }}"
+          - "/etc/hosts: {{ traefik_bridge_ip }} {{ traefik_hostname }}"
+          - "Traefik NodePort: {{ traefik_node_ip }}:{{ traefik_http_nodeport }} (HTTP), :{{ traefik_https_nodeport }} (HTTPS)"
+          - "IngressClass: {{ traefik_ingressclass.stdout_lines | join(' ') }}"
+          - "Traefik-service: {{ traefik_service.stdout_lines | join(' ') }}"

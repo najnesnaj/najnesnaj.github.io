@@ -1,0 +1,167 @@
+---
+# Administrative tooling for the Talos/Kubernetes management container:
+# base CLI packages plus talosctl and kubectl.
+
+- name: Install base CLI packages
+  ansible.builtin.apt:
+    name: "{{ tools_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+# --- talosctl ---------------------------------------------------------------
+- name: Check for an existing talosctl
+  ansible.builtin.stat:
+    path: "{{ tools_bin_dir }}/talosctl"
+  register: talosctl_bin
+
+- name: Query installed talosctl version
+  ansible.builtin.command: "{{ tools_bin_dir }}/talosctl version --client --short"
+  register: talosctl_installed
+  changed_when: false
+  failed_when: false
+  when: talosctl_bin.stat.exists
+
+- name: Install talosctl
+  ansible.builtin.get_url:
+    url: "{{ talosctl_url }}"
+    dest: "{{ tools_bin_dir }}/talosctl"
+    owner: root
+    group: root
+    mode: "0755"
+  when: >-
+    not talosctl_bin.stat.exists or
+    (talosctl_version | length > 0 and
+     talosctl_version not in (talosctl_installed.stdout | default('')))
+
+# --- kubectl ----------------------------------------------------------------
+- name: Discover the current stable kubectl version
+  ansible.builtin.uri:
+    url: https://dl.k8s.io/release/stable.txt
+    return_content: true
+    status_code: 200
+  register: kubectl_stable
+  changed_when: false
+  when: kubectl_version | length == 0
+
+- name: Resolve the kubectl target version
+  ansible.builtin.set_fact:
+    kubectl_target: >-
+      {{ kubectl_version if kubectl_version | length > 0 else (kubectl_stable.content | trim) }}
+
+- name: Check for an existing kubectl
+  ansible.builtin.stat:
+    path: "{{ tools_bin_dir }}/kubectl"
+  register: kubectl_bin
+
+- name: Query installed kubectl version
+  ansible.builtin.command: "{{ tools_bin_dir }}/kubectl version --client -o json"
+  register: kubectl_installed
+  changed_when: false
+  failed_when: false
+  when: kubectl_bin.stat.exists
+
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ kubectl_target }}/bin/linux/{{ tools_arch }}/kubectl"
+    dest: "{{ tools_bin_dir }}/kubectl"
+    owner: root
+    group: root
+    mode: "0755"
+    checksum: "sha256:https://dl.k8s.io/release/{{ kubectl_target }}/bin/linux/{{ tools_arch }}/kubectl.sha256"
+  when: >-
+    not kubectl_bin.stat.exists or
+    kubectl_target not in (kubectl_installed.stdout | default(''))
+
+- name: Enable kubectl shell completion
+  ansible.builtin.copy:
+    dest: /etc/bash_completion.d/kubectl
+    content: |
+      # Managed by Ansible - role `tools`.
+      command -v kubectl >/dev/null && source <(kubectl completion bash)
+    owner: root
+    group: root
+    mode: "0644"
+
+# --- helm -------------------------------------------------------------------
+- name: Discover the current stable Helm version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/helm/helm/releases/latest
+    return_content: true
+    status_code: 200
+  register: helm_stable
+  changed_when: false
+  when: helm_version | length == 0
+
+- name: Resolve the Helm target version
+  ansible.builtin.set_fact:
+    helm_target: >-
+      {{ helm_version if helm_version | length > 0
+         else (helm_stable.json.tag_name | regex_replace('^v', '')) }}
+
+- name: Check for an existing helm
+  ansible.builtin.stat:
+    path: "{{ tools_bin_dir }}/helm"
+  register: helm_bin
+
+- name: Query installed helm version
+  ansible.builtin.command: "{{ tools_bin_dir }}/helm version --short"
+  register: helm_installed
+  changed_when: false
+  failed_when: false
+  when: helm_bin.stat.exists
+
+- name: Determine whether Helm must be installed
+  ansible.builtin.set_fact:
+    helm_needs_install: >-
+      {{ not helm_bin.stat.exists or
+         helm_target not in (helm_installed.stdout | default('')) }}
+
+- name: Create a temporary directory for the Helm release
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: helm
+  register: helm_tmp
+  when: helm_needs_install
+
+- name: Download the Helm release
+  ansible.builtin.get_url:
+    url: "https://get.helm.sh/helm-v{{ helm_target }}-linux-{{ tools_arch }}.tar.gz"
+    dest: "{{ helm_tmp.path }}/helm.tar.gz"
+    owner: root
+    group: root
+    mode: "0644"
+  when: helm_needs_install
+
+- name: Unpack the Helm release
+  ansible.builtin.unarchive:
+    src: "{{ helm_tmp.path }}/helm.tar.gz"
+    dest: "{{ helm_tmp.path }}"
+    remote_src: true
+  when: helm_needs_install
+
+- name: Install helm
+  ansible.builtin.copy:
+    src: "{{ helm_tmp.path }}/linux-{{ tools_arch }}/helm"
+    dest: "{{ tools_bin_dir }}/helm"
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0755"
+  when: helm_needs_install
+
+- name: Remove the temporary Helm directory
+  ansible.builtin.file:
+    path: "{{ helm_tmp.path }}"
+    state: absent
+  when: helm_needs_install
+
+- name: Enable helm shell completion
+  ansible.builtin.copy:
+    dest: /etc/bash_completion.d/helm
+    content: |
+      # Managed by Ansible - role `tools`.
+      command -v helm >/dev/null && source <(helm completion bash)
+    owner: root
+    group: root
+    mode: "0644"

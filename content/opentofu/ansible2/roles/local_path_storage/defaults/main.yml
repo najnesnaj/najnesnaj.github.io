@@ -1,0 +1,26 @@
+---
+# Rancher local-path-provisioner: dynamische PV's op één node.
+#
+# De data komt standaard op de EPHEMERAL-partitie van de Talos-node
+# (/var/local-path-provisioner). Dat overleeft reboots, maar niet een
+# Talos-upgrade of -reinstall. Koppel de datadisk (scsi1 -> /var/mnt/storage)
+# en zet `local_path_provisioner_data_dir` daarop voor blijvende opslag.
+local_path_provisioner_version: v0.0.37
+local_path_provisioner_namespace: local-path-storage
+local_path_storage_class: local-path
+local_path_provisioner_data_dir: /var/local-path-provisioner
+
+# De enige node van deze cluster is een control-plane met een NoSchedule-taint.
+# Workloads moeten die taint tolereren om te kunnen draaien.
+local_path_provisioner_tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+
+local_path_provisioner_manifest_url: >-
+  https://raw.githubusercontent.com/rancher/local-path-provisioner/{{
+    local_path_provisioner_version
+  }}/deploy/local-path-storage.yaml
