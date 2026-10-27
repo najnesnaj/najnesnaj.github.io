@@ -3,3 +3,6 @@
 kube_config_dir: /root/.kube
 kubeconfig_file: "{{ kube_config_dir }}/config"
 kube_api_endpoint: "{{ talos_endpoint_ip }}"
+# Temporary path used to download the admin kubeconfig before it is rendered and
+# installed at kubeconfig_file.
+kubeconfig_download_path: /tmp/kubeconfig.managed

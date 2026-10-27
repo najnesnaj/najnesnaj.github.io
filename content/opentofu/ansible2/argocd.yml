@@ -451,11 +451,11 @@
     - name: Toon de toegangsinformatie
       ansible.builtin.debug:
         msg:
-          - "ArgoCD: ssh root@192.168.0.137 'kubectl -n {{ argocd_namespace }} port-forward --address 0.0.0.0 svc/argocd-server 8080:443'"
-          - "ArgoCD UI: https://192.168.0.137:8080 (admin / wachtwoord uit argocd-initial-admin-secret)"
+          - "ArgoCD: ssh root@{{ ansible_host }} 'kubectl -n {{ argocd_namespace }} port-forward --address 0.0.0.0 svc/argocd-server 8080:443'"
+          - "ArgoCD UI: https://{{ ansible_host }}:8080 (admin / wachtwoord uit argocd-initial-admin-secret)"
           - "admin-wachtwoord: kubectl -n {{ argocd_namespace }} get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
           - "Forgejo-repo: {{ forgejo_git_url }}/{{ forgejo_admin_user }}/{{ forgejo_gitops_repo }}.git"
           - "Application {{ argocd_app_name }}: {{ argocd_app_status.stdout.split('/')[0] }}/{{ argocd_app_status.stdout.split('/')[1] }} (revisie {{ argocd_gitops_revision[:8] }})"
           - "Application {{ argocd_nginx_app_name }}: {{ argocd_nginx_status.stdout.split('/')[0] }}/{{ argocd_nginx_status.stdout.split('/')[1] }} (revisie {{ argocd_gitops_revision[:8] }})"
           - "Demo: {{ argocd_demo_result.stdout_lines | join('; ') }}"
-          - "nginx-demo: http://nginx-demo.kubernetes.local (na traefik.yml en de /etc/hosts-regel 192.168.0.137 nginx-demo.kubernetes.local)"
+          - "nginx-demo: http://nginx-demo.kubernetes.local (na traefik.yml en de /etc/hosts-regel {{ ansible_host }} nginx-demo.kubernetes.local)"

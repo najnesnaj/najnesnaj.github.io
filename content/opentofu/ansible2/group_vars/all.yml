@@ -34,10 +34,13 @@ sshd_permit_root_login: "prohibit-password"
 sshd_allow_users: "root {{ admin_user }}"
 
 # --- tools ------------------------------------------------------------------
-# Empty strings install the latest stable release.
-talosctl_version: ""
-kubectl_version: ""
-helm_version: ""
+# Pinned to the running cluster so the managed clients never drift more than
+# one minor version: Talos nodes run v1.8.1, Kubernetes v1.31.1.
+# talosctl_version is used as `v<version>` in the download URL, kubectl_version
+# already includes its leading `v`, helm_version does not.
+talosctl_version: "1.8.1"
+kubectl_version: "v1.31.1"
+helm_version: "3.16.3"
 tools_arch: amd64
 tools_packages:
   - bash-completion

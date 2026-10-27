@@ -5,12 +5,12 @@
 #   ansible-playbook traefik.yml
 #
 # De Talos-node staat op het geïsoleerde netwerk 10.10.50.0/24. De
-# managementcontainer is dual-homed (192.168.0.137 op het thuisnetwerk en
+# managementcontainer is dual-homed (DHCP op het thuisnetwerk en
 # 10.10.50.5 op het clusternetwerk). Traefik luistert als NodePort op de node;
 # systemd-socket-proxyd op de managementcontainer forwardt TCP 80/443 naar die
 # NodePorts. Zo heeft het thuisnetwerk aan één /etc/hosts-regel genoeg:
 #
-#   192.168.0.137  nginx-demo.kubernetes.local
+#   <ansible_host>  nginx-demo.kubernetes.local
 #
 # De proxy is puur L4; Traefik doet de routing op Host-header.
 - name: Installeer Traefik als ingress controller
@@ -23,8 +23,10 @@
     traefik_chart: oci://ghcr.io/traefik/helm/traefik
     # Pin de chart; update bewust na het lezen van de release notes.
     traefik_chart_version: "42.1.3"
-    traefik_node_ip: 10.10.50.22
-    traefik_bridge_ip: 192.168.0.137
+    traefik_node_ip: "{{ talos_endpoint_ip | default('10.10.50.22') }}"
+    # The WAN address is assigned by DHCP; use the inventory address instead of
+    # a hard-coded 192.168.0.137.
+    traefik_bridge_ip: "{{ ansible_host }}"
     traefik_http_nodeport: 30080
     traefik_https_nodeport: 30443
     traefik_hostname: nginx-demo.kubernetes.local
@@ -77,6 +79,8 @@
           - "{{ traefik_chart_version }}"
           - --values
           - /tmp/traefik-values.yaml
+          - --set-string
+          - "providers.kubernetesIngress.ingressEndpoint.ip={{ traefik_bridge_ip }}"
           - --wait
           - --timeout
           - 10m

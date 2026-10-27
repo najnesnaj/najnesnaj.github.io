@@ -29,6 +29,9 @@
     owner: root
     group: root
     mode: "0755"
+    # get_url defaults to force=false: without this a pre-existing binary is
+    # never replaced, so pinning talosctl_version silently had no effect.
+    force: true
   when: >-
     not talosctl_bin.stat.exists or
     (talosctl_version | length > 0 and

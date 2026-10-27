@@ -1,5 +1,9 @@
 # 1. Generate Talos machine secrets (cluster PKI, tokens, keys)
 resource "talos_machine_secrets" "this" {
+  # Keep this pinned: the provider folds talos_version into the generated
+  # machine_secrets, so bumping it on a live cluster would rotate the PKI.
+  # The boot ISO (v1.8.1) and the generated installer image already match;
+  # verify with `talosctl -n <node> get machineconfig -o yaml`.
   talos_version = "v1.7.0"
 }
 
@@ -35,6 +39,13 @@ data "talos_machine_configuration" "controlplane" {
             ]
           }
         ]
+      }
+      cluster = {
+        # This cluster has no dedicated workers: all three nodes are control
+        # planes. Without this, every workload (including Argo CD's
+        # redis-secret-init pre-install job) stays Pending on the default
+        # node-role.kubernetes.io/control-plane:NoSchedule taint.
+        allowSchedulingOnControlPlanes = true
       }
     })
   ]
@@ -73,6 +84,12 @@ data "talos_cluster_health" "this" {
   control_plane_nodes  = var.node_ips
   endpoints            = var.node_ips
 
+  # First boot pulls the control-plane images, which can take longer than the
+  # provider's 10-minute default on a slow link.
+  timeouts = {
+    read = "30m"
+  }
+
   depends_on = [talos_cluster_kubeconfig.this]
 }
 
@@ -80,6 +97,16 @@ data "talos_cluster_health" "this" {
 output "kubeconfig" {
   value     = talos_cluster_kubeconfig.this.kubeconfig_raw
   sensitive = true
+}
+
+output "talos_nodes" {
+  description = "Talos node IP addresses on the isolated cluster network"
+  value       = var.node_ips
+}
+
+output "cluster_endpoint" {
+  description = "Talos/Kubernetes control-plane endpoint IP"
+  value       = var.cluster_endpoint_ip
 }
 
 output "talosconfig" {

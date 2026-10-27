@@ -17,11 +17,27 @@
     mode: "0700"
 
 - name: Download the admin kubeconfig from the cluster
-  ansible.builtin.command: /usr/local/bin/talosctl kubeconfig -m=false -
+  # talosctl v1.8.x treats "-" as a filename ("kubeconfig file already exists"),
+  # so write to a temp file and read it back instead of relying on stdout.
+  ansible.builtin.command: >-
+    /usr/local/bin/talosctl kubeconfig --merge=false --force
+    {{ kubeconfig_download_path }}
   environment:
     TALOSCONFIG: "{{ talos_config_file }}"
-  register: kubeconfig_raw
+  register: kubeconfig_download
   changed_when: false
+  no_log: true
+
+- name: Read the downloaded kubeconfig
+  ansible.builtin.slurp:
+    src: "{{ kubeconfig_download_path }}"
+  register: kubeconfig_downloaded
+  no_log: true
+
+- name: Remove the temporary kubeconfig
+  ansible.builtin.file:
+    path: "{{ kubeconfig_download_path }}"
+    state: absent
   no_log: true
 
 - name: Resolve the kubeconfig for the control plane endpoint
@@ -30,11 +46,12 @@
   # reinstall is needed.
   ansible.builtin.set_fact:
     kubeconfig_rendered: >-
-      {{ kubeconfig_raw.stdout
+      {{ (kubeconfig_downloaded.content | b64decode)
          | regex_replace('(server:\s*)https?://[^\s]+',
                          '\1https://' ~ kube_api_endpoint ~ ':6443') }}
     kubeconfig_ca: >-
-      {{ (kubeconfig_raw.stdout | from_yaml).clusters[0].cluster['certificate-authority-data'] }}
+      {{ ((kubeconfig_downloaded.content | b64decode) | from_yaml)
+         .clusters[0].cluster['certificate-authority-data'] }}
   no_log: true
 
 - name: Read the installed kubeconfig (if present)
