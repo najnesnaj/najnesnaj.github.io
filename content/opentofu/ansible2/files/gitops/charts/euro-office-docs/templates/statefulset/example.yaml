@@ -1,0 +1,127 @@
+{{- if .Values.example.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+  namespace: {{ include "ds.namespace" . | quote }}
+  labels:
+    app: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+    {{- if .Values.commonLabels }}
+    {{- include "ds.labels.commonLabels" . | trim | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.commonAnnotations .Values.example.annotations }}
+  {{- $dictValue := default .Values.commonAnnotations .Values.example.annotations }}
+  annotations: {{- include "ds.annotations.commonAnnotations" ( dict "keyName" $dictValue "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+      {{- if or .Values.commonLabels .Values.commonMatchLabels }}
+      {{- include "ds.labels.matchLabels" . | trim | nindent 6 }}
+      {{- end }}
+  serviceName: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+  replicas: 1
+  {{- if .Values.example.updateStrategy }}
+  updateStrategy: {{- toYaml .Values.example.updateStrategy | nindent 4 }}
+  {{- end }}
+  podManagementPolicy: OrderedReady
+  template:
+    metadata:
+      labels:
+        app: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+        {{- if .Values.commonLabels }}
+        {{- include "ds.labels.commonLabels" . | trim | nindent 8 }}
+        {{- end }}
+      {{- if .Values.example.podAnnotations }}
+      annotations:
+        {{- range $key, $value := .Values.example.podAnnotations }}
+        {{ $key }}: {{ tpl $value $ }}
+        {{- end }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ include "ds.serviceAccountName" . }}
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext: {{- toYaml .Values.podSecurityContext.example | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.example.customPodAntiAffinity .Values.example.podAffinity .Values.example.nodeAffinity }}
+      affinity:
+        {{- with .Values.example.customPodAntiAffinity }}
+        podAntiAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.example.podAffinity }}
+        podAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.example.nodeAffinity }}
+        nodeAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- if or .Values.nodeSelector .Values.example.nodeSelector }}
+      nodeSelector: {{ toYaml (default .Values.nodeSelector .Values.example.nodeSelector) | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.tolerations .Values.example.tolerations }}
+      tolerations: {{ toYaml (default .Values.tolerations .Values.example.tolerations) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.example.terminationGracePeriodSeconds }}
+      {{- if .Values.example.hostAliases }}
+      hostAliases: {{- toYaml .Values.example.hostAliases | nindent 8 }}
+      {{- end }}
+      {{- with .Values.example.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: example
+        image: {{ .Values.example.image.repository }}:{{ default .Values.images.tag .Values.example.image.tag }}
+        imagePullPolicy: {{ .Values.example.image.pullPolicy }}
+        {{- if .Values.example.containerSecurityContext.enabled }}
+        securityContext: {{- omit .Values.example.containerSecurityContext "enabled" | toYaml | nindent 10 }}
+        {{- end }}
+        {{- if .Values.example.lifecycleHooks }}
+        lifecycle: {{- toYaml .Values.example.lifecycleHooks | nindent 10 }}
+        {{- end }}
+        ports:
+        - containerPort: {{ .Values.example.containerPorts.http }}
+          name: http
+        resources: {{ toYaml .Values.example.resources | nindent 10 }}
+        {{- if .Values.example.extraEnvVars }}
+        env:
+        {{- with .Values.example.extraEnvVars }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- end }}
+        envFrom:
+        - secretRef:
+            name: {{ template "ds.jwt.secretName" . }}
+        - configMapRef:
+            name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}
+        {{- if or .Values.example.extraConf.configMap .Values.example.extraVolumeMounts }}
+        volumeMounts:
+          {{- if .Values.example.extraConf.configMap }}
+          - name: example-custom-file
+            mountPath: /etc/{{ .Values.product.name }}/documentserver-example/{{ .Values.example.extraConf.filename }}
+            subPath: {{ .Values.example.extraConf.filename }}
+          {{- end }}
+          {{- with .Values.example.extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- end }}
+      {{- if or .Values.example.extraConf.configMap .Values.example.extraVolumes }}
+      volumes:
+        {{- if .Values.example.extraConf.configMap }}
+        - name: example-custom-file
+          configMap:
+            name: {{ .Values.example.extraConf.configMap }}
+        {{- end }}
+        {{- with .Values.example.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+{{- end }}

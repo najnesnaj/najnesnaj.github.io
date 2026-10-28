@@ -1,0 +1,85 @@
+# Nextcloud on the Talos homelab cluster.
+#
+# Upstream chart: https://nextcloud.github.io/helm/ (chart 8.3.0, app 32.0.0)
+#
+# Adaptations for this cluster:
+#   * Traefik instead of NGINX Ingress
+#   * HTTP only (no cert-manager / Let's Encrypt)
+#   * external PostgreSQL in the euro-office namespace
+#   * `local-path` StorageClass for the Nextcloud data volume
+#   * admin credentials read from the `nextcloud-admin` Secret
+
+image:
+  repository: nextcloud
+  flavor: apache
+
+replicaCount: 1
+
+ingress:
+  enabled: true
+  className: traefik
+  annotations: {}
+  path: /
+  pathType: Prefix
+
+nextcloud:
+  host: nextcloud.kubernetes.local
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-admin
+    usernameKey: username
+    passwordKey: password
+  update: 0
+  datadir: /var/www/html/data
+
+persistence:
+  enabled: true
+  storageClass: local-path
+  accessMode: ReadWriteOnce
+  size: 5Gi
+
+internalDatabase:
+  enabled: false
+
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: postgresql.euro-office.svc.cluster.local
+  database: nextcloud
+  user: nextcloud
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-db
+    usernameKey: username
+    passwordKey: password
+
+mariadb:
+  enabled: false
+postgresql:
+  enabled: false
+redis:
+  enabled: false
+collabora:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 5
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6

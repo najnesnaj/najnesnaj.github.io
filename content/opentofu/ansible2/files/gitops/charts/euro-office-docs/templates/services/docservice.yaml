@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "docservice") }}
+  namespace: {{ include "ds.namespace" . | quote }}
+  {{- if .Values.commonLabels }}
+  labels:
+    {{- include "ds.labels.commonLabels" . | trim | nindent 4 }}
+  {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "ds.annotations.commonAnnotations" ( dict "keyName" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    app: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "docservice") }}
+    {{- if or .Values.commonLabels .Values.commonMatchLabels }}
+    {{- include "ds.labels.matchLabels" . | trim | nindent 4 }}
+    {{- end }}
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ .Values.docservice.containerPorts.http }}
+      targetPort: {{ .Values.docservice.containerPorts.http }}
+  type: ClusterIP

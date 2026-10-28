@@ -1,0 +1,117 @@
+{{- if .Values.delete.job.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "pre-delete") }}
+  namespace: {{ include "ds.namespace" . | quote }}
+  labels:
+    app.kubernetes.io/component: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "delete") }}
+    {{- if .Values.commonLabels }}
+    {{- include "ds.labels.commonLabels" . | trim | nindent 4 }}
+    {{- end }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    {{- if or .Values.commonAnnotations .Values.delete.job.annotations }}
+    {{- $dictValue := default .Values.commonAnnotations .Values.delete.job.annotations }}
+    {{- include "ds.annotations.commonAnnotations" ( dict "keyName" $dictValue "context" $ ) | nindent 4 }}
+    {{- end }}
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "delete") }}
+        {{- if .Values.commonLabels }}
+        {{- include "ds.labels.commonLabels" . | trim | nindent 8 }}
+        {{- end }}
+      {{- if .Values.delete.job.podAnnotations }}
+      annotations: {{- include "ds.annotations.commonAnnotations" ( dict "keyName" .Values.delete.job.podAnnotations "context" $ ) | nindent 8 }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ include "ds.serviceAccountName" . }}
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext: {{- toYaml .Values.podSecurityContext.jobs | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.delete.job.customPodAntiAffinity .Values.delete.job.podAffinity .Values.delete.job.nodeAffinity }}
+      affinity:
+        {{- with .Values.delete.job.customPodAntiAffinity }}
+        podAntiAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.delete.job.podAffinity }}
+        podAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.delete.job.nodeAffinity }}
+        nodeAffinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- if or .Values.nodeSelector .Values.delete.job.nodeSelector }}
+      nodeSelector: {{ toYaml (default .Values.nodeSelector .Values.delete.job.nodeSelector) | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.tolerations .Values.delete.job.tolerations }}
+      tolerations: {{ toYaml (default .Values.tolerations .Values.delete.job.tolerations) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+      {{- end }}
+      volumes:
+        {{- if not .Values.persistence.storageS3 }}
+        - name: ds-files
+          persistentVolumeClaim:
+            claimName: {{ include "ds.pvc.name" (list . .Values.persistence.existingClaim "ds-files") }}
+        {{- end }}
+        - name: stop-scripts
+          configMap:
+            name: {{ template "ds.delete.configMapName" . }}
+            defaultMode: 0755
+        {{- if and .Values.privateCluster (not .Values.delete.existingConfigmap.dsStop) }}
+        - name: remove-dt-scripts
+          configMap:
+            name: {{ template "ds.delete.configmap.tblRemove.name" . }}
+        {{- end }}
+      {{- with .Values.delete.job.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: pre-delete
+          image: {{ .Values.delete.job.image.repository }}:{{ default .Values.images.tag .Values.delete.job.image.tag }}
+          imagePullPolicy: {{ .Values.delete.job.image.pullPolicy }}
+          {{- if .Values.delete.job.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.delete.job.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          resources: {{- toYaml .Values.delete.job.resources | nindent 12 }}
+          env:
+          - name: DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "ds.db.secretName" . }}
+                key: {{ .Values.connections.dbSecretKeyName }}
+          - name: PRIVATE_CLUSTER
+            value: {{ .Values.privateCluster | quote }}
+          volumeMounts:
+          {{- if not .Values.persistence.storageS3 }}
+          - name: ds-files
+            mountPath: /var/lib/{{ .Values.product.name }}/documentserver/App_Data/cache/files
+          {{- end }}
+          - name: stop-scripts
+            mountPath: /scripts/stop.sh
+            subPath: stop.sh
+          {{- if and .Values.privateCluster (not .Values.delete.existingConfigmap.dsStop) }}
+          - name: remove-dt-scripts
+            mountPath: /scripts/{{ .Values.delete.existingConfigmap.tblRemove.keyName }}
+            subPath: {{ .Values.delete.existingConfigmap.tblRemove.keyName }}
+          {{- end }}
+          command: ["/bin/sh", "-c"]
+          {{- if .Values.webProxy.enabled }}
+          args: ["http_proxy={{ .Values.webProxy.http }} https_proxy={{ .Values.webProxy.https }} no_proxy={{ .Values.webProxy.noProxy }} /scripts/stop.sh"]
+          {{- else }}
+          args: ["/scripts/stop.sh"]
+          {{- end }}          
+      restartPolicy: Never
+{{- end }}

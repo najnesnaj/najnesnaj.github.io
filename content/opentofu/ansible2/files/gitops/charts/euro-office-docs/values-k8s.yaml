@@ -1,0 +1,122 @@
+# Euro-Office Docs on the Talos homelab cluster.
+#
+# Upstream chart: https://github.com/Euro-Office/Kubernetes-Docs (chart 6.0.0)
+#
+# Adaptations for this cluster:
+#   * Traefik instead of NGINX Ingress
+#   * HTTP only (no cert-manager / Let's Encrypt)
+#   * `nfs` StorageClass for the ReadWriteMany volumes the chart requires
+#   * one replica per workload, sized for 3 x 2 vCPU / 4 GiB nodes
+#   * external PostgreSQL / Redis / RabbitMQ (installed in the euro-office namespace)
+#   * JWT secret and DB password are read from pre-created Secrets
+
+images:
+  # The chart defaults to 9.3.1-1, but Euro-Office publishes v9.3.1 on GHCR.
+  tag: v9.3.1
+
+# The chart downloads DB schema files from the Euro-Office server repository.
+# Upstream defaults to the old ONLYOFFICE/server master path (404).
+sqlScripts:
+  branchName: main
+
+# Keep every Euro-Office pod on one node. The main image is ~1.4 GB and the
+# cluster uplink is slow; scheduling on multiple nodes would pull it repeatedly.
+nodeSelector:
+  kubernetes.io/hostname: talos-node-1
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  controllerName: ""
+  annotations: {}
+  host: euro-office.kubernetes.local
+  path: /
+  pathType: Prefix
+  ssl:
+    enabled: false
+
+jwt:
+  enabled: true
+  existingSecret: euro-office-jwt
+
+connections:
+  dbType: postgres
+  dbHost: postgresql
+  dbPort: "5432"
+  dbName: eurooffice
+  dbUser: eurooffice
+  dbExistingSecret: eurooffice-db
+  dbSecretKeyName: password
+
+  redisHost: redis-master
+  redisPort: "6379"
+  redisExistingSecret: redis
+  redisSecretKeyName: redis-password
+
+  amqpType: rabbitmq
+  amqpHost: rabbitmq
+  amqpPort: "5672"
+  amqpVhost: /
+  amqpUser: user
+  amqpExistingSecret: rabbitmq
+  amqpSecretKeyName: rabbitmq-password
+  amqpProto: amqp
+
+persistence:
+  storageClass: nfs
+  size: 4Gi
+  runtimeConfig:
+    enabled: true
+    size: 1Gi
+  customResources:
+    enabled: false
+  buffer:
+    size: 2Gi
+
+docservice:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+
+converter:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+proxy:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+metrics:
+  enabled: false
+adminpanel:
+  enabled: false
+example:
+  enabled: false
+tests:
+  enabled: false
+
+# Argo CD runs both pre-install and pre-upgrade Helm hooks during PreSync.
+# The pre-upgrade hook tries to disable a service that does not exist on a fresh
+# install, so disable the upgrade/rollback hooks for this deployment.
+upgrade:
+  job:
+    enabled: false
+rollback:
+  job:
+    enabled: false

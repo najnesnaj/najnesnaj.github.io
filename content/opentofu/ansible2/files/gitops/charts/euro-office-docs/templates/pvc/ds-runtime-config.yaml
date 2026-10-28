@@ -1,0 +1,23 @@
+{{- if and .Values.persistence.runtimeConfig.enabled (eq (include "ds.pvc.create" .Values.persistence.runtimeConfig.existingClaim) "true") }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "ds-runtime-config") }}
+  namespace: {{ include "ds.namespace" . | quote }}
+  {{- if .Values.commonLabels }}
+  labels:
+    {{- include "ds.labels.commonLabels" . | trim | nindent 4 }}
+  {{- end }}
+  {{- if or .Values.commonAnnotations .Values.persistence.runtimeConfig.annotations }}
+  {{- $dictValue := default .Values.commonAnnotations .Values.persistence.runtimeConfig.annotations }}
+  annotations: {{- include "ds.annotations.commonAnnotations" ( dict "keyName" $dictValue "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  storageClassName: {{ .Values.persistence.storageClass }}
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.persistence.runtimeConfig.size }}
+{{- end }}

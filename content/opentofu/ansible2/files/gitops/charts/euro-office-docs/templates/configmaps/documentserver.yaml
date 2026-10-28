@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "documentserver") }}
+  namespace: {{ include "ds.namespace" . | quote }}
+  {{- if .Values.commonLabels }}
+  labels:
+    {{- include "ds.labels.commonLabels" . | trim | nindent 4 }}
+  {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "ds.annotations.commonAnnotations" ( dict "keyName" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  APPLICATION_NAME: {{ .Values.product.name }}
+  DB_TYPE: {{ template "ds.db.type" . }}
+  DB_USER: {{ .Values.connections.dbUser }}
+  DB_HOST: {{ .Values.connections.dbHost }}
+  DB_PORT: {{ .Values.connections.dbPort | quote }}
+  DB_NAME: {{ .Values.connections.dbName }}
+  REDIS_CONNECTOR_NAME: {{ .Values.connections.redisConnectorName }}
+  REDIS_SERVER_HOST: {{ .Values.connections.redisHost }}
+  REDIS_SERVER_PORT: {{ .Values.connections.redisPort | quote }}
+  REDIS_SERVER_USER: {{ .Values.connections.redisUser }}
+  REDIS_SERVER_DB_NUM: {{ .Values.connections.redisDBNum | quote }}
+  {{- if.Values.connections.redisClusterNodes }}
+  REDIS_CLUSTER_NODES: {{ join " " .Values.connections.redisClusterNodes }}
+  {{- end }}
+  {{- if eq .Values.connections.redisConnectorName "ioredis" }}
+  REDIS_SENTINEL_GROUP_NAME: {{ .Values.connections.redisSentinelGroupName }}
+  {{- if.Values.connections.redisSentinelNodes }}
+  REDIS_SENTINEL_NODES: {{ join " " .Values.connections.redisSentinelNodes }}
+  {{- end }}
+  {{- end }}
+  AMQP_TYPE: {{ .Values.connections.amqpType }}
+  AMQP_PORT: {{ .Values.connections.amqpPort | quote }}
+  AMQP_VHOST: {{ .Values.connections.amqpVhost | quote }}
+  AMQP_HOST: {{ .Values.connections.amqpHost }}
+  AMQP_USER: {{ .Values.connections.amqpUser }}
+  AMQP_PROTO: {{ .Values.connections.amqpProto }}
+  METRICS_ENABLED: {{ .Values.metrics.enabled | quote }}
+  {{- if .Values.metrics.enabled }}
+  METRICS_HOST: {{ .Values.metrics.host }}
+  METRICS_PORT: {{ .Values.metrics.port | quote }}
+  METRICS_PREFIX: {{ .Values.metrics.prefix }}
+  {{- end }}
+  LOG_LEVEL: {{ .Values.log.level }}
+  LOG_TYPE: {{ .Values.log.type }}
+  LOG_PATTERN: {{ .Values.log.pattern | quote }}
+  NGINX_ACCESS_LOG: {{ .Values.proxy.accessLog | quote }}
+  NGINX_GZIP_PROXIED: {{ .Values.proxy.gzipProxied | quote }}
+  NGINX_CLIENT_MAX_BODY_SIZE: {{ .Values.proxy.clientMaxBodySize | quote }}
+  NGINX_WORKER_CONNECTIONS: {{ .Values.proxy.workerConnections | quote }}
+  {{- if .Values.example.enabled }}
+  EXAMPLE_HOST_PORT: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}:3000
+  {{- end }}
+  {{- if .Values.adminpanel.enabled }}
+  ADMINPANEL_HOST_PORT: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "adminpanel") }}:9000
+  {{- end }}
+  WOPI_ENABLED: {{ .Values.wopi.enabled | quote }}
+  {{- if .Values.webProxy.enabled }}
+  http_proxy: {{ .Values.webProxy.http | quote }}
+  https_proxy: {{ .Values.webProxy.https | quote }}
+  no_proxy: {{ .Values.webProxy.noProxy | quote }}
+  {{- end }}
+  {{- if typeIs "bool" .Values.requestFilteringAgent.allowPrivateIPAddress }}
+  ALLOW_PRIVATE_IP_ADDRESS: {{ .Values.requestFilteringAgent.allowPrivateIPAddress | quote }}
+  {{- end }}
+  {{- if typeIs "bool" .Values.requestFilteringAgent.allowMetaIPAddress }}
+  ALLOW_META_IP_ADDRESS: {{ .Values.requestFilteringAgent.allowMetaIPAddress | quote }}
+  {{- end }}
+  {{- if .Values.requestFilteringAgent.allowIPAddressList }}
+  ALLOW_IP_ADDRESS_LIST: {{ toJson .Values.requestFilteringAgent.allowIPAddressList | squote }}
+  {{- end }}
+  {{- if .Values.requestFilteringAgent.denyIPAddressList }}
+  DENY_IP_ADDRESS_LIST: {{ toJson .Values.requestFilteringAgent.denyIPAddressList | squote }}
+  {{- end }}
+  STORAGE_SUBDIRECTORY_NAME: {{ default .Values.images.tag .Values.docservice.image.tag }}
+  {{- if or .Values.customFonts.build .Values.customDictionaries.build .Values.customPlugins.build }}
+  DS_VERSION_HASH: {{ printf "%s" (now | date "2006.01.02-1504") | sha256sum | trunc 32 }}
+  {{- end }}
