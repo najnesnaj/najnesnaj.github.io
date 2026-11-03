@@ -1,0 +1,121 @@
+image:
+  repository: docker.io/velero/velero
+  tag: v1.18.2
+  pullPolicy: IfNotPresent
+
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.14.4
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+namespace:
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/warn: privileged
+
+credentials:
+  useSecret: true
+  existingSecret: velero-credentials
+
+snapshotsEnabled: false
+deployNodeAgent: true
+
+# Publish Velero's built-in Prometheus metrics. The Velero server already
+# exposes /metrics on port 8085; this creates the in-cluster Service and the
+# ServiceMonitor that the kube-prometheus-stack Prometheus picks up.
+metrics:
+  enabled: true
+  scrapeInterval: 30s
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: monitoring
+  prometheusRule:
+    enabled: true
+    additionalLabels:
+      release: monitoring
+    spec:
+      - alert: VeleroBackupFailed
+        annotations:
+          message: Velero backup {{ $labels.schedule }} has failed
+        expr: velero_backup_last_status{schedule!=""} != 1
+        for: 15m
+        labels:
+          severity: warning
+      - alert: VeleroNoSuccessfulBackup
+        annotations:
+          message: Velero backup {{ $labels.schedule }} has not succeeded in the last 25h
+        expr: |
+          (time() - velero_backup_last_successful_timestamp{schedule!=""}) > 90000
+          or absent(velero_backup_last_successful_timestamp{schedule!=""})
+        for: 1h
+        labels:
+          severity: critical
+
+configuration:
+  uploaderType: kopia
+  defaultVolumesToFsBackup: false
+  defaultBackupTTL: 720h
+
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: velero
+      default: true
+      config:
+        region: garage
+        s3ForcePathStyle: "true"
+        s3Url: http://10.10.50.2:3900
+
+  volumeSnapshotLocation: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+tolerations:
+  - operator: Exists
+
+nodeAgent:
+  tolerations:
+    - operator: Exists
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+schedules:
+  daily:
+    schedule: "0 2 * * *"
+    template:
+      ttl: "720h"
+      storageLocation: default
+      snapshotVolumes: false
+      defaultVolumesToFsBackup: false
+      includedNamespaces:
+        - argocd
+        - argocd-demo
+        - euro-office
+        - forgejo
+        - nextcloud
+        - nfs-server
+        - nginx-demo
+        - traefik
+        - local-path-storage
+        - backup
+      excludedNamespaces:
+        - kube-system
+        - kube-public
+        - kube-node-lease
+        - velero

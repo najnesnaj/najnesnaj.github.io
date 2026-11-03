@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restic-exporter
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: restic-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: restic-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: restic-exporter
+    spec:
+      containers:
+        - name: restic-exporter
+          image: ngosang/restic-exporter:2.0.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: Europe/Brussels
+            - name: RESTIC_REPOSITORY
+              value: s3:http://10.10.50.2:3900/restic
+            - name: AWS_DEFAULT_REGION
+              value: garage
+            - name: REFRESH_INTERVAL
+              value: "3600"
+            - name: LISTEN_PORT
+              value: "8001"
+            - name: NO_LEGACY_STATS
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: restic-credentials
+          ports:
+            - name: http
+              containerPort: 8001
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: restic-exporter
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: restic-exporter
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: restic-exporter
+  ports:
+    - name: http
+      port: 8001
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: restic-exporter
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: restic-exporter
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: restic-exporter
+  namespaceSelector:
+    matchNames:
+      - backup
+  endpoints:
+    - port: http
+      interval: 60s
+      path: /metrics
+      scheme: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: restic-exporter
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: restic-exporter
+    release: monitoring
+spec:
+  groups:
+    - name: restic
+      rules:
+        - alert: ResticCheckFailed
+          annotations:
+            description: restic check failed for {{ $labels.instance }}
+            summary: Restic repository check failed
+          expr: restic_check_success == 0
+          for: 5m
+          labels:
+            severity: critical
+        - alert: ResticBackupOutdated
+          annotations:
+            description: No successful restic snapshot for {{ $labels.client_hostname }} since {{ $value | humanizeDuration }}
+            summary: Restic backup is outdated
+          expr: time() - restic_backup_timestamp > 172800
+          for: 0m
+          labels:
+            severity: critical

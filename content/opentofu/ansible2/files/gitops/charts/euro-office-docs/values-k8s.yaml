@@ -19,6 +19,12 @@ images:
 sqlScripts:
   branchName: main
 
+# Nextcloud is reached through its ClusterIP (10.x). The document server's
+# request filter blocks private addresses by default, which makes document
+# downloads fail with "Error while downloading the document file".
+requestFilteringAgent:
+  allowPrivateIPAddress: true
+
 # Keep every Euro-Office pod on one node. The main image is ~1.4 GB and the
 # cluster uplink is slow; scheduling on multiple nodes would pull it repeatedly.
 nodeSelector:
@@ -107,7 +113,30 @@ metrics:
 adminpanel:
   enabled: false
 example:
-  enabled: false
+  enabled: true
+  # The example entrypoint defaults JWT_ENABLED to false. The document server
+  # requires JWT, so without this the editor config has no token and the
+  # document server logs "jwt must be provided".
+  extraEnvVars:
+    - name: JWT_ENABLED
+      value: "true"
+    - name: JWT_HEADER
+      value: Authorization
+    # Server-to-server URL used by the document server to download the file
+    # and post callbacks. The public /example/ prefix is stripped by the
+    # documentserver proxy, so use the example Service root here.
+    - name: EXAMPLE_URL
+      value: http://example:3000
+  # The chart adds a random `rollme` annotation by default, which makes Argo CD
+  # see a different manifest on every render and restart the StatefulSet.
+  podAnnotations: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 tests:
   enabled: false
 

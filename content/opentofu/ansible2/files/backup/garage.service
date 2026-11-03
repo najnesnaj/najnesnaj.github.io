@@ -1,0 +1,25 @@
+[Unit]
+Description=Garage S3 backup target
+Documentation=https://garagehq.deuxfleurs.fr/
+After=network-online.target local-fs.target
+Wants=network-online.target
+RequiresMountsFor=/mnt/garage
+AssertPathIsDirectory=/mnt/garage/data
+
+[Service]
+Type=simple
+User=garage
+Group=garage
+EnvironmentFile=/etc/garage.env
+ExecStart=/usr/local/bin/garage -c /etc/garage.toml server --single-node --default-bucket
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+LimitNOFILE=1048576
+
+# Keep this unit free of systemd namespace/private-tmp hardening. The
+# privileged LXC used for the backup target does not provide the namespace
+# features those options require; hardening causes status=226/NAMESPACE.
+
+[Install]
+WantedBy=multi-user.target

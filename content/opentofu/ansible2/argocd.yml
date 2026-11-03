@@ -55,6 +55,7 @@
     argocd_gitops_files:
       - path: apps/demo.yaml
       - path: apps/nginx-demo/app.yaml
+      - path: apps/monitoring.yaml
 
   environment:
     KUBECONFIG: "{{ forgejo_kubeconfig }}"

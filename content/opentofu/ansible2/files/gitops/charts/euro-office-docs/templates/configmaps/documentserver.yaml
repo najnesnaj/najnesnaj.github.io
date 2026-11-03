@@ -12,6 +12,11 @@ metadata:
   {{- end }}
 data:
   APPLICATION_NAME: {{ .Values.product.name }}
+  # The v9.3.1 entrypoints use $COMPANY_NAME to build paths such as
+  # /etc/$COMPANY_NAME/documentserver and /var/www/$COMPANY_NAME/...
+  # The upstream chart only sets APPLICATION_NAME, which leaves the paths
+  # pointing at /etc// and /var/www// and makes the containers exit.
+  COMPANY_NAME: {{ .Values.product.name }}
   DB_TYPE: {{ template "ds.db.type" . }}
   DB_USER: {{ .Values.connections.dbUser }}
   DB_HOST: {{ .Values.connections.dbHost }}

@@ -1,0 +1,9 @@
+[Unit]
+Description=Online snapshot of the Garage metadata SQLite database
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/garage-meta-snapshot.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
