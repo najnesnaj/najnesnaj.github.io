@@ -7,6 +7,8 @@ not contain credentials.
 | --- | --- | --- |
 | `garage-net-init.sh` | LXC `/usr/local/sbin/garage-net-init` | LXC entrypoint; sets both addresses then execs `/sbin/init` |
 | `garage.service` | LXC `/etc/systemd/system/garage.service` | Keep systemd sandboxing off; see `backup.md` |
+| `garage-webui.service` | LXC `/etc/systemd/system/garage-webui.service` | Garage Web UI; runs as user `garage`, see `backup.md` section 5 |
+| `garage-webui.env.example` | LXC `/etc/garage-webui.env` (0600) | Password hash is live-only, not reproduced here |
 | `garage.toml.example` | LXC `/etc/garage.toml` | Replace generated placeholders |
 | `garage-meta-snapshot.sh` | LXC `/usr/local/sbin/garage-meta-snapshot.sh` | SQLite online backup |
 | `garage-meta-snapshot.service` | LXC `/etc/systemd/system/` | Oneshot unit |

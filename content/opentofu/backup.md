@@ -106,6 +106,7 @@ filesystem; the timer makes a consistent copy onto the external disk.
 | Component | Version |
 | --- | --- |
 | Garage | v2.5.0 (`x86_64-unknown-linux-musl`) |
+| garage-webui | 1.1.0 (`garage-webui-v1.1.0-linux-amd64`) |
 | Velero Helm chart | 12.2.2 |
 | Velero server | v1.18.2 |
 | Velero CLI | v1.18.4 |
@@ -230,6 +231,36 @@ velero backup-location get Phase: Available
 
 The endpoint is deliberately HTTP inside the private network. There is no TLS
 termination or Garage node replication; this is a single-node homelab target.
+
+### Garage Web UI
+
+Garage v2.5 itself has no admin UI yet (the official one is still in
+development), so the community UI
+[`garage-webui`](https://github.com/khairul169/garage-webui) v1.1.0 runs
+alongside Garage as a second systemd unit. The full installation steps are in
+[`garage-web-installation.md`](garage-web-installation.md).
+
+| Setting | Value |
+| --- | --- |
+| Binary | `/usr/local/bin/garage-webui` (linux-amd64 release) |
+| Service | `garage-webui.service` in `/etc/systemd/system/`, enabled |
+| Runs as | user/group `garage` (it only needs to read `/etc/garage.toml`) |
+| Env file | `/etc/garage-webui.env` (root-only 0600) |
+| Listen | `0.0.0.0:3909` |
+| Config | reads admin API and S3 endpoint straight from `/etc/garage.toml` |
+| Auth | browser login via `AUTH_USER_PASS` (`/etc/garage-webui.env`) |
+
+The UI is at <http://192.168.0.224:3909> from the management network (user
+`admin`; the password lives only in `/etc/garage-webui.env` on the LXC and is
+not reproduced in this repository). Unauthenticated admin API requests are
+rejected with `401`; the Garage admin API stays bound to `127.0.0.1:3903`.
+`apache2-utils` is installed on the LXC to generate new bcrypt hashes; see
+`garage-webui.env.example` for the `$2y$` → `$2b$` prefix detail.
+
+```bash
+ssh root@192.168.0.224 'systemctl status garage-webui --no-pager'
+ssh root@192.168.0.224 'cat /etc/garage-webui.env'
+```
 
 ### Metadata snapshots
 
@@ -500,6 +531,9 @@ different node is not enough by itself.
 - [x] restic restore to a temporary hostPath succeeds.
 - [x] PostgreSQL dump CronJob completes.
 - [x] Garage metadata timer is active and produced a snapshot.
+- [x] Garage Web UI (`garage-webui`) runs as `garage-webui.service` on LXC 107,
+      serves <http://192.168.0.224:3909>, and rejects unauthenticated admin
+      API calls with `401` (2026-11-03).
 
 ### Not yet covered
 
@@ -738,6 +772,8 @@ aws_secret_access_key=<garage-secret-key>
 | `ansible2/files/backup/postgres-dump.yaml` | PostgreSQL logical dump PVC/CronJob |
 | `ansible2/files/backup/garage-net-init.sh` | LXC network entrypoint |
 | `ansible2/files/backup/garage.service` | Garage systemd unit |
+| `ansible2/files/backup/garage-webui.service` | Garage Web UI systemd unit |
+| `ansible2/files/backup/garage-webui.env.example` | Secret-free Web UI environment |
 | `ansible2/files/backup/garage-meta-snapshot.sh` | SQLite online snapshot |
 | `ansible2/files/backup/garage-meta-snapshot.service` | Snapshot oneshot unit |
 | `ansible2/files/backup/garage-meta-snapshot.timer` | Daily snapshot timer |
@@ -770,6 +806,8 @@ garage -c /etc/garage.toml bucket info velero
 garage -c /etc/garage.toml bucket info restic
 findmnt /mnt/garage
 ls -l /mnt/garage/meta-snapshots
+systemctl is-active garage.service garage-webui.service
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3909/
 ```
 
 Do not trust the installation until a fresh object backup and a fresh restic

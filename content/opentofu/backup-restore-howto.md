@@ -157,6 +157,7 @@ kubectl -n euro-office get pvc postgres-dumps
 
 # Garage metadata and service
 ssh root@192.168.0.224 'systemctl is-active garage.service'
+ssh root@192.168.0.224 'systemctl is-active garage-webui.service'
 ssh root@192.168.0.224 'systemctl is-active garage-meta-snapshot.timer'
 ssh root@192.168.0.224 'systemctl list-timers --no-pager'
 ssh root@192.168.0.224 'garage -c /etc/garage.toml status'
@@ -172,6 +173,8 @@ Expected:
 * restic lists one snapshot per node that has local-path data.
 * The PostgreSQL CronJob's last job is `Complete`.
 * Garage lists a recent `db-*.sqlite` metadata copy.
+* `garage-webui` is active; `curl -s -o /dev/null -w "%{http_code}" http://192.168.0.224:3909/`
+  from the management host returns `200`.
 
 ### 3.2 If a backup did not run
 
@@ -672,6 +675,13 @@ garage -c /etc/garage.toml bucket info velero
 garage -c /etc/garage.toml bucket info restic
 ```
 
+The Garage Web UI keeps running through this procedure; it only talks to the
+admin API and will show the cluster again once Garage is back. To restart it:
+
+```bash
+ssh root@192.168.0.224 'systemctl restart garage-webui && systemctl is-active garage-webui'
+```
+
 If the data directory (`/mnt/garage/data`) is intact, existing objects remain
 usable. If the data directory is missing, metadata alone is not enough; you
 need an off-site copy of the data volume.
@@ -685,7 +695,9 @@ Garage. Then:
 1. Restore `/etc/garage.toml` and `/etc/garage.env` from the password manager,
    or generate new RPC/admin tokens.
 2. Install `garage.service`, the metadata script, and the timer from
-   `ansible2/files/backup/`.
+   `ansible2/files/backup/`. Reinstall the Garage Web UI from
+   `ansible2/files/backup/garage-webui.service` and rebuild
+   `/etc/garage-webui.env` from the password manager.
 3. Recreate/attach `/mnt/garage` and restore `/mnt/garage/data` from off-site
    if the old volume was lost.
 4. Restore `/var/lib/garage/meta/db.sqlite` from the newest metadata copy.

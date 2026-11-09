@@ -1,0 +1,17 @@
+[Unit]
+Description=Garage Web UI (garage-webui)
+Documentation=https://github.com/khairul169/garage-webui
+After=network.target garage.service
+
+[Service]
+Type=simple
+User=garage
+Group=garage
+EnvironmentFile=/etc/garage-webui.env
+ExecStart=/usr/local/bin/garage-webui
+Restart=always
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
