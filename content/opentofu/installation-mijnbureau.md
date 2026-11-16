@@ -92,13 +92,30 @@ EOF
 
 ### 3.2 Patch the ArgoCD repo server
 
-The repo server needs the `helmfile` and `helm` binaries and the plugin
-configuration. If ArgoCD is managed by Helm, add the volumes, init
-container and sidecar to the repo server values. The upstream example uses
-the ArgoCD Operator; the same mounts apply to a standard Helm installation:
+The repo server needs the `helmfile` and `helm` binaries, Helm plugins, and
+the CMP plugin configuration. For ArgoCD v3.x the CMP sidecar must run the
+ArgoCD CMP server image (`quay.io/argoproj/argocd:v<version>`) and the plugin
+socket; copy `helmfile`/`helm` and Helm plugins into a shared volume with an
+init container.
+
+Key points that were required on this cluster:
+
+- Use `quay.io/argoproj/argocd:v3.5.6` for the `cmp` sidecar (same version as
+  ArgoCD) so it can serve `/home/argocd/cmp-server/plugins/*.sock`.
+- Copy tools/plugins from `ghcr.io/helmfile/helmfile:v1.1.7` in an init
+  container (e.g. `helmfile`, `helm`, and `/helm/.local/share/helm/plugins/`).
+- Mount the plugin `plugin.yaml` under `/home/argocd/cmp-server/config/`.
+- Pass `MIJNBUREAU_MASTER_PASSWORD` into the sidecar via a Secret-backed env
+  var (do not put it in the Application manifest). The plugin should fail fast
+  if the variable is unset.
+- ArgoCD caches rendered manifests in Redis. After changing plugin/config,
+  restart the repo-server and flush Redis or bump a plugin env var (e.g.
+  `OVERLAY_VERSION`) and recreate the Application to force a fresh render.
+
+Example (adapt to your Helm values schema):
 
 ```yaml
-repo:
+repoServer:
   volumes:
     - name: helmfile-tools
       emptyDir: {}
@@ -116,28 +133,32 @@ repo:
       volumeMounts:
         - mountPath: /helmfile-tools
           name: helmfile-tools
-  sidecarContainers:
+  extraContainers:
     - name: cmp
+      image: quay.io/argoproj/argocd:v3.5.6
       command: [/var/run/argocd/argocd-cmp-server]
-      image: ghcr.io/helmfile/helmfile:v1.1.7
+      env:
+        - name: MIJNBUREAU_MASTER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mijnbureau-master-password
+              key: password
       volumeMounts:
         - mountPath: /var/run/argocd
           name: var-files
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
-        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: plugin.yaml
+        - mountPath: /home/argocd/cmp-server/config
           name: helmfile-plugin-config
-  volumeMounts:
-    - mountPath: /usr/local/bin/helmfile
-      name: helmfile-tools
-      subPath: helmfile
-    - mountPath: /usr/local/sbin/helm
-      name: helmfile-tools
-      subPath: helm
-    - mountPath: /.local/share/helm/plugins/
-      name: helmfile-tools
-      subPath: plugins
+        - mountPath: /usr/local/bin/helmfile
+          name: helmfile-tools
+          subPath: helmfile
+        - mountPath: /usr/local/bin/helm
+          name: helmfile-tools
+          subPath: helm
+        - mountPath: /helm/.local/share/helm/plugins
+          name: helmfile-tools
+          subPath: plugins
 ```
 
 Restart the repo server after changing it:
@@ -302,3 +323,120 @@ kubectl -n argocd get secret mijnbureau-master-password
   https://minbzk.github.io/mijn-bureau-infra/docs/gitops
 - Upstream prerequisites:
   https://minbzk.github.io/mijn-bureau-infra/docs/getting_started/prerequisites
+
+---
+
+## 11. Homelab-specific fixes (tested on this cluster)
+
+These notes capture the adjustments required to deploy MijnBureau on this
+3×control-plane Talos v1.8.1 / Kubernetes v1.31.1 cluster (6 vCPU / 8 GiB per
+node, `local-path` storage, Traefik NodePorts 30080/30443 exposed on
+`192.168.0.192`) using the `demo` environment with a `nano` resource preset.
+
+### 11.1 Sizing and feature selection
+
+- `global.resourcesPreset: nano` is not sufficient by itself for some
+  workloads; keep upstream per-app presets/floors where needed and add explicit
+  overrides.
+- Disable heavy/unsupported components for a small cluster, e.g.
+  `application.ollama/livekit/meet/clamav/messages.enabled: false` (and keep
+  `nextcloud`/`dictaphone` disabled if not required).
+- Disable horizontal autoscalers (`autoscaling.horizontal.*.enabled: false`) if
+  no metrics-server is installed; otherwise ArgoCD sync can fail on HPA handling
+  in this environment.
+- Upstream `element` now enables Matrix Authentication Service (MAS) and Element
+  Call by default. If LiveKit is disabled and/or the MAS image
+  (`oci.element.io/matrix-authentication-service`) is not pullable, set
+  `application.element.mas.enabled: false` and
+  `application.element.call.enabled: false` and use direct Synapse OIDC.
+
+### 11.2 Namespace and overlay injection
+
+- Deploy app resources into a dedicated namespace (e.g. `mijnbureau`) by
+  setting `application.<app>.namespace` for enabled apps and
+  `destination.namespace: mijnbureau` in the ArgoCD Application.
+- Inject a `--state-values-file` overlay from the CMP plugin
+  (`helmfile -e demo --state-values-file <overlay> template`) to set domain,
+  ingress/storage classes, TLS, OIDC, resource overrides, and feature toggles
+  without forking upstream.
+
+### 11.3 TLS (self-signed wildcard)
+
+- Apps and OIDC redirect URIs expect HTTPS. Without cert-manager, create a
+  self-signed wildcard certificate for `*.mijnbureau.kubernetes.local` and
+  store it as a Secret in the app namespace (e.g. `mijnbureau-wildcard-tls`).
+- Set `global.tls.enabled: true` and configure per-app `tls.<app>` entries
+  / `extraTls` where supported.
+- Some static-nginx ingresses (docs/conversations/drive, depending on upstream
+  revision) do not render `spec.tls` from values alone. A post-render patch in
+  the CMP `generate` step (e.g. via `awk`) was used to add `spec.tls` with the
+  wildcard secret. Verify after sync: `kubectl -n mijnbureau get ingress`.
+- Do not set global `cluster.ingress.annotations` blindly: upstream
+  static-nginx templates can have fragile indentation for Traefik middleware
+  annotations, producing invalid YAML when annotations are non-empty.
+
+### 11.4 OIDC / Keycloak endpoints
+
+- Use mixed endpoints so browser redirects work over HTTPS while in-cluster
+  traffic avoids TLS trust issues with the self-signed cert:
+  - browser-facing (`issuer`, `authorization_endpoint`, `end_session_endpoint`):
+    `https://id.<domain>/realms/mijnbureau/...`
+  - in-cluster (`token_endpoint`, `introspection_endpoint`, `userinfo_endpoint`,
+    `jwks_uri`): `http://keycloak-http/realms/mijnbureau/...`
+- Keycloak (Quarkus image, uid 1000) may need writable runtime paths on startup.
+  If it crashes with `AccessDeniedException` on
+  `/opt/keycloak/lib/quarkus/transformed-bytecode.jar`, override the container
+  security context (e.g. `runAsUser: 1000`, `runAsGroup: 0`,
+  `readOnlyRootFilesystem: false`) via environment values.
+- The `mijnbureau` realm is created by the `keycloak-config-cli` PostSync hook.
+  If sync hooks do not complete, run the hook Job manually and verify:
+  `curl -sk --resolve id.mijnbureau.kubernetes.local:443:<host> https://id.mijnbureau.kubernetes.local/realms/mijnbureau/.well-known/openid-configuration`.
+
+### 11.5 Resources, probes, and scheduling
+
+- Several Python/Django/Celery components OOMKilled at very small limits; raise
+  limits (e.g. to 1Gi) while keeping modest requests where needed for docs,
+  conversations, drive backends/celery, calendars backend/worker, projects, and
+  bureaublad backend.
+- Docs backend may need a longer liveness `initialDelaySeconds` to avoid
+  premature kills during startup/migrations.
+- Celery `inspect ping` liveness/readiness probes can time out and kill healthy
+  workers under load/startup; increase `timeoutSeconds`/`failureThreshold`
+  (and for drive celery, `initialDelaySeconds`) as needed.
+- Synapse's `large` preset requests can be too high for a 3×8GiB cluster (and a
+  local-path PVC pins it to a node). Lower Synapse requests (including init
+  containers such as `volume-permissions`) and cap limits appropriately.
+- Talos nodes may need extra CPU/RAM; this cluster was increased to 6 vCPU /
+  8192 MB per node. Configure registry mirrors for Docker Hub if pulls are
+  slow/blocked (e.g. `mirror.gcr.io`, `dockerproxy.net`).
+
+### 11.6 ArgoCD / sync behavior
+
+- ArgoCD Helmfile CMP renders can take time; ensure repo-server/cmp timeouts and
+  resources are sufficient.
+- Manifest caching: after plugin/ConfigMap changes, restart repo-server and
+  force a fresh render (flush Redis if possible, or bump a plugin env such as
+  `OVERLAY_VERSION` and recreate the Application). A hard refresh alone may not
+  invalidate cached manifests.
+- Sync can be blocked by failing hook/prune tasks (e.g. HPA discovery issues in
+  this environment) or by hook Jobs stuck on image pulls. All core Deployments/
+  StatefulSets/Ingresses may be healthy even if the Application reports
+  `OutOfSync|Degraded` due to hooks; inspect `operationState` and hook Jobs.
+- `RepeatedResourceWarning` for duplicated `hsts-header` Middleware /
+  `default-deny-ingress` NetworkPolicy resources was observed and tolerated.
+- MinIO provisioning hooks are idempotent; if they are stuck, buckets can be
+  created manually in the running MinIO pods and hook Jobs cleaned up.
+
+### 11.7 Current state (this run)
+
+- Core MijnBureau workloads in namespace `mijnbureau` are running with
+  `nano`-oriented overrides, wildcard TLS on ingresses, Traefik ingress, and
+  Keycloak running with the adjusted security context.
+- Synapse is running with reduced requests so it can schedule on its local-path
+  node.
+- `keycloak-config-cli` (realm bootstrap) may take time if its image pull is
+  slow; until the `mijnbureau` realm exists, OIDC-dependent app logins will not
+  work. Verify realm creation and re-run/configure if needed.
+- ArgoCD Application sync may remain retrying if hook Jobs (e.g. minio
+  provisioning or keycloak-config-cli) are stuck; resolve hook image pulls or
+  complete their actions manually, then re-sync.
