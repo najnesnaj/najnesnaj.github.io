@@ -89,3 +89,5 @@
         --set persistence.size={{ forgejo_storage_size }}
         --set persistence.storageClass={{ forgejo_storage_class }}
         --set-json 'tolerations={{ forgejo_tolerations | to_json }}'
+        --set service.http.type=NodePort
+        --set service.http.nodePort=30000
