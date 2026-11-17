@@ -427,6 +427,60 @@ node, `local-path` storage, Traefik NodePorts 30080/30443 exposed on
 - MinIO provisioning hooks are idempotent; if they are stuck, buckets can be
   created manually in the running MinIO pods and hook Jobs cleaned up.
 
+#### 11.6.1 Resolving a stuck/failed sync (`one or more synchronization tasks completed unsuccessfully`)
+
+A reproducible cause of this error was traced and fixed in the CMP post-render
+script (`patch-render.sh`). All fixes are applied in the **GitOps/CMP source**, not
+with live `kubectl edit`, so ArgoCD `selfHeal` will not revert them. Bump
+`OVERLAY_VERSION` (and hard-refresh the Application) after each CMP change so the
+repo-server re-renders instead of using cached manifests.
+
+1. **Do not change `imagePullPolicy` on Job/CronJob pod templates.** A patch that
+   rewrote `imagePullPolicy: Always` → `IfNotPresent` on *all* rendered workloads
+   changed Job `spec.template`, which is immutable. ArgoCD's in-place patch then
+   failed with `Job.batch "<name>" is invalid: spec.template: Invalid value: ...
+   field is immutable` (e.g. `synapse-keygen`). Scope such patches to workloads
+   that are safe to update in place:
+   ```awk
+   doc_kind!="Job" && doc_kind!="CronJob" && /^[[:space:]]*imagePullPolicy: Always[[:space:]]*$/ {
+     sub(/Always/, "IfNotPresent"); print; next
+   }
+   ```
+   The Docker Hub registry mirrors on the Talos nodes are sufficient for hook
+   image pulls; leaving hook Jobs untouched avoids the immutability failure.
+
+2. **Drop null-valued ConfigMap data keys in the post-render script.** Some
+   charts render `FRONTEND_JS_URL: ` (empty value = YAML `null`) in ConfigMaps.
+   Kubernetes cannot store `null` in ConfigMap `data`, so ArgoCD normalises it
+   away and the two ConfigMaps (`conversations`, `drive`) stayed permanently
+   `OutOfSync`. With `selfHeal: true` this triggered continuous re-syncs (tens of
+   operations in minutes) that re-ran all PostSync hooks and could fail on slow
+   image pulls. Drop those keys during rendering so desired == live:
+   ```awk
+   doc_kind=="ConfigMap" && /^  FRONTEND_JS_URL:[[:space:]]*(null)?[[:space:]]*$/ { next }
+   ```
+   Scope this to the exact key (a broad "empty 2-space value" rule also deletes
+   structural keys such as `annotations:` and produces invalid YAML).
+
+3. **Beware shell quoting in `patch-render.sh`.** The awk program is wrapped in
+   single quotes inside the CMP `generate` command. A comment containing an
+   apostrophe (e.g. `ArgoCD's`) terminates the string and the CMP fails with
+   errors like `awk: cannot open "in-place" (No such file or directory)` or
+   `did not find expected key`. Never use apostrophes anywhere inside the awk
+   program, including comments.
+
+4. **Clearing a stale/orphaned operation.** If the controller is stuck in a
+   retry loop using an old render, disable `syncPolicy.automated`, terminate the
+   operation (ArgoCD API / `argocd app terminate-op`), restart the
+   `argocd-application-controller`, re-enable automated sync, then hard-refresh
+   with a new `OVERLAY_VERSION`. All workloads may already be healthy while the
+   operation is stuck; verify per-resource health before intervening.
+
+**Verified end state:** with these fixes (`OVERLAY_VERSION=13`) the Application
+reports `Synced` / `Healthy`, `operationState.phase: Succeeded`, no `SyncError`
+or `ComparisonError` conditions, and zero automatic re-syncs in a 5-minute
+window. Only the two tolerated `RepeatedResourceWarning` conditions remain.
+
 ### 11.7 Current state (this run)
 
 - Core MijnBureau workloads in namespace `mijnbureau` are running with

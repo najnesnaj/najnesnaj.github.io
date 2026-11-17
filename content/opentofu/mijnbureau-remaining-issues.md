@@ -1,16 +1,20 @@
 # MijnBureau installation — remaining issues and follow-up
 
-This document records the remaining issues and recommended follow-up after deploying MijnBureau (`demo`, `nano`-oriented overlay, `OVERLAY_VERSION=7`) to namespace `mijnbureau` on the Talos/Kubernetes homelab cluster via ArgoCD + Helmfile CMP.
+This document records the remaining issues and recommended follow-up after deploying MijnBureau (`demo`, `nano`-oriented overlay, current `OVERLAY_VERSION=13`) to namespace `mijnbureau` on the Talos/Kubernetes homelab cluster via ArgoCD + Helmfile CMP.
 
-**Status snapshot (end of run):** core Deployments/StatefulSets and application workloads are running/ready, wildcard TLS ingresses are in place, Keycloak is reachable, and the `mijnbureau` realm was bootstrapped manually. The ArgoCD Application is **not** in a clean synced/healthy state due to hook/operation failures (see below).
+**Status snapshot (end of run):** core Deployments/StatefulSets and application workloads are running/ready, wildcard TLS ingresses are in place, Keycloak is reachable, the `mijnbureau` realm was bootstrapped manually, and the ArgoCD Application is **`Synced` / `Healthy`** with a clean `Succeeded` operation and no `SyncError`/`ComparisonError`. See [`installation-mijnbureau.md`](./installation-mijnbureau.md#1161-resolving-a-stuckfailed-sync-one-or-more-synchronization-tasks-completed-unsuccessfully) for the CMP fixes that stabilised it.
+
+## Resolved issues
+
+### 1. ArgoCD Application sync is not clean — RESOLVED
+- **Was:** `argocd/mijn-bureau` ended as `Failed` / `OutOfSync` / `Degraded` with repeated retries ("one or more synchronization tasks completed unsuccessfully (retried 5 times)").
+- **Root causes fixed in the CMP post-render script:**
+  - `imagePullPolicy: Always` → `IfNotPresent` was applied to all workloads including Jobs, whose `spec.template` is immutable — ArgoCD patch failed on `synapse-keygen`. The patch is now scoped to non-Job/CronJob workloads.
+  - Null-valued ConfigMap data (`FRONTEND_JS_URL: `) caused a permanent `OutOfSync` on `conversations`/`drive` and a `selfHeal` re-sync loop; those keys are now dropped during render.
+  - An apostrophe in an awk comment broke the single-quoted CMP script; removed.
+- **Verified:** `Synced` / `Healthy`, `Succeeded`, no error conditions, 0 automatic re-syncs in 5 minutes (only tolerated `RepeatedResourceWarning`s remain). Hook image pulls can still be slow; see section 5.
 
 ## Remaining issues
-
-### 1. ArgoCD Application sync is not clean
-- **Observed:** `argocd/mijn-bureau` ended as `Failed` / `OutOfSync` / `Degraded` with repeated retries (e.g. “one or more synchronization tasks completed unsuccessfully (retried 5 times)”).
-- **Impact:** Desired manifests are effectively applied and workloads are healthy, but ArgoCD does not report a reconciled/synced state and may continue retrying operations.
-- **Likely causes:** hook Jobs/tasks that failed, were deleted, or became stuck during earlier attempts (notably minio provisioning hooks and keycloak-config-cli image pulls) and/or stale operation state.
-- **Notes:** A naive app recreate/full sync can re-run PostSync hooks and stall again if hook images are slow/unavailable.
 
 ### 2. `keycloak-config-cli` hook not converged declaratively
 - **Observed:** `docker.io/adorsys/keycloak-config-cli:6.5.1-26.5.5` remained stuck in `ContainerCreating` (image pull) on nodes for an extended period, blocking realm bootstrap.
@@ -32,11 +36,7 @@ This document records the remaining issues and recommended follow-up after deplo
 
 ## Follow-up actions
 
-1. **Stabilize ArgoCD sync**
-   - Inspect current operation/hook failures: `kubectl -n argocd get app mijn-bureau -o yaml` (operation state, sync result, hook phases/messages) and related Jobs/Pods in `mijnbureau`.
-   - Ensure required hook images are pullable/cached on all relevant nodes (or adjust hook job scheduling/image policy as appropriate).
-   - Decide on a controlled reconciliation: re-run/repair failed hooks, then perform a fresh sync/app recreate with a forced render (restart repo-server and/or flush Redis / bump overlay env) only when hooks will complete cleanly.
-   - Target end state: `Synced` and `Healthy` with no failing hook tasks.
+1. **ArgoCD sync — DONE** (see resolved issue 1 and installation guide section 11.6.1). Application is `Synced`/`Healthy` with no failing hook tasks and no `selfHeal` loop. Keep hook Jobs untouched by workload-template patches, and keep the null-ConfigMap-key drop in the CMP render. If hook image pulls stall again, warm the images on the nodes rather than changing Job templates.
 
 2. **Make Keycloak configuration declarative again**
    - Pre-pull or otherwise make `adorsys/keycloak-config-cli` reliably available, then run the `keycloak-config-cli` Job (or allow ArgoCD to run it) and confirm it completes successfully.
