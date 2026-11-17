@@ -15,6 +15,12 @@ image:
 
 replicaCount: 1
 
+# Expose Nextcloud through a fixed NodePort so the UI is reachable from outside
+# the cluster via any Talos node IP (e.g. http://10.10.50.10:30030).
+service:
+  type: NodePort
+  nodePort: 30030
+
 ingress:
   enabled: true
   className: traefik
@@ -24,6 +30,50 @@ ingress:
 
 nextcloud:
   host: nextcloud.kubernetes.local
+  # Nextcloud rejects any HTTP Host not listed here with "Access through
+  # untrusted domain" (HTTP 400). Cover every way this homelab reaches it:
+  # the Ingress vhost, Talos node IPs/hostnames, and LAN/forwarded addresses.
+  trustedDomains:
+    - nextcloud.kubernetes.local
+    - 10.10.50.10
+    - 10.10.50.21
+    - 10.10.50.22
+    - talos-node-1
+    - talos-node-2
+    - talos-node-3
+    - 192.168.0.192
+    - 192.168.0.201
+    - 192.168.0.250
+    - nextcloud.gridzig.com
+  # NEXTCLOUD_TRUSTED_DOMAINS is only applied on first install. A later-loaded
+  # config file keeps these hosts trusted after every pod recreation.
+  configs:
+    zz-trusted-domains.config.php: |-
+      <?php
+      $CONFIG = array (
+        'trusted_domains' =>
+        array (
+          0 => 'nextcloud.kubernetes.local',
+          1 => '10.10.50.10',
+          2 => '10.10.50.21',
+          3 => '10.10.50.22',
+          4 => 'talos-node-1',
+          5 => 'talos-node-2',
+          6 => 'talos-node-3',
+          7 => '192.168.0.192',
+          8 => '192.168.0.201',
+          9 => '192.168.0.250',
+          10 => 'nextcloud.gridzig.com',
+        ),
+      );
+    # Force all generated URLs and browser traffic to HTTPS behind the public
+    # reverse proxy / Traefik TLS terminator for nextcloud.gridzig.com.
+    zz-https.config.php: |-
+      <?php
+      $CONFIG = array (
+        'overwriteprotocol' => 'https',
+        'overwrite.cli.url' => 'https://nextcloud.gridzig.com',
+      );
   existingSecret:
     enabled: true
     secretName: nextcloud-admin

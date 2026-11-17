@@ -17,11 +17,18 @@ spec:
   - name: http
     protocol: TCP
     port: {{ .Values.example.containerPorts.http }}
-    targetPort: {{ .Values.example.containerPorts.http }}
+    targetPort: {{ .Values.example.service.targetPort | default .Values.example.containerPorts.http }}
+    {{- if and (eq (.Values.example.service.type | default "ClusterIP") "NodePort") .Values.example.service.nodePort }}
+    nodePort: {{ .Values.example.service.nodePort }}
+    {{- end }}
   selector:
+    {{- if .Values.example.service.selector }}
+    {{- toYaml .Values.example.service.selector | nindent 4 }}
+    {{- else }}
     statefulset.kubernetes.io/pod-name: {{ include "ds.resources.name" (list . .Values.commonNameSuffix "example") }}-0
     {{- if or .Values.commonLabels .Values.commonMatchLabels }}
     {{- include "ds.labels.matchLabels" . | trim | nindent 4 }}
     {{- end }}
-  type: ClusterIP
+    {{- end }}
+  type: {{ .Values.example.service.type | default "ClusterIP" }}
 {{- end }}

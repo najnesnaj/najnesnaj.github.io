@@ -36,6 +36,13 @@ ingress:
   controllerName: ""
   annotations: {}
   host: euro-office.kubernetes.local
+  # Also serve the public hostname through Traefik (NodePort 30080). The router
+  # forwards euro-office.gridzig.com to port 30080; this host routes it to the
+  # document server proxy (documentserver:8888), which serves the full UI and
+  # /web-apps/apps/api/documents/api.js.
+  tenants:
+    - euro-office.kubernetes.local
+    - euro-office.gridzig.com
   path: /
   pathType: Prefix
   ssl:
@@ -114,6 +121,12 @@ adminpanel:
   enabled: false
 example:
   enabled: true
+  # Expose the local demo through a fixed NodePort so it can be reached from
+  # outside the cluster via any Talos node IP (e.g. http://10.10.50.10:30020).
+  # The public euro-office.gridzig.com hostname uses the Traefik Ingress instead.
+  service:
+    type: NodePort
+    nodePort: 30020
   # The example entrypoint defaults JWT_ENABLED to false. The document server
   # requires JWT, so without this the editor config has no token and the
   # document server logs "jwt must be provided".
